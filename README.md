@@ -77,7 +77,9 @@ captured.
 
 CD-ROM support currently only accesses `/dev/cdrom`. It has not been heavily tested.
 
-On Windows, if you want to use PCAP networking, you will need to install [npcap](https://npcap.com) and replace the libpcap.dll in PCem dir using the wpcap.dll installed in C:\Windows\System32  
+On Windows, if you want to use PCAP networking, you will need to install [npcap](https://npcap.com) and replace the libpcap.dll in PCem dir using the wpcap.dll installed in C:\Windows\System32
+
+On Linux, if you want to use PCap Networking, run 'setcap cap_net_raw,cap_net_admin=eip (path to binary here)' as root.
 
 ## Links
 
