@@ -88,7 +88,7 @@ set(PCEM_SRC ${PCEM_SRC}
         sound/resid-fp/wave.cc
         )
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux" AND USE_ALSA)
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
         set(PCEM_SRC ${PCEM_SRC}
                 sound/midi_alsa.c
                 )
@@ -98,9 +98,4 @@ elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
                 sound/win-midi.c
                 )
                 set(PCEM_ADDITIONAL_LIBS ${PCEM_ADDITIONAL_LIBS} winmm)
-else()
-    message(STATUS "Warning: Using sdl2-midi. It currently is an empty midi implementation")
-        set(PCEM_SRC ${PCEM_SRC}
-                sound/sdl2-midi.c
-                )
 endif()
