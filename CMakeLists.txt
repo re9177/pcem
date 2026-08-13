@@ -38,7 +38,7 @@ message("***************************************************************")
 
 if(${PCEM_CPU_TYPE} STREQUAL "x86_64")
     set(PCEM_MARCH "x86-64-v2" CACHE STRING "march CPU architecture")
-    message("MArch: ${PCEM_MARCH}")
+    message("March: ${PCEM_MARCH}")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=${PCEM_MARCH}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=${PCEM_MARCH}")
 endif()
