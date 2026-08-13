@@ -735,7 +735,7 @@ void loadcsjmp(uint16_t seg, uint32_t old_pc) {
                                 case 0x1D00:
                                 case 0x1E00:
                                 case 0x1F00: /*Conforming*/
-                                        CS = (seg2 & ~3) | CPL;
+                                        CS = seg2;
                                         do_seg_load(&cpu_state.seg_cs, segdat);
                                         if (CPL == 3 && oldcpl != 3)
                                                 flushmmucache_cr3();
