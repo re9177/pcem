@@ -1148,7 +1148,7 @@ void loadcscall(uint16_t seg, uint32_t old_pc) {
                                                 cpl_override = 0;
 #endif
 
-                                                CS = (seg2 & ~3) | CPL;
+                                                CS = (seg2 & ~3) | DPL;
                                                 do_seg_load(&cpu_state.seg_cs, segdat);
                                                 if (CPL == 3 && oldcpl != 3)
                                                         flushmmucache_cr3();
