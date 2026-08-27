@@ -652,7 +652,7 @@ CPU cpus_VIA_100MHz[] = {
         {"Cyrix III/500", CPU_CYRIX_III, fpus_builtin, 20, 500000000, 3, 33333333, 0x663, 0x663, 0,
          CPU_SUPPORTS_DYNAREC | CPU_REQUIRES_DYNAREC, 18, 18, 9, 9, 64},
         /*Below are disabled as Windows 98 won't boot. This is most likely a limitation of the timer system*/
-        /*        {"Cyrix III/550", CPU_CYRIX_III, fpus_builtin, 20, 550000000, 3, 33333333, 0x663, 0x663, 0, CPU_SUPPORTS_DYNAREC
+                {"Cyrix III/550", CPU_CYRIX_III, fpus_builtin, 20, 550000000, 3, 33333333, 0x663, 0x663, 0, CPU_SUPPORTS_DYNAREC
            | CPU_REQUIRES_DYNAREC, 18,18,9,9,  70},
                 {"Cyrix III/600", CPU_CYRIX_III, fpus_builtin, 20, 600000000, 3, 33333333, 0x663, 0x663, 0, CPU_SUPPORTS_DYNAREC |
            CPU_REQUIRES_DYNAREC, 18,18,9,9,  76},
@@ -663,5 +663,5 @@ CPU cpus_VIA_100MHz[] = {
                 {"C3/750",        CPU_CYRIX_III, fpus_builtin, 20, 750000000, 3, 33333333, 0x673, 0x673, 0, CPU_SUPPORTS_DYNAREC |
            CPU_REQUIRES_DYNAREC, 18,18,9,9,  94},
                 {"C3/800",        CPU_CYRIX_III, fpus_builtin, 20, 800000000, 3, 33333333, 0x673, 0x673, 0, CPU_SUPPORTS_DYNAREC |
-           CPU_REQUIRES_DYNAREC, 18,18,9,9, 100},*/
+           CPU_REQUIRES_DYNAREC, 18,18,9,9, 100},
         {"", -1, 0, 0, 0}};
