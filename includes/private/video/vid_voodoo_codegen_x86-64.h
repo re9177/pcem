@@ -188,6 +188,13 @@ static inline int codegen_texture_fetch(uint8_t *code_block, voodoo_t *voodoo, v
                 addbyte(0x4d);
                 addbyte(0x87);
                 addlong(offsetof(voodoo_state_t, lod_max[tmu]));
+                addbyte(0x89); /*MOV state->lod_frac[tmu], EAX*/
+                addbyte(0x87);
+                addlong(offsetof(voodoo_state_t, lod_frac[tmu]));
+                addbyte(0x81); /*AND state->lod_frac[tmu], 0xff*/
+                addbyte(0xa7);
+                addlong(offsetof(voodoo_state_t, lod_frac[tmu]));
+                addlong(0xff);
                 addbyte(0xc1); /*SHR EAX, 8*/
                 addbyte(0xe8);
                 addbyte(8);
@@ -237,6 +244,13 @@ static inline int codegen_texture_fetch(uint8_t *code_block, voodoo_t *voodoo, v
                         addbyte(0x8b); /*MOV ECX, state->lod[RDI]*/
                         addbyte(0x8f);
                         addlong(offsetof(voodoo_state_t, lod));
+                        addbyte(0x48); /*MOV RAX, state->tex_lod[tmu]*/
+                        addbyte(0x8b);
+                        addbyte(0x87);
+                        addlong(offsetof(voodoo_state_t, tex_lod[tmu]));
+                        addbyte(0x8b); /*MOV ECX, [RAX+RCX*4]*/
+                        addbyte(0x0c);
+                        addbyte(0x88);
                         addbyte(0xbd); /*MOV EBP, 1*/
                         addlong(1);
                         addbyte(0x28); /*SUB DL, CL*/
@@ -559,6 +573,13 @@ static inline int codegen_texture_fetch(uint8_t *code_block, voodoo_t *voodoo, v
                         addbyte(0xac);
                         addbyte(0xcf);
                         addlong(offsetof(voodoo_state_t, tex[tmu]));
+                        addbyte(0x48); /*MOV RAX, state->tex_lod[tmu]*/
+                        addbyte(0x8b);
+                        addbyte(0x87);
+                        addlong(offsetof(voodoo_state_t, tex_lod[tmu]));
+                        addbyte(0x8b); /*MOV ECX, [RAX+RCX*4]*/
+                        addbyte(0x0c);
+                        addbyte(0x88);
                         addbyte(0x28); /*SUB DL, CL*/
                         addbyte(0xca);
                         addbyte(0x80); /*ADD CL, 4*/
@@ -591,6 +612,13 @@ static inline int codegen_texture_fetch(uint8_t *code_block, voodoo_t *voodoo, v
                         addbyte(0xe8);
                         addbyte(0xd3); /*SHR EBX, CL*/
                         addbyte(0xeb);
+                        /*The mask arrays below are indexed by LOD index + 4 (hence the -0x10 displacement)*/
+                        addbyte(0x8b); /*MOV ECX, state->lod[RDI]*/
+                        addbyte(0x8f);
+                        addlong(offsetof(voodoo_state_t, lod));
+                        addbyte(0x83); /*ADD ECX, 4*/
+                        addbyte(0xc1);
+                        addbyte(4);
                         if (state->clamp_s[tmu]) {
                                 addbyte(0x85); /*TEST EAX, EAX*/
                                 addbyte(0xc0);

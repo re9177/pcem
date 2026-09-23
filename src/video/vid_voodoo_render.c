@@ -689,7 +689,7 @@ static void voodoo_half_triangle(voodoo_t *voodoo, voodoo_params_t *params, vood
                 }
         }
 #ifndef NO_CODEGEN
-        if (voodoo->use_recompiler)
+        if (voodoo->use_recompiler && !(params->fbzMode & (FBZ_ALPHA_ENABLE | FBZ_ALPHA_MASK)))
                 voodoo_draw = voodoo_get_block(voodoo, params, state, odd_even);
         else
                 voodoo_draw = NULL;
@@ -856,7 +856,7 @@ static void voodoo_half_triangle(voodoo_t *voodoo, voodoo_params_t *params, vood
                 state->x = x;
                 state->x2 = x2;
 #ifndef NO_CODEGEN
-                if (voodoo->use_recompiler) {
+                if (voodoo->use_recompiler && !(params->fbzMode & (FBZ_ALPHA_ENABLE | FBZ_ALPHA_MASK))) {
                         voodoo_draw(state, params, x, real_y);
                 } else
 #endif
@@ -919,6 +919,13 @@ static void voodoo_half_triangle(voodoo_t *voodoo, voodoo_params_t *params, vood
                                         dest_g |= (dest_g >> 6);
                                         dest_b |= (dest_b >> 5);
                                         dest_a = 0xff;
+
+                                        if (params->fbzMode & FBZ_ALPHA_ENABLE) {
+                                                if (voodoo->params.aux_tiled)
+                                                        dest_a = aux_mem[x_tiled];
+                                                else
+                                                        dest_a = aux_mem[x];
+                                        }
 
                                         if (params->fbzColorPath & FBZCP_TEXTURE_ENABLED) {
                                                 if ((params->textureMode[0] & TEXTUREMODE_LOCAL_MASK) == TEXTUREMODE_LOCAL ||
@@ -1026,6 +1033,9 @@ static void voodoo_half_triangle(voodoo_t *voodoo, voodoo_params_t *params, vood
                                                 aother = 0;
                                                 break;
                                         }
+
+                                        if ((params->fbzMode & FBZ_ALPHA_MASK) && !(aother & 1))
+                                                goto skip_pixel;
 
                                         if (cc_zero_other) {
                                                 src_r = 0;
@@ -1183,6 +1193,10 @@ static void voodoo_half_triangle(voodoo_t *voodoo, voodoo_params_t *params, vood
                                                         dest_b = dithersub_rb2x2[dest_b][real_y & 1][x & 1];
                                                 }
                                                 ALPHA_BLEND(src_r, src_g, src_b, src_a);
+
+                                                src_a = (((dest_aafunc == 4) ? dest_a * 256 : 0) +
+                                                         ((src_aafunc == 4) ? src_a * 256 : 0)) >>
+                                                        8;
                                         }
 
                                         if (update) {
@@ -1208,8 +1222,14 @@ static void voodoo_half_triangle(voodoo_t *voodoo, voodoo_params_t *params, vood
                                                         else
                                                                 fb_mem[x] = src_b | (src_g << 5) | (src_r << 11);
                                                 }
-                                                if ((params->fbzMode & (FBZ_DEPTH_WMASK | FBZ_DEPTH_ENABLE)) ==
-                                                    (FBZ_DEPTH_WMASK | FBZ_DEPTH_ENABLE)) {
+                                                if ((params->fbzMode & (FBZ_DEPTH_WMASK | FBZ_ALPHA_ENABLE)) ==
+                                                    (FBZ_DEPTH_WMASK | FBZ_ALPHA_ENABLE)) {
+                                                        if (voodoo->params.aux_tiled)
+                                                                aux_mem[x_tiled] = src_a;
+                                                        else
+                                                                aux_mem[x] = src_a;
+                                                } else if ((params->fbzMode & (FBZ_DEPTH_WMASK | FBZ_DEPTH_ENABLE)) ==
+                                                           (FBZ_DEPTH_WMASK | FBZ_DEPTH_ENABLE)) {
                                                         if (voodoo->params.aux_tiled)
                                                                 aux_mem[x_tiled] = new_depth;
                                                         else
