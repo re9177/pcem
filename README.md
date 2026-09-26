@@ -21,14 +21,14 @@ You will need the following libraries and buildtools (and their dependencies):
 - Ninja (Recommended, but you can use a Makefile generator if you prefer)
 - CLang Toolchain
 
-Open a terminal window, navigate to the PCem directory, create a build directory, then enter in that build directory: 
+Open a terminal window, navigate to the PCem directory, then enter:
 ### Linux/BSD
 ```
-cmake -G "Ninja" -DCMAKE_BUILD_TYPE=Release ..
+cmake -B build -G "Ninja" -DCMAKE_BUILD_TYPE=Release
 ninja
 ```
 
-then `./src/pcem` to run.
+then `build/src/pcem` to run.
 
 BIOS ROM images, configuration files, and other data are stored in `~/.pcem`. You can also create a `.pcem` folder with
 the Binary, and run it in a portable mode.
@@ -45,8 +45,6 @@ default value.
   -DUSE_ALSA=OFF             : Build with support for MIDI output through ALSA. Requires libasound. (Linux Only)
   -DFORCE_X11=ON             : Enables a hack to force X11 on Wayland systems. See #128 for details. (Linux Only)
   -DPLUGIN_ENGINE=ON         : Build with plugin support. Builds libpcem-plugin-api and links PCem with it.
-  -DPCEM_MARCH=x86_64-v2     : Change the architecture used for generated instructions, by default we set it for
-                               >= Nehalem for Intel, and >= Bulldozer for AMD. 
 ```
 
 If you are using -DCMAKE_BUILD_TYPE=Debug, there are some more debug options you can enable if needed
@@ -79,7 +77,7 @@ CD-ROM support currently only accesses `/dev/cdrom`. It has not been heavily tes
 
 On Windows, if you want to use PCAP networking, you will need to install [npcap](https://npcap.com) and replace the libpcap.dll in PCem dir using the wpcap.dll installed in C:\Windows\System32
 
-On Linux, if you want to use PCap Networking, run 'setcap cap_net_raw,cap_net_admin=eip (path to binary here)' as root.
+On Linux, if you want to use PCap Networking, run `setcap cap_net_raw,cap_net_admin=eip (path to binary here)` as root.
 
 ## Links
 
