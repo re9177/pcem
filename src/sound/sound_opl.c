@@ -7,7 +7,7 @@
 #include "sound_dbopl.h"
 #include "x86.h"
 
-/*Interfaces between PCem and the actual OPL emulator*/
+/* Interfaces between PCem and the actual OPL emulator */
 
 uint8_t opl2_read(uint16_t a, void *priv) {
         opl_t *opl = (opl_t *)priv;
@@ -16,6 +16,7 @@ uint8_t opl2_read(uint16_t a, void *priv) {
         opl2_update2(opl);
         return opl_read(0, a);
 }
+
 void opl2_write(uint16_t a, uint8_t v, void *priv) {
         opl_t *opl = (opl_t *)priv;
 
@@ -31,6 +32,7 @@ uint8_t opl2_l_read(uint16_t a, void *priv) {
         opl2_update2(opl);
         return opl_read(0, a);
 }
+
 void opl2_l_write(uint16_t a, uint8_t v, void *priv) {
         opl_t *opl = (opl_t *)priv;
 
@@ -45,6 +47,7 @@ uint8_t opl2_r_read(uint16_t a, void *priv) {
         opl2_update2(opl);
         return opl_read(1, a);
 }
+
 void opl2_r_write(uint16_t a, uint8_t v, void *priv) {
         opl_t *opl = (opl_t *)priv;
 
@@ -59,6 +62,7 @@ uint8_t opl3_read(uint16_t a, void *priv) {
         opl3_update2(opl);
         return opl_read(0, a);
 }
+
 void opl3_write(uint16_t a, uint8_t v, void *priv) {
         opl_t *opl = (opl_t *)priv;
 
@@ -95,6 +99,7 @@ void ym3812_timer_set_0(void *param, int timer, int64_t period) {
         else
                 timer_disable(&opl->timers[0][timer]);
 }
+
 void ym3812_timer_set_1(void *param, int timer, int64_t period) {
         opl_t *opl = (opl_t *)param;
 
@@ -119,8 +124,8 @@ static void opl_timer_callback10(void *p) { opl_timer_over(1, 0); }
 static void opl_timer_callback11(void *p) { opl_timer_over(1, 1); }
 
 void opl2_init(opl_t *opl) {
-        opl_init(ym3812_timer_set_0, opl, 0, 0, 0);
-        opl_init(ym3812_timer_set_1, opl, 1, 0, 0);
+        opl_init(ym3812_timer_set_0, opl, 0, 0);
+        opl_init(ym3812_timer_set_1, opl, 1, 0);
         timer_add(&opl->timers[0][0], opl_timer_callback00, (void *)opl, 0);
         timer_add(&opl->timers[0][1], opl_timer_callback01, (void *)opl, 0);
         timer_add(&opl->timers[1][0], opl_timer_callback10, (void *)opl, 0);
@@ -128,7 +133,7 @@ void opl2_init(opl_t *opl) {
 }
 
 void opl3_init(opl_t *opl, int opl_emu) {
-        opl_init(ymf262_timer_set, opl, 0, 1, opl_emu);
+        opl_init(ymf262_timer_set, opl, 0, opl_emu);
         timer_add(&opl->timers[0][0], opl_timer_callback00, (void *)opl, 0);
         timer_add(&opl->timers[0][1], opl_timer_callback01, (void *)opl, 0);
 }

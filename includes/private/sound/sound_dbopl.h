@@ -1,10 +1,10 @@
 #ifndef _SOUND_DBOPL_H_
 #define _SOUND_DBOPL_H_
+#include <stdint.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
-void opl_init(void (*timer_callback)(void *param, int timer, int64_t period), void *timer_param, int nr, int is_opl3,
-              int opl_emu);
+void opl_init(void (*timer_callback)(void *param, int timer, int64_t period), void *timer_param, int nr, int opl_emu);
 void opl_write(int nr, uint16_t addr, uint8_t val);
 uint8_t opl_read(int nr, uint16_t addr);
 void opl_timer_over(int nr, int timer);

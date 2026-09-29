@@ -1,6 +1,8 @@
+#include "sound_dbopl.h"
 #include "dosbox/dbopl.h"
 #include "dosbox/nukedopl.h"
-#include "sound_dbopl.h"
+
+static Bit32s buffer_32[1024 * 2];
 
 static struct {
         DBOPL::Chip chip;
@@ -10,8 +12,7 @@ static struct {
         uint8_t timer_ctrl;
         uint8_t status_mask;
         uint8_t status;
-        int is_opl3;
-        int opl_emu;
+        int opl_emu; // 0 = dbopl 1 = nuked
 
         void (*timer_callback)(void *param, int timer, int64_t period);
         void *timer_param;
@@ -27,21 +28,18 @@ enum {
         CTRL_TIMER1_CTRL = 0x01
 };
 
-void opl_init(void (*timer_callback)(void *param, int timer, int64_t period), void *timer_param, int nr, int is_opl3,
-              int opl_emu) {
-        if (!is_opl3 || !opl_emu) {
+void opl_init(void (*timer_callback)(void *param, int timer, int64_t period), void *timer_param, int nr, int opl_emu) {
+        opl[nr].timer_callback = timer_callback;
+        opl[nr].timer_param = timer_param;
+        opl[nr].opl_emu = opl_emu;
+        opl[nr].status = 0;
+        opl[nr].status_mask = 0xff;
+
+        if (!opl_emu) {
                 DBOPL::InitTables();
-                opl[nr].chip.Setup(48000, is_opl3);
-                opl[nr].timer_callback = timer_callback;
-                opl[nr].timer_param = timer_param;
-                opl[nr].is_opl3 = is_opl3;
-                opl[nr].opl_emu = opl_emu;
+                opl[nr].chip.Setup(48000);
         } else {
                 OPL3_Reset(&opl[nr].opl3chip, 48000);
-                opl[nr].timer_callback = timer_callback;
-                opl[nr].timer_param = timer_param;
-                opl[nr].is_opl3 = is_opl3;
-                opl[nr].opl_emu = opl_emu;
         }
 }
 
@@ -66,26 +64,25 @@ void opl_timer_over(int nr, int timer) {
 
 void opl_write(int nr, uint16_t addr, uint8_t val) {
         if (!(addr & 1)) {
-                if (!opl[nr].is_opl3 || !opl[nr].opl_emu)
-                        opl[nr].addr = (int)opl[nr].chip.WriteAddr(addr, val) & (opl[nr].is_opl3 ? 0x1ff : 0xff);
+                if (!opl[nr].opl_emu)
+                        opl[nr].addr = (int)opl[nr].chip.WriteAddr(addr, val) & 0x1ff;
                 else
                         opl[nr].addr = (int)OPL3_WriteAddr(&opl[nr].opl3chip, addr, val) & 0x1ff;
         } else {
-                if (!opl[nr].is_opl3 || !opl[nr].opl_emu)
+                if (!opl[nr].opl_emu)
                         opl[nr].chip.WriteReg(opl[nr].addr, val);
                 else
                         OPL3_WriteReg(&opl[nr].opl3chip, opl[nr].addr, val);
 
                 switch (opl[nr].addr) {
-                case 0x02: /*Timer 1*/
+                case 0x02: /* Timer 1 */
                         opl[nr].timer[0] = 256 - val;
                         break;
-                case 0x03: /*Timer 2*/
+                case 0x03: /* Timer 2 */
                         opl[nr].timer[1] = 256 - val;
                         break;
-                case 0x04:                        /*Timer control*/
-                        if (val & CTRL_IRQ_RESET) /*IRQ reset*/
-                        {
+                case 0x04: /* Timer control */
+                        if (val & CTRL_IRQ_RESET) {
                                 opl[nr].status &= ~(STATUS_TIMER_1 | STATUS_TIMER_2);
                                 opl_status_update(nr);
                                 return;
@@ -111,65 +108,55 @@ void opl_write(int nr, uint16_t addr, uint8_t val) {
 
 uint8_t opl_read(int nr, uint16_t addr) {
         if (!(addr & 1)) {
-                return (opl[nr].status & opl[nr].status_mask) | (opl[nr].is_opl3 ? 0 : 0x06);
+                return (opl[nr].status & opl[nr].status_mask);
         }
-        return opl[nr].is_opl3 ? 0 : 0xff;
+        return 0xff;
 }
 
 static void opl2_update_impl(int nr, int16_t *buffer, Bit32s *buffer_32, int samples) {
-        int c;
-
         opl[nr].chip.GenerateBlock2(samples, buffer_32);
 
-        for (c = 0; c < samples; c++)
+        for (int c = 0; c < samples; c++) {
                 buffer[c * 2] = (int16_t)buffer_32[c];
+        }
 }
 
 void opl2_update(int nr, int16_t *buffer, int samples) {
-        #define chunk_size 1024
-
-        int n_chunks;
-        int rest;
-        int i_chunks;
-        Bit32s buffer_32[chunk_size];
-
-        n_chunks = samples / chunk_size;
-        rest = samples - n_chunks * chunk_size;
-        for(i_chunks = 0; i_chunks != n_chunks; ++i_chunks)
-                opl2_update_impl(nr, buffer + i_chunks * chunk_size * 2, buffer_32, chunk_size);
-        if(rest != 0)
-                opl2_update_impl(nr, buffer + n_chunks * chunk_size * 2, buffer_32, rest);
-
-        #undef chunk_size
+        int n_chunks = samples / 1024;
+        int rest = samples - n_chunks * 1024;
+        for (int i_chunks = 0; i_chunks != n_chunks; ++i_chunks)
+                opl2_update_impl(nr, buffer + i_chunks * 1024 * 2, buffer_32, 1024);
+        if (rest != 0)
+                opl2_update_impl(nr, buffer + n_chunks * 1024 * 2, buffer_32, rest);
 }
 
 static void opl3_update_impl(int nr, int16_t *buffer, Bit32s *buffer_32, int samples) {
-        int c;
-
         if (opl[nr].opl_emu) {
                 OPL3_GenerateStream(&opl[nr].opl3chip, buffer, samples);
         } else {
-                opl[nr].chip.GenerateBlock3(samples, buffer_32);
-
-                for (c = 0; c < samples * 2; c++)
-                        buffer[c] = (int16_t)buffer_32[c];
+                if (!opl[nr].chip.opl3Active) {
+                        opl[nr].chip.GenerateBlock2(samples, buffer_32);
+                        for (int c = 0; c < samples; c++) {
+                                int16_t sample = (int16_t)buffer_32[c];
+                                buffer[c * 2]     = sample;
+                                buffer[c * 2 + 1] = sample;
+                        }
+                } else {
+                        opl[nr].chip.GenerateBlock3(samples, buffer_32);
+                        for (int c = 0; c < samples * 2; c++) {
+                                buffer[c] = (int16_t)buffer_32[c];
+                        }
+                }
         }
 }
 
 void opl3_update(int nr, int16_t *buffer, int samples) {
-        #define chunk_size 1024
 
-        int n_chunks;
-        int rest;
-        int i_chunk;
-        Bit32s buffer_32[chunk_size * 2];
+        int n_chunks = samples / 1024;
+        int rest = samples - n_chunks * 1024;
+        for (int i_chunk = 0; i_chunk != n_chunks; ++i_chunk)
+                opl3_update_impl(nr, buffer + i_chunk * 1024 * 2, buffer_32, 1024);
+        if (rest != 0)
+                opl3_update_impl(nr, buffer + n_chunks * 1024 * 2, buffer_32, rest);
 
-        n_chunks = samples / chunk_size;
-        rest = samples - n_chunks * chunk_size;
-        for(i_chunk = 0; i_chunk != n_chunks; ++i_chunk)
-                opl3_update_impl(nr, buffer + i_chunk * chunk_size * 2, buffer_32, chunk_size);
-        if(rest != 0)
-                opl3_update_impl(nr, buffer + n_chunks * chunk_size * 2, buffer_32, rest);
-
-        #undef chunk_size
 }
