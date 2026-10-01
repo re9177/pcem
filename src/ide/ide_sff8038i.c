@@ -80,6 +80,9 @@ static int sff_bus_master_data_read(int channel, uint8_t *data, int size, void *
         if (!(busmaster[channel].status & 1))
                 return 1; /*DMA disabled*/
 
+        if (busmaster[channel].addr >= (mem_size * 1024) || (busmaster[channel].addr + size) > (mem_size * 1024))
+                return 1;
+
         while (transferred < size) {
                 if (busmaster[channel].count < (size - transferred) && busmaster[channel].eot)
                         fatal("DMA on channel %i - Read count less than size! Addr %08X Count %04X EOT %i size %i\n", channel,
@@ -132,6 +135,9 @@ static int sff_bus_master_data_write(int channel, uint8_t *data, int size, void 
 
         if (!(busmaster[channel].status & 1))
                 return 1; /*DMA disabled*/
+
+        if (busmaster[channel].addr >= (mem_size * 1024) || (busmaster[channel].addr + size) > (mem_size * 1024))
+                return 1;
 
         while (transferred < size) {
                 if (busmaster[channel].count < (size - transferred) && busmaster[channel].eot)

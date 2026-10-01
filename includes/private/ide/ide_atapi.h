@@ -53,6 +53,7 @@ typedef struct atapi_device_t {
         int *cylinder;
 
         int use_dma;
+        int dma_retries;
 } atapi_device_t;
 
 void atapi_data_write(atapi_device_t *atapi_dev, uint16_t val);
