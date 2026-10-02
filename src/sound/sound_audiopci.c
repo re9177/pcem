@@ -33,6 +33,7 @@ typedef struct es1371_t {
         uint32_t si_cr;
 
         uint32_t sr_cir;
+        uint32_t sr_state;
         uint16_t sr_ram[128];
 
         uint8_t uart_ctrl;
@@ -101,6 +102,8 @@ typedef struct es1371_t {
 #define LEGACY_INT (1 << 0)
 
 #define SRC_RAM_WE (1 << 24)
+#define SRC_STATE_MASK 0x00870000
+#define SRC_STATE_OK 0x00010000
 
 #define CODEC_READ (1 << 23)
 #define CODEC_READY (1 << 31)
@@ -125,6 +128,7 @@ const int32_t codec_attn[] = {25,   32,   41,   51,   65,    82,    103,   130, 
                               4125, 5192, 6537, 8230, 10362, 13044, 16422, 20674, 26027, 32767};
 
 static void es1371_fetch(es1371_t *es1371, int dac_nr);
+static uint32_t es1371_read_status(es1371_t *es1371);
 static void update_legacy(es1371_t *es1371, uint32_t old_legacy_ctrl);
 
 static void es1371_update_irqs(es1371_t *es1371) {
@@ -171,7 +175,7 @@ static uint8_t es1371_inb(uint16_t port, void *p) {
                 break;
 
         case 0x04:
-                ret = es1371->int_status & 0xff;
+                ret = es1371_read_status(es1371);
                 break;
         case 0x05:
                 ret = (es1371->int_status >> 8) & 0xff;
@@ -231,9 +235,20 @@ static uint16_t es1371_inw(uint16_t port, void *p) {
                 ret = (es1371->int_ctrl >> 16) & 0xffff;
                 break;
 
+        case 0x04:
+                ret = es1371_read_status(es1371);
+                break;
+
         case 0x18:
                 ret = es1371->legacy_ctrl & 0xffff;
                 //                pclog("Read legacy ctrl %04x\n", ret);
+                break;
+
+        case 0x20:
+                ret = es1371->si_cr & 0xffff;
+                break;
+        case 0x22:
+                ret = (es1371->si_cr >> 16) & 0xffff;
                 break;
 
         case 0x26:
@@ -282,12 +297,21 @@ static uint32_t es1371_inl(uint16_t port, void *p) {
                 ret = es1371->int_ctrl;
                 break;
         case 0x04:
-                ret = es1371->int_status;
+                ret = es1371_read_status(es1371);
+                break;
+
+        case 0x18:
+                ret = es1371->legacy_ctrl;
+                break;
+
+        case 0x20:
+                ret = es1371->si_cr;
                 break;
 
         case 0x10:
-                ret = es1371->sr_cir & ~0xffff;
+                ret = (es1371->sr_cir & ~SRC_STATE_MASK) | es1371->sr_state;
                 ret |= es1371->sr_ram[es1371->sr_cir >> 25];
+                es1371->sr_state = SRC_STATE_OK;
                 break;
 
         case 0x14:
@@ -330,35 +354,74 @@ static uint32_t es1371_inl(uint16_t port, void *p) {
         return ret;
 }
 
+static void es1371_set_int_status(es1371_t *es1371, uint32_t val) {
+        es1371->int_status &= ~val;
+        es1371_update_irqs(es1371);
+}
+static uint32_t es1371_read_status(es1371_t *es1371) {
+        uint32_t ret = es1371->int_status;
+
+        es1371->int_status &= ~(INT_STATUS_DAC1 | INT_STATUS_DAC2);
+        es1371_update_irqs(es1371);
+
+        return ret;
+}
+static void es1371_set_int_ctrl(es1371_t *es1371, uint32_t val) {
+        uint32_t old = es1371->int_ctrl;
+
+        if (!(old & INT_DAC1_EN) && (val & INT_DAC1_EN)) {
+                es1371->dac[0].addr = es1371->dac[0].addr_latch;
+                es1371->dac[0].buffer_pos = 0;
+                es1371->dac[0].buffer_pos_end = 0;
+                es1371_fetch(es1371, 0);
+        }
+        if (!(old & INT_DAC2_EN) && (val & INT_DAC2_EN)) {
+                es1371->dac[1].addr = es1371->dac[1].addr_latch;
+                es1371->dac[1].buffer_pos = 0;
+                es1371->dac[1].buffer_pos_end = 0;
+                es1371_fetch(es1371, 1);
+        }
+
+        es1371->int_ctrl = val;
+}
+static void es1371_set_si_cr(es1371_t *es1371, uint32_t val) {
+        es1371->si_cr = val;
+
+        if (!(es1371->si_cr & SI_P1_INTR_EN))
+                es1371->int_status &= ~INT_STATUS_DAC1;
+        if (!(es1371->si_cr & SI_P2_INTR_EN))
+                es1371->int_status &= ~INT_STATUS_DAC2;
+        es1371_update_irqs(es1371);
+}
+static void es1371_set_legacy_ctrl(es1371_t *es1371, uint32_t val) {
+        uint32_t old = es1371->legacy_ctrl;
+
+        es1371->legacy_ctrl = val;
+        es1371_update_irqs(es1371);
+        update_legacy(es1371, old);
+}
+
 static void es1371_outb(uint16_t port, uint8_t val, void *p) {
         es1371_t *es1371 = (es1371_t *)p;
         uint32_t old_legacy_ctrl;
 
         //        pclog("es1371_outb: port=%04x val=%02x %04x:%08x\n", port, val, cs, cpu_state.pc);
         switch (port & 0x3f) {
+        case 0x04:
+                es1371_set_int_status(es1371, val);
+                break;
+
         case 0x00:
-                if (!(es1371->int_ctrl & INT_DAC1_EN) && (val & INT_DAC1_EN)) {
-                        es1371->dac[0].addr = es1371->dac[0].addr_latch;
-                        es1371->dac[0].buffer_pos = 0;
-                        es1371->dac[0].buffer_pos_end = 0;
-                        es1371_fetch(es1371, 0);
-                }
-                if (!(es1371->int_ctrl & INT_DAC2_EN) && (val & INT_DAC2_EN)) {
-                        es1371->dac[1].addr = es1371->dac[1].addr_latch;
-                        es1371->dac[1].buffer_pos = 0;
-                        es1371->dac[1].buffer_pos_end = 0;
-                        es1371_fetch(es1371, 1);
-                }
-                es1371->int_ctrl = (es1371->int_ctrl & 0xffffff00) | val;
+                es1371_set_int_ctrl(es1371, (es1371->int_ctrl & 0xffffff00) | val);
                 break;
         case 0x01:
-                es1371->int_ctrl = (es1371->int_ctrl & 0xffff00ff) | (val << 8);
+                es1371_set_int_ctrl(es1371, (es1371->int_ctrl & 0xffff00ff) | (val << 8));
                 break;
         case 0x02:
-                es1371->int_ctrl = (es1371->int_ctrl & 0xff00ffff) | (val << 16);
+                es1371_set_int_ctrl(es1371, (es1371->int_ctrl & 0xff00ffff) | (val << 16));
                 break;
         case 0x03:
-                es1371->int_ctrl = (es1371->int_ctrl & 0x00ffffff) | (val << 24);
+                es1371_set_int_ctrl(es1371, (es1371->int_ctrl & 0x00ffffff) | (val << 24));
                 break;
 
         case 0x09:
@@ -387,18 +450,13 @@ static void es1371_outb(uint16_t port, uint8_t val, void *p) {
                 break;
 
         case 0x20:
-                es1371->si_cr = (es1371->si_cr & 0xffff00) | val;
+                es1371_set_si_cr(es1371, (es1371->si_cr & 0xffff0000) | val);
                 break;
         case 0x21:
-                es1371->si_cr = (es1371->si_cr & 0xff00ff) | (val << 8);
-                if (!(es1371->si_cr & SI_P1_INTR_EN))
-                        es1371->int_status &= ~INT_STATUS_DAC1;
-                if (!(es1371->si_cr & SI_P2_INTR_EN))
-                        es1371->int_status &= ~INT_STATUS_DAC2;
-                es1371_update_irqs(es1371);
+                es1371_set_si_cr(es1371, (es1371->si_cr & 0xff00ffff) | (val << 8));
                 break;
         case 0x22:
-                es1371->si_cr = (es1371->si_cr & 0x00ffff) | (val << 16);
+                es1371_set_si_cr(es1371, (es1371->si_cr & 0x00ffffff) | (val << 16));
                 break;
 
         default:
@@ -410,36 +468,70 @@ static void es1371_outw(uint16_t port, uint16_t val, void *p) {
 
         //        pclog("es1371_outw: port=%04x val=%04x\n", port, val);
         switch (port & 0x3f) {
+        case 0x00:
+                es1371_set_int_ctrl(es1371, (es1371->int_ctrl & 0xffff0000) | val);
+                break;
+
+        case 0x04:
+                es1371_set_int_status(es1371, val);
+                break;
+
+        case 0x18:
+                es1371_set_legacy_ctrl(es1371, val);
+                break;
+
+        case 0x20:
+                es1371_set_si_cr(es1371, (es1371->si_cr & 0xffff0000) | val);
+                break;
+
         case 0x0c:
                 es1371->mem_page = val & 0xf;
                 break;
 
         case 0x24:
                 es1371->dac[0].samp_ct = val;
+                es1371->dac[0].curr_samp_ct = val;
                 break;
 
         case 0x28:
                 es1371->dac[1].samp_ct = val;
+                es1371->dac[1].curr_samp_ct = val;
                 break;
 
         default:
                 pclog("Bad es1371_outw: port=%04x val=%04x\n", port, val);
         }
 }
+
 static void es1371_outl(uint16_t port, uint32_t val, void *p) {
         es1371_t *es1371 = (es1371_t *)p;
 
         //        pclog("es1371_outl: port=%04x val=%08x %04x:%08x\n", port, val, CS, cpu_state.pc);
         switch (port & 0x3f) {
+        case 0x00:
+                es1371_set_int_ctrl(es1371, val);
+                break;
+
         case 0x04:
+                es1371_set_int_status(es1371, val);
                 break;
 
         case 0x0c:
                 es1371->mem_page = val & 0xf;
                 break;
 
+        case 0x18:
+                es1371_set_legacy_ctrl(es1371, val);
+                break;
+
+        case 0x20:
+                es1371_set_si_cr(es1371, val);
+                break;
+
         case 0x10:
-                es1371->sr_cir = val;
+                es1371->sr_cir = val & ~SRC_STATE_MASK;
+                if (val & SRC_STATE_OK)
+                        es1371->sr_state = 0;
                 if (es1371->sr_cir & SRC_RAM_WE) {
                         //                        pclog("Write SR RAM %02x %04x\n", es1371->sr_cir >> 25, val & 0xffff);
                         es1371->sr_ram[es1371->sr_cir >> 25] = val & 0xffff;
@@ -517,10 +609,16 @@ static void es1371_outl(uint16_t port, uint32_t val, void *p) {
 
         case 0x24:
                 es1371->dac[0].samp_ct = val & 0xffff;
+                es1371->dac[0].curr_samp_ct = es1371->dac[0].samp_ct;
                 break;
 
         case 0x28:
                 es1371->dac[1].samp_ct = val & 0xffff;
+                es1371->dac[1].curr_samp_ct = es1371->dac[1].samp_ct;
+                break;
+
+        case 0x2c:
+                es1371->adc.samp_ct = val & 0xffff;
                 break;
 
         case 0x30:
@@ -1114,6 +1212,8 @@ static void es1371_update(es1371_t *es1371) {
 static void es1371_poll(void *p) {
         es1371_t *es1371 = (es1371_t *)p;
 
+        if (!es1371->dac[1].latch)
+                es1371->dac[1].latch = (uint64_t)((double)TIMER_USEC * (1000000.0 / 48000.0));
         timer_advance_u64(&es1371->dac[1].timer, es1371->dac[1].latch);
 
         es1371_update(es1371);
@@ -1136,12 +1236,14 @@ static void es1371_poll(void *p) {
                         es1371_next_sample_filtered(es1371, 0, es1371->dac[0].f_pos ? 16 : 0);
                         es1371->dac[0].f_pos = (es1371->dac[0].f_pos + 1) & 1;
 
-                        es1371->dac[0].curr_samp_ct--;
-                        if (es1371->dac[0].curr_samp_ct < 0) {
-                                //                                pclog("DAC1 IRQ\n");
-                                es1371->int_status |= INT_STATUS_DAC1;
-                                es1371_update_irqs(es1371);
-                                es1371->dac[0].curr_samp_ct = es1371->dac[0].samp_ct;
+                        if (es1371->dac[0].samp_ct) {
+                                es1371->dac[0].curr_samp_ct--;
+                                if (es1371->dac[0].curr_samp_ct < 0) {
+                                        //                                pclog("DAC1 IRQ\n");
+                                        es1371->int_status |= INT_STATUS_DAC1;
+                                        es1371_update_irqs(es1371);
+                                        es1371->dac[0].curr_samp_ct = es1371->dac[0].samp_ct;
+                                }
                         }
                 }
         }
@@ -1164,12 +1266,14 @@ static void es1371_poll(void *p) {
                         es1371_next_sample_filtered(es1371, 1, es1371->dac[1].f_pos ? 16 : 0);
                         es1371->dac[1].f_pos = (es1371->dac[1].f_pos + 1) & 1;
 
-                        es1371->dac[1].curr_samp_ct--;
-                        if (es1371->dac[1].curr_samp_ct < 0) {
-                                //                                pclog("DAC2 IRQ\n");
-                                es1371->int_status |= INT_STATUS_DAC2;
-                                es1371_update_irqs(es1371);
-                                es1371->dac[1].curr_samp_ct = es1371->dac[1].samp_ct;
+                        if (es1371->dac[1].samp_ct) {
+                                es1371->dac[1].curr_samp_ct--;
+                                if (es1371->dac[1].curr_samp_ct < 0) {
+                                        //                                pclog("DAC2 IRQ\n");
+                                        es1371->int_status |= INT_STATUS_DAC2;
+                                        es1371_update_irqs(es1371);
+                                        es1371->dac[1].curr_samp_ct = es1371->dac[1].samp_ct;
+                                }
                         }
                 }
         }
@@ -1222,6 +1326,11 @@ static void generate_es1371_filter() {
 static void *es1371_init() {
         es1371_t *es1371 = malloc(sizeof(es1371_t));
         memset(es1371, 0, sizeof(es1371_t));
+
+        es1371->master_vol_l = es1371->master_vol_r = codec_attn[0x1f];
+        es1371->dac[0].vol_l = es1371->dac[0].vol_r = 1 << 12;
+        es1371->dac[1].vol_l = es1371->dac[1].vol_r = 1 << 12;
+        es1371->sr_state = SRC_STATE_OK;
 
         sound_add_handler(es1371_get_buffer, es1371);
 
