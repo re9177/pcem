@@ -4193,7 +4193,7 @@ static void *s3_virge_init() {
         return virge;
 }
 
-static void *s3_virge_375_init() {
+static void *s3_virge_dx_gx_init(char *rom_name) {
         virge_t *virge = malloc(sizeof(virge_t));
         memset(virge, 0, sizeof(virge_t));
 
@@ -4205,7 +4205,7 @@ static void *s3_virge_375_init() {
                   s3_virge_hwcursor_draw, s3_virge_overlay_draw);
         virge->svga.vblank_start = s3_virge_vblank_start;
 
-        rom_init(&virge->bios_rom, "86c375_1.bin", 0xc0000, 0x8000, 0x7fff, 0, MEM_MAPPING_EXTERNAL);
+        rom_init(&virge->bios_rom, rom_name, 0xc0000, 0x8000, 0x7fff, 0, MEM_MAPPING_EXTERNAL);
         if (PCI)
                 mem_mapping_disable(&virge->bios_rom.mapping);
 
@@ -4269,6 +4269,10 @@ static void *s3_virge_375_init() {
         return virge;
 }
 
+static void *s3_virge_375_init() { return s3_virge_dx_gx_init("86c375_1.bin"); }
+
+static void *s3_virge_gx_init() { return s3_virge_dx_gx_init("s3-virge-375-385-generic-2-01-16.vbi"); }
+
 static void s3_virge_close(void *p) {
         virge_t *virge = (virge_t *)p;
 #ifndef RELEASE_BUILD
@@ -4294,6 +4298,8 @@ static void s3_virge_close(void *p) {
 static int s3_virge_available() { return rom_present("s3virge.bin"); }
 
 static int s3_virge_375_available() { return rom_present("86c375_1.bin"); }
+
+static int s3_virge_gx_available() { return rom_present("s3-virge-375-385-generic-2-01-16.vbi"); }
 
 static void s3_virge_speed_changed(void *p) {
         virge_t *virge = (virge_t *)p;
@@ -4354,3 +4360,9 @@ device_t s3_virge_375_device = {"S3 ViRGE/DX",          0,
                                 s3_virge_375_available, s3_virge_speed_changed,
                                 s3_virge_force_redraw,  s3_virge_add_status_info,
                                 s3_virge_config};
+
+device_t s3_virge_gx_device = {"S3 ViRGE/GX",         0,
+                               s3_virge_gx_init,      s3_virge_close,
+                               s3_virge_gx_available, s3_virge_speed_changed,
+                               s3_virge_force_redraw, s3_virge_add_status_info,
+                               s3_virge_config};                                

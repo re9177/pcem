@@ -172,6 +172,8 @@ VIDEO_CARD v_quadcolor = {
         {VIDEO_ISA, 8, 16, 32, 8, 16, 32}};
 VIDEO_CARD v_virge375 = {
         "S3 ViRGE/DX", "virge375", &s3_virge_375_device, GFX_VIRGEDX, VIDEO_FLAG_TYPE_SPECIAL, {VIDEO_BUS, 2, 2, 3, 28, 28, 45}};
+VIDEO_CARD v_virge385 = {
+        "S3 ViRGE/GX", "virge385", &s3_virge_gx_device, GFX_VIRGEGX, VIDEO_FLAG_TYPE_SPECIAL, {VIDEO_BUS, 2, 2, 3, 20, 20, 33}};
 VIDEO_CARD v_sigma400 = {"Sigma Color 400", "sigma400",          &sigma_device,
                          GFX_SIGMA400,      VIDEO_FLAG_TYPE_CGA, {VIDEO_ISA, 8, 16, 32, 8, 16, 32}};
 VIDEO_CARD v_tvga8900d = {"Trident TVGA8900D",           "tvga8900d", &tvga8900d_device, GFX_TVGA, VIDEO_FLAG_TYPE_SPECIAL,
@@ -1341,6 +1343,7 @@ void video_init_builtin() {
         pcem_add_video(&v_plantronics);
         pcem_add_video(&v_quadcolor);
         pcem_add_video(&v_virge375);
+        pcem_add_video(&v_virge385);
         pcem_add_video(&v_sigma400);
         pcem_add_video(&v_tvga8900d);
         pcem_add_video(&v_tvga9000b);

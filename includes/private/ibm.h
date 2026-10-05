@@ -294,6 +294,7 @@ enum {
         GFX_MACH64GX,       /*ATI Graphics Pro Turbo (Mach64)*/
         GFX_CL_GD5429,      /*Cirrus Logic CL-GD5429*/
         GFX_VIRGEDX,        /*S3 Virge/DX*/
+        GFX_VIRGEGX,        /*S3 Virge/GX*/
         GFX_PHOENIX_TRIO32, /*S3 732/Trio32 (Phoenix)*/
         GFX_PHOENIX_TRIO64, /*S3 764/Trio64 (Phoenix)*/
         GFX_INCOLOR,        /* Hercules InColor */
