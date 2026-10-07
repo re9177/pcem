@@ -55,22 +55,22 @@ CDROM_Interface_Image::BinaryFile::~BinaryFile() {
 	delete file;
 }
 
-bool CDROM_Interface_Image::BinaryFile::read(Bit8u *buffer, int seek, int count) {
+bool CDROM_Interface_Image::BinaryFile::read(Bit8u *buffer, int64_t seek, int count) {
 	file->clear();
-	file->seekg(seek, ios::beg);
+	file->seekg((std::streamoff)seek, ios::beg);
 	if (file->fail())
 		return false;
 	file->read((char *)buffer, count);
 	return !(file->fail());
 }
 
-int CDROM_Interface_Image::BinaryFile::getLength() {
+int64_t CDROM_Interface_Image::BinaryFile::getLength() {
 	file->clear();
 	file->seekg(0, ios::end);
-	int length = (int)file->tellg();
+	std::streamoff length = file->tellg();
 	if (file->fail())
 		return -1;
-	return length;
+	return (int64_t)length;
 }
 
 CDROM_Interface_Image::CDROM_Interface_Image() {
@@ -166,12 +166,18 @@ int CDROM_Interface_Image::GetTrack(int sector) {
 	return -1;
 }
 
+int64_t CDROM_Interface_Image::GetTrackStartLBA(int track_number) {
+	if (track_number < 1 || track_number > (int)tracks.size())
+		return -1;
+	return tracks[track_number - 1].start;
+}
+
 bool CDROM_Interface_Image::ReadSector(Bit8u *buffer, bool raw, unsigned long sector) {
-	int track = GetTrack(sector) - 1;
+	int track = GetTrack((int)sector) - 1;
 	if (track < 0)
 		return false;
 
-	int seek = tracks[track].skip + (sector - tracks[track].start) * tracks[track].sectorSize;
+	int64_t seek = tracks[track].skip + ((int64_t)sector - tracks[track].start) * tracks[track].sectorSize;
 	int length = (raw ? RAW_SECTOR_SIZE : COOKED_SECTOR_SIZE);
 	if (tracks[track].sectorSize != RAW_SECTOR_SIZE && raw)
 		return false;
@@ -184,7 +190,7 @@ bool CDROM_Interface_Image::ReadSector(Bit8u *buffer, bool raw, unsigned long se
 }
 
 bool CDROM_Interface_Image::LoadIsoFile(char *filename) {
-	tracks.clear();
+	ClearTracks();
 
 	// data track
 	Track track = {0, 0, 0, 0, 0, 0, 0, false, NULL};
@@ -211,12 +217,24 @@ bool CDROM_Interface_Image::LoadIsoFile(char *filename) {
 	} else if (CanReadPVD(track.file, RAW_SECTOR_SIZE, true)) {
 		track.sectorSize = RAW_SECTOR_SIZE;
 		track.mode2 = true;
+	} else if (CanReadUDF(track.file)) {
+		track.sectorSize = COOKED_SECTOR_SIZE;
+		track.mode2 = false;
 	} else {
 		delete track.file;
 		return false;
 	}
 
-	track.length = track.file->getLength() / track.sectorSize;
+	int64_t length = track.file->getLength();
+	if (length <= 0) {
+		delete track.file;
+		return false;
+	}
+	track.length = (int)(length / track.sectorSize);
+	if (track.length <= 0) {
+		delete track.file;
+		return false;
+	}
 	tracks.push_back(track);
 
 	// leadout track
@@ -229,6 +247,21 @@ bool CDROM_Interface_Image::LoadIsoFile(char *filename) {
 	tracks.push_back(track);
 
 	return true;
+}
+
+bool CDROM_Interface_Image::CanReadUDF(TrackFile *file) {
+	Bit8u vrs[COOKED_SECTOR_SIZE];
+
+	for (int sector = 16; sector <= 18; sector++) {
+		memset(vrs, 0, sizeof(vrs));
+		if (!file->read(vrs, (int64_t)sector * COOKED_SECTOR_SIZE, COOKED_SECTOR_SIZE))
+			return false;
+
+		if (!strncmp((char *)(&vrs[1]), "BEA01", 5) || !strncmp((char *)(&vrs[1]), "NSR02", 5) ||
+		    !strncmp((char *)(&vrs[1]), "NSR03", 5))
+			return true;
+	}
+	return false;
 }
 
 bool CDROM_Interface_Image::CanReadPVD(TrackFile *file, int sectorSize, bool mode2) {
@@ -266,7 +299,7 @@ static string dirname(char *file) {
 
 bool CDROM_Interface_Image::LoadCueSheet(char *cuefile) {
 	Track track = {0, 0, 0, 0, 0, 0, 0, false, NULL};
-	tracks.clear();
+	ClearTracks();
 	int shift = 0;
 	int currPregap = 0;
 	int totalPregap = 0;
@@ -412,7 +445,7 @@ bool CDROM_Interface_Image::AddTrack(Track &curr, int &shift, int prestart, int 
 	if (tracks.empty()) {
 		if (curr.number != 1)
 			return false;
-		curr.skip = skip * curr.sectorSize;
+		curr.skip = (int64_t)skip * curr.sectorSize;
 		curr.start += currPregap;
 		totalPregap = currPregap;
 		tracks.push_back(curr);
@@ -425,18 +458,18 @@ bool CDROM_Interface_Image::AddTrack(Track &curr, int &shift, int prestart, int 
 	if (prev.file == curr.file) {
 		curr.start += shift;
 		prev.length = curr.start + totalPregap - prev.start - skip;
-		curr.skip += prev.skip + prev.length * prev.sectorSize + skip * curr.sectorSize;
+		curr.skip += prev.skip + (int64_t)prev.length * prev.sectorSize + (int64_t)skip * curr.sectorSize;
 		totalPregap += currPregap;
 		curr.start += totalPregap;
 		// current track uses a different file as the previous track
 	} else {
-		int tmp = prev.file->getLength() - prev.skip;
-		prev.length = tmp / prev.sectorSize;
+		int64_t tmp = prev.file->getLength() - prev.skip;
+		prev.length = (int)(tmp / prev.sectorSize);
 		if (tmp % prev.sectorSize != 0)
 			prev.length++; // padding
 
 		curr.start += prev.start + prev.length + currPregap;
-		curr.skip = skip * curr.sectorSize;
+		curr.skip = (int64_t)skip * curr.sectorSize;
 		shift += prev.start + prev.length;
 		totalPregap = currPregap;
 	}

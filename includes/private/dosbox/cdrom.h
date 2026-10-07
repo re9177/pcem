@@ -102,8 +102,8 @@ class CDROM_Interface_Image : public CDROM_Interface {
     private:
         class TrackFile {
             public:
-                virtual bool read(Bit8u *buffer, int seek, int count) = 0;
-                virtual int getLength() = 0;
+                virtual bool read(Bit8u *buffer, int64_t seek, int count) = 0;
+                virtual int64_t getLength() = 0;
                 virtual ~TrackFile(){};
         };
 
@@ -111,8 +111,8 @@ class CDROM_Interface_Image : public CDROM_Interface {
             public:
                 BinaryFile(const char *filename, bool &error);
                 ~BinaryFile();
-                bool read(Bit8u *buffer, int seek, int count);
-                int getLength();
+                bool read(Bit8u *buffer, int64_t seek, int count);
+                int64_t getLength();
 
             private:
                 BinaryFile();
@@ -125,7 +125,7 @@ class CDROM_Interface_Image : public CDROM_Interface {
                 int attr;
                 int start;
                 int length;
-                int skip;
+                int64_t skip;
                 int sectorSize;
                 bool mode2;
                 TrackFile *file;
@@ -148,6 +148,7 @@ class CDROM_Interface_Image : public CDROM_Interface {
         bool HasAudioTracks(void);
 
         int GetTrack(int sector);
+        int64_t GetTrackStartLBA(int track_number);
 
     private:
         // player
@@ -156,6 +157,7 @@ class CDROM_Interface_Image : public CDROM_Interface {
         void ClearTracks();
         bool LoadIsoFile(char *filename);
         bool CanReadPVD(TrackFile *file, int sectorSize, bool mode2);
+        bool CanReadUDF(TrackFile *file);
         // cue sheet processing
         bool LoadCueSheet(char *cuefile);
         bool GetRealFileName(std::string &filename, std::string &pathname);

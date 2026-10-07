@@ -152,28 +152,42 @@ static int image_ready(void) {
         return 1;
 }
 
+static void lba_to_msf(int64_t lba, unsigned char *m, unsigned char *s, unsigned char *f) {
+        int64_t frames = lba + 150;
+        int64_t max_frames = ((int64_t)255 * 60 + 59) * 75 + 74;
+
+        if (frames < 0)
+                frames = 0;
+        if (frames > max_frames)
+                frames = max_frames;
+
+        *f = frames % 75;
+        frames /= 75;
+        *s = frames % 60;
+        frames /= 60;
+        *m = (unsigned char)frames;
+}
+
 static int image_get_last_block(unsigned char starttrack, int msf, int maxlen, int single) {
         int c;
-        uint32_t lb = 0;
+        int64_t lb = 0;
 
         if (!cdrom)
                 return 0;
 
         int first_track;
         int last_track;
-        int number;
-        unsigned char attr;
         TMSF tmsf;
         cdrom->GetAudioTracks(first_track, last_track, tmsf);
 
         for (c = 0; c <= last_track; c++) {
-                uint32_t address;
-                cdrom->GetAudioTrackInfo(c + 1, number, tmsf, attr);
-                address = MSFtoLBA(tmsf.min, tmsf.sec, tmsf.fr) - 150;
+                int64_t address = cdrom->GetTrackStartLBA(c + 1);
+                if (address < 0)
+                        continue;
                 if (address > lb)
                         lb = address;
         }
-        return lb;
+        return (int)lb;
 }
 
 static int image_medium_changed(void) {
@@ -293,30 +307,37 @@ static int image_readtoc(unsigned char *b, unsigned char starttrack, int msf, in
                         break;
                 }
         }
+        if (c > last_track)
+                c = last_track;
         cdrom->GetAudioTrackInfo(c + 1, number, tmsf, attr);
         b[2] = number;
 
         for (c = d; c <= last_track; c++) {
+                int64_t track_start;
+
                 if ((len + 8) > maxlen)
                         break;
                 cdrom->GetAudioTrackInfo(c + 1, number, tmsf, attr);
 
-                //                pclog("Len %i max %i Track %02X - %02X %02X %02i:%02i:%02i
-                //                %08X\n",len,maxlen,toc[c].cdte_track,toc[c].cdte_adr,toc[c].cdte_ctrl,toc[c].cdte_addr.msf.minute,
-                //                toc[c].cdte_addr.msf.second, toc[c].cdte_addr.msf.frame,MSFtoLBA(toc[c].cdte_addr.msf.minute,
-                //                toc[c].cdte_addr.msf.second, toc[c].cdte_addr.msf.frame));
+                track_start = cdrom->GetTrackStartLBA(c + 1);
+                if (track_start < 0)
+                        break;
+
                 b[len++] = 0; /* reserved */
                 b[len++] = attr;
                 b[len++] = number; /* track number */
                 b[len++] = 0;      /* reserved */
 
                 if (msf) {
+                        unsigned char m, s, f;
+
+                        lba_to_msf(track_start, &m, &s, &f);
                         b[len++] = 0;
-                        b[len++] = tmsf.min;
-                        b[len++] = tmsf.sec;
-                        b[len++] = tmsf.fr;
+                        b[len++] = m;
+                        b[len++] = s;
+                        b[len++] = f;
                 } else {
-                        temp = MSFtoLBA(tmsf.min, tmsf.sec, tmsf.fr) - 150;
+                        temp = (uint32_t)track_start;
                         b[len++] = temp >> 24;
                         b[len++] = temp >> 16;
                         b[len++] = temp >> 8;
@@ -354,9 +375,11 @@ static int image_readtoc_session(unsigned char *b, int msf, int maxlen) {
         int number;
         TMSF tmsf;
         unsigned char attr;
+        int64_t track_start;
         cdrom->GetAudioTrackInfo(1, number, tmsf, attr);
-
-        //        pclog("Read TOC session - %i %02X %02X %i %i %02X %02X %02X\n",0, 0, 0,1,1,attr,0,number);
+        track_start = cdrom->GetTrackStartLBA(1);
+        if (track_start < 0)
+                track_start = 0;
 
         b[2] = 1;
         b[3] = 1;
@@ -365,12 +388,15 @@ static int image_readtoc_session(unsigned char *b, int msf, int maxlen) {
         b[len++] = number; /* track number */
         b[len++] = 0;      /* reserved */
         if (msf) {
+                unsigned char m, s, f;
+
+                lba_to_msf(track_start, &m, &s, &f);
                 b[len++] = 0;
-                b[len++] = tmsf.min;
-                b[len++] = tmsf.sec;
-                b[len++] = tmsf.fr;
+                b[len++] = m;
+                b[len++] = s;
+                b[len++] = f;
         } else {
-                uint32_t temp = MSFtoLBA(tmsf.min, tmsf.sec, tmsf.fr) - 150;
+                uint32_t temp = (uint32_t)track_start;
                 b[len++] = temp >> 24;
                 b[len++] = temp >> 16;
                 b[len++] = temp >> 8;
@@ -417,9 +443,14 @@ static int image_readtoc_raw(unsigned char *b, int maxlen) {
                 b[len++] = 0;
                 b[len++] = 0;
                 b[len++] = 0;
-                b[len++] = tmsf.min;
-                b[len++] = tmsf.sec;
-                b[len++] = tmsf.fr;
+                {
+                        unsigned char m, s, f;
+
+                        lba_to_msf(cdrom->GetTrackStartLBA(track), &m, &s, &f);
+                        b[len++] = m;
+                        b[len++] = s;
+                        b[len++] = f;
+                }
         }
         return len;
 }
