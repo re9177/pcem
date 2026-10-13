@@ -13,6 +13,7 @@ static int pci_irq_routing[32];
 static int pci_irq_active[32];
 static int pci_irqs[4];
 static int pci_card_valid[32];
+static int pci_card_irq[32];
 
 static int pci_index, pci_func, pci_card, pci_bus, pci_enable, pci_key;
 int pci_burst_time, pci_nonburst_time;
@@ -125,26 +126,31 @@ void pci_set_card_routing(int card, int pci_int) {
         //        pclog("pci_irq_routing: card=%i pci_int=%i\n", card, pci_int);
 }
 
-void pci_set_irq(int card, int pci_int) {
-        //        pclog("pci_set_irq: card=%i irq_routing=%i\n", card, pci_irq_routing[card]);
+void pci_set_card_irq(int card, int irq) { pci_card_irq[card] = irq; }
+
+static int pci_card_effective_irq(int card, int pci_int) {
         if (pci_irq_routing[card]) {
-                int irq = ((pci_int - PCI_INTA) + (pci_irq_routing[card] - PCI_INTA)) & 3;
-                //                pclog("  irq=%i pci_irqs=%i active=%i\n", irq, pci_irqs[irq], pci_irq_active[card]);
-                if (pci_irqs[irq] != PCI_IRQ_DISABLED && !pci_irq_active[card])
-                        picint(1 << pci_irqs[irq]);
-                pci_irq_active[card] = 1;
+                int pirq = ((pci_int - PCI_INTA) + (pci_irq_routing[card] - PCI_INTA)) & 3;
+                if (pci_irqs[pirq] != PCI_IRQ_DISABLED)
+                        return pci_irqs[pirq];
         }
+        return pci_card_irq[card];
+}
+
+void pci_set_irq(int card, int pci_int) {
+        int irq = pci_card_effective_irq(card, pci_int);
+        //        pclog("pci_set_irq: card=%i irq_routing=%i\n", card, pci_irq_routing[card]);
+        if (irq > 0 && !pci_irq_active[card])
+                picint(1 << irq);
+        pci_irq_active[card] = 1;
 }
 
 void pci_clear_irq(int card, int pci_int) {
+        int irq = pci_card_effective_irq(card, pci_int);
         //        pclog("pci_clear_irq: card=%i irq_routing=%i\n", card, pci_irq_routing[card]);
-        if (pci_irq_routing[card]) {
-                int irq = ((pci_int - PCI_INTA) + (pci_irq_routing[card] - PCI_INTA)) & 3;
-                //                pclog("  irq=%i pci_irqs=%i active=%i\n", irq, pci_irqs[irq], pci_irq_active[card]);
-                if (pci_irqs[irq] != PCI_IRQ_DISABLED && pci_irq_active[card])
-                        picintc(1 << pci_irqs[irq]);
-                pci_irq_active[card] = 0;
-        }
+        if (irq > 0 && pci_irq_active[card])
+                picintc(1 << irq);
+        pci_irq_active[card] = 0;
 }
 
 void pci_init(int type) {
@@ -167,6 +173,7 @@ void pci_init(int type) {
                 pci_irq_routing[c] = 0;
                 pci_irq_active[c] = 0;
                 pci_card_valid[c] = 0;
+                pci_card_irq[c] = 0;
         }
 
         for (c = 0; c < 4; c++)

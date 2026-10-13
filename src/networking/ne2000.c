@@ -1514,6 +1514,7 @@ static void rtl8029_pci_write(int func, int addr, uint8_t val, void *p) {
 
         case 0x3c:
                 ne2000->int_line = val;
+                pci_set_card_irq(ne2000->card, val);
                 break;
         }
 }

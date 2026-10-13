@@ -8,6 +8,7 @@ int pci_add(uint8_t (*read)(int func, int addr, void *priv), void (*write)(int f
             void *priv);
 void pci_set_irq_routing(int card, int irq);
 void pci_set_card_routing(int card, int pci_int);
+void pci_set_card_irq(int card, int irq);
 void pci_set_irq(int card, int pci_int);
 void pci_clear_irq(int card, int pci_int);
 
