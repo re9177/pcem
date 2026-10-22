@@ -46,9 +46,11 @@ void svga_out(uint16_t addr, uint8_t val, void *p) {
                 } else {
                         if ((svga->attraddr == 0x13) && (svga->attrregs[0x13] != val))
                                 svga->fullchange = changeframecount;
-                        svga->attrregs[svga->attraddr & 31] = val;
-                        if (svga->attraddr < 16)
-                                svga->fullchange = changeframecount;
+                        if (svga->attraddr >= 0x10 || !svga->attr_palette_enable) {
+                                svga->attrregs[svga->attraddr & 31] = val;
+                                if (svga->attraddr < 16)
+                                        svga->fullchange = changeframecount;
+                        }
                         if (svga->attraddr == 0x10 || svga->attraddr == 0x14 || svga->attraddr < 0x10) {
                                 for (c = 0; c < 16; c++) {
                                         if (svga->attrregs[0x10] & 0x80)
@@ -427,8 +429,13 @@ void svga_recalctimings(svga_t *svga) {
         if (svga->recalctimings_ex)
                 svga->recalctimings_ex(svga);
 
-        if (svga->vblankstart < svga->dispend)
-                svga->dispend = svga->vblankstart;
+        if (svga->vblankstart == 1)
+                svga->vblank_skip = svga->crtc[0x16] + 1;
+        else {
+                svga->vblank_skip = 0;
+                if (svga->vblankstart < svga->dispend)
+                        svga->dispend = svga->vblankstart;
+        }
 
         crtcconst = svga->clock * svga->char_width;
 
@@ -500,36 +507,38 @@ void svga_poll(void *p) {
                         svga->hdisp_on = 1;
 
                         svga->ma &= svga->vram_display_mask;
-                        if (svga->firstline == 2000) {
-                                svga->firstline = svga->displine;
-                                video_wait_for_buffer();
-                        }
+                        if (svga->displine >= svga->vblank_skip) {
+                                if (svga->firstline == 2000) {
+                                        svga->firstline = svga->displine;
+                                        video_wait_for_buffer();
+                                }
 
-                        if (svga->hwcursor_on || svga->overlay_on)
-                                svga->changedvram[svga->ma >> 12] = svga->changedvram[(svga->ma >> 12) + 1] =
-                                        svga->interlace ? 3 : 2;
+                                if (svga->hwcursor_on || svga->overlay_on)
+                                        svga->changedvram[svga->ma >> 12] = svga->changedvram[(svga->ma >> 12) + 1] =
+                                                svga->interlace ? 3 : 2;
 
-                        if (!svga->override)
-                                svga->render(svga);
-
-                        if (svga->overlay_on) {
                                 if (!svga->override)
-                                        svga->overlay_draw(svga, svga->displine);
-                                svga->overlay_on--;
-                                if (svga->overlay_on && svga->interlace)
+                                        svga->render(svga);
+
+                                if (svga->overlay_on) {
+                                        if (!svga->override)
+                                                svga->overlay_draw(svga, svga->displine);
                                         svga->overlay_on--;
-                        }
+                                        if (svga->overlay_on && svga->interlace)
+                                                svga->overlay_on--;
+                                }
 
-                        if (svga->hwcursor_on) {
-                                if (!svga->override)
-                                        svga->hwcursor_draw(svga, svga->displine);
-                                svga->hwcursor_on--;
-                                if (svga->hwcursor_on && svga->interlace)
+                                if (svga->hwcursor_on) {
+                                        if (!svga->override)
+                                                svga->hwcursor_draw(svga, svga->displine);
                                         svga->hwcursor_on--;
-                        }
+                                        if (svga->hwcursor_on && svga->interlace)
+                                                svga->hwcursor_on--;
+                                }
 
-                        if (svga->lastline < svga->displine)
-                                svga->lastline = svga->displine;
+                                if (svga->lastline < svga->displine)
+                                        svga->lastline = svga->displine;
+                        }
                 }
 
                 //                pclog("%03i %06X %06X\n",displine,ma,vrammask);
@@ -793,6 +802,7 @@ int svga_init(svga_t *svga, void *p, int memsize, void (*recalctimings_ex)(struc
         svga_pri = svga;
 
         svga->ramdac_type = RAMDAC_6BIT;
+        svga->vblank_skip = 0;
 
         viewer_add("256-colour palette", &viewer_palette, svga);
         viewer_add("16-colour palette", &viewer_palette_16, svga);
@@ -1468,7 +1478,10 @@ void svga_doblit(int y1, int y2, int wx, int wy, svga_t *svga) {
                 xsize = wx;
                 ysize = wy + 1;
         }
-        video_blit_memtoscreen(32, 0, y1, y2, xsize, ysize);
+        if (svga->vblank_skip)
+                video_blit_memtoscreen(32, y1, 0, y2 - y1, xsize, ysize);
+        else
+                video_blit_memtoscreen(32, 0, y1, y2, xsize, ysize);
         //        pclog("svga_doblit end\n");
 }
 

@@ -56,7 +56,7 @@ typedef struct svga_t {
 
         int ramdac_type;
 
-        int vtotal, dispend, vsyncstart, split, vblankstart;
+        int vtotal, dispend, vsyncstart, split, vblankstart, vblank_skip;
         int hdisp, hdisp_old, htotal, hdisp_time, rowoffset;
         int lowres, interlace;
         int linedbl, rowcount;
