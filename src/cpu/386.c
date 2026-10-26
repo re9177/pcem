@@ -2,17 +2,16 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "ibm.h"
-#include "x86.h"
+#include "cpu/x86.h"
 #include "x87.h"
-#include "mem.h"
-#include "cpu.h"
-#include "fdc.h"
-#include "pic.h"
+#include "memory/mem.h"
+#include "cpu/cpu.h"
+#include "models/pic.h"
 #include "timer.h"
-#include "nmi.h"
+#include "models/nmi.h"
 
 #include "386_common.h"
-#include "codegen.h"
+#include "codegen/codegen.h"
 
 #undef CPU_BLOCK_END
 #define CPU_BLOCK_END()

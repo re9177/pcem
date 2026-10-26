@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "ide.h"
+#include "ide/ide.h"
 #include "ide_atapi.h"
-#include "scsi.h"
+#include "scsi/scsi.h"
 #include "timer.h"
 
 #define IDE_TIME (100 * TIMER_USEC)

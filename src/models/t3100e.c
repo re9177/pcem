@@ -1,13 +1,13 @@
 #include "ibm.h"
-#include "cpu.h"
+#include "cpu/cpu.h"
 #include "model.h"
 #include "io.h"
-#include "fdd.h"
-#include "mouse.h"
-#include "mem.h"
-#include "device.h"
+#include "floppy/fdd.h"
+#include "mouse/mouse.h"
+#include "memory/mem.h"
+#include "plugin-api/device.h" // REMOVE
 #include "t3100e.h"
-#include "vid_t3100e.h"
+#include "video/vid_t3100e.h"
 
 /* The Toshiba 3100e is a 286-based portable.
  *

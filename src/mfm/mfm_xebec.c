@@ -10,13 +10,13 @@
 #include <sys/types.h>
 #include "ibm.h"
 
-#include "device.h"
-#include "dma.h"
-#include "hdd_file.h"
+#include "plugin-api/device.h" // REMOVE
+#include "models/dma.h"
+#include "hdd/hdd_file.h"
 #include "io.h"
-#include "mem.h"
-#include "pic.h"
-#include "rom.h"
+#include "memory/mem.h"
+#include "models/pic.h"
+#include "flash/rom.h"
 #include "timer.h"
 
 #include "mfm_xebec.h"

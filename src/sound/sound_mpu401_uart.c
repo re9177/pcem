@@ -1,6 +1,6 @@
 #include "ibm.h"
 #include "io.h"
-#include "pic.h"
+#include "models/pic.h"
 #include "plat-midi.h"
 #include "sound_mpu401_uart.h"
 

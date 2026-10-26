@@ -1,13 +1,13 @@
 /*S3 emulation*/
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
-#include "pci.h"
-#include "rom.h"
+#include "memory/mem.h"
+#include "bus/pci.h"
+#include "flash/rom.h"
 #include "thread.h"
-#include "video.h"
+#include "video/video.h"
 #include "vid_s3.h"
 #include "vid_svga.h"
 #include "vid_svga_render.h"

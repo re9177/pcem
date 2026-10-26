@@ -1,5 +1,5 @@
 #include "ibm.h"
-#include "cpu.h"
+#include "cpu/cpu.h"
 
 /*Available cpuspeeds :
         0 = 16 MHz

@@ -8,7 +8,7 @@
 #include "ibm.h"
 #include "cs8230.h"
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 
 static struct {
         int idx;

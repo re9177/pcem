@@ -2,8 +2,8 @@
 #include <math.h>
 #include <SDL2/SDL.h>
 #include "ibm.h"
-#include "device.h"
-#include "gameport.h"
+#include "plugin-api/device.h" // REMOVE
+#include "joystick/gameport.h"
 #include "plat-joystick.h"
 
 int joysticks_present;

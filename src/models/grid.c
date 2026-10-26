@@ -1,8 +1,8 @@
 /*This is the chipset used in the LaserXT series model*/
 #include "ibm.h"
-#include "cpu.h"
+#include "cpu/cpu.h"
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 
 #define GRID_APPROM_SELECT 0x440
 #define GRID_APPROM_ENABLE 0x405

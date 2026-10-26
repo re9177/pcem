@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
-#include "mem.h"
+#include "plugin-api/device.h" // REMOVE
+#include "memory/mem.h"
 #include "zenith.h"
 
 static uint8_t *zenith_scratchpad_ram;

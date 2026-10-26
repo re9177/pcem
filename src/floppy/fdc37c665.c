@@ -1,10 +1,10 @@
 #include "ibm.h"
 
-#include "fdc.h"
-#include "fdd.h"
+#include "floppy/fdc.h"
+#include "floppy/fdd.h"
 #include "io.h"
-#include "lpt.h"
-#include "serial.h"
+#include "lpt/lpt.h"
+#include "models/serial.h"
 #include "fdc37c665.h"
 
 static uint8_t fdc37c665_lock[2];

@@ -1,7 +1,7 @@
 #ifndef _MEM_H_
 #define _MEM_H_
 
-#include "x86.h"
+#include "cpu/x86.h"
 
 typedef struct mem_mapping_t {
         struct mem_mapping_t *prev, *next;

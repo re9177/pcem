@@ -1,9 +1,9 @@
 #include "ibm.h"
 #include "82091aa.h"
-#include "fdc.h"
+#include "floppy/fdc.h"
 #include "io.h"
-#include "lpt.h"
-#include "serial.h"
+#include "lpt/lpt.h"
+#include "models/serial.h"
 
 #define AIP_AIPID 0x00
 #define AIP_AIPREV 0x01

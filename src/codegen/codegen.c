@@ -1,10 +1,10 @@
 #include "ibm.h"
-#include "x86_ops.h"
-#include "mem.h"
+#include "cpu/x86_ops.h"
+#include "memory/mem.h"
 #include "codegen.h"
-#include "x86.h"
+#include "cpu/x86.h"
 
-#include "386_common.h"
+#include "cpu/386_common.h"
 
 #include "codegen_accumulate.h"
 #include "codegen_allocator.h"

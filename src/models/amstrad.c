@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include "ibm.h"
 #include "io.h"
-#include "keyboard.h"
-#include "lpt.h"
-#include "mouse.h"
-#include "video.h"
-#include "fdc.h"
-#include "x86.h"
+#include "keyboard/keyboard.h"
+#include "lpt/lpt.h"
+#include "mouse/mouse.h"
+#include "video/video.h"
+#include "floppy/fdc.h"
+#include "cpu/x86.h"
 
 #include "amstrad.h"
 

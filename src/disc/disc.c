@@ -1,11 +1,11 @@
 #include "ibm.h"
 
-#include "config.h"
+#include "plugin-api/config.h" // REMOVE
 #include "disc.h"
 #include "disc_fdi.h"
 #include "disc_img.h"
-#include "fdc.h"
-#include "fdd.h"
+#include "floppy/fdc.h"
+#include "floppy/fdd.h"
 #include "timer.h"
 
 int disc_drivesel = 0;

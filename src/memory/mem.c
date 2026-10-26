@@ -10,15 +10,15 @@
 #include <string.h>
 #include "ibm.h"
 
-#include "config.h"
-#include "mem.h"
-#include "video.h"
-#include "x86.h"
-#include "cpu.h"
-#include "rom.h"
-#include "x86_ops.h"
-#include "codegen.h"
-#include "xi8088.h"
+#include "plugin-api/config.h" // REMOVE
+#include "memory/mem.h"
+#include "video/video.h"
+#include "cpu/x86.h"
+#include "cpu/cpu.h"
+#include "flash/rom.h"
+#include "cpu/x86_ops.h"
+#include "codegen/codegen.h"
+#include "models/xi8088.h"
 
 page_t *pages;
 page_t **page_lookup;

@@ -1,12 +1,12 @@
 #include "ibm.h"
 
-#include "dma.h"
-#include "fdc.h"
+#include "models/dma.h"
+#include "floppy/fdc.h"
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 #include "ps2_mca.h"
-#include "video.h"
-#include "x86.h"
+#include "video/video.h"
+#include "cpu/x86.h"
 
 dma_t dma[8];
 

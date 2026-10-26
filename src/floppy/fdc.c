@@ -2,15 +2,15 @@
 #include <string.h>
 #include "ibm.h"
 
-#include "disc.h"
-#include "disc_sector.h"
-#include "dma.h"
-#include "fdc.h"
-#include "fdd.h"
+#include "disc/disc.h"
+#include "disc/disc_sector.h"
+#include "models/dma.h"
+#include "floppy/fdc.h"
+#include "floppy/fdd.h"
 #include "io.h"
-#include "pic.h"
+#include "models/pic.h"
 #include "timer.h"
-#include "x86.h"
+#include "cpu/x86.h"
 
 #define ST1_DE (1 << 5)
 #define ST1_ND (1 << 2)

@@ -1,7 +1,7 @@
 #include "ibm.h"
 #include "io.h"
 
-#include "lpt.h"
+#include "lpt/lpt.h"
 #include "lpt_dac.h"
 #include "lpt_dss.h"
 

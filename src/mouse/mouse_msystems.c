@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "mouse.h"
-#include "pic.h"
-#include "serial.h"
+#include "mouse/mouse.h"
+#include "models/pic.h"
+#include "models/serial.h"
 #include "timer.h"
 
 typedef struct mouse_msystems_t {

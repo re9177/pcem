@@ -1,7 +1,7 @@
 #ifndef __IDE_ATAPI__
 #define __IDE_ATAPI__
 
-#include "scsi.h"
+#include "scsi/scsi.h"
 
 /*ATAPI stuff*/
 typedef struct ATAPI {

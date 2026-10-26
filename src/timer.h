@@ -1,7 +1,7 @@
 #ifndef _TIMER_H_
 #define _TIMER_H_
 
-#include "cpu.h"
+#include "cpu/cpu.h"
 
 /*Timers are based on the CPU Time Stamp Counter. Timer timestamps are in a
   32:32 fixed point format, with the integer part compared against the TSC. The

@@ -1,9 +1,9 @@
 #include "ibm.h"
 
-#include "fdc.h"
+#include "floppy/fdc.h"
 #include "io.h"
-#include "lpt.h"
-#include "serial.h"
+#include "lpt/lpt.h"
+#include "models/serial.h"
 #include "w83977tf.h"
 
 typedef struct winbond_t {

@@ -13,13 +13,13 @@
 #include "ibm.h"
 #include "hdd.h"
 #include "io.h"
-#include "pic.h"
+#include "models/pic.h"
 #include "timer.h"
 #include "hdd_file.h"
-#include "scsi.h"
-#include "scsi_cd.h"
-#include "scsi_zip.h"
-#include "ide.h"
+#include "scsi/scsi.h"
+#include "scsi/scsi_cd.h"
+#include "scsi/scsi_zip.h"
+#include "ide/ide.h"
 
 /* ATA Commands */
 #define WIN_SRST 0x08 /* ATAPI Device Reset */

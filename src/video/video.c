@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <math.h>
 #include "ibm.h"
-#include "device.h"
-#include "mem.h"
-#include "video.h"
+#include "plugin-api/device.h" // REMOVE
+#include "memory/mem.h"
+#include "video/video.h"
 #include "vid_svga.h"
 #include "io.h"
-#include "cpu.h"
-#include "rom.h"
+#include "cpu/cpu.h"
+#include "flash/rom.h"
 #include "thread.h"
 #include "timer.h"
 

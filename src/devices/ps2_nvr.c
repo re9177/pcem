@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "ps2_nvr.h"
-#include "nvr.h"
+#include "devices/ps2_nvr.h"
+#include "devices/nvr.h"
 
 typedef struct ps2_nvr_t {
         int addr;

@@ -1,10 +1,10 @@
 #include "ibm.h"
 #include "acc3221.h"
-#include "fdc.h"
-#include "ide.h"
+#include "floppy/fdc.h"
+#include "ide/ide.h"
 #include "io.h"
-#include "lpt.h"
-#include "serial.h"
+#include "lpt/lpt.h"
+#include "models/serial.h"
 
 static struct {
         int reg_idx;

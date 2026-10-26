@@ -10,7 +10,7 @@
 #include "ddk/ntddscsi.h"
 #endif
 #include "ibm.h"
-#include "ide.h"
+#include "ide/ide.h"
 #include "cdrom-ioctl.h"
 
 int cdrom_drive;

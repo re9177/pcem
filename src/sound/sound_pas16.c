@@ -1,18 +1,18 @@
 #include <stdlib.h>
 #include "ibm.h"
 
-#include "device.h"
-#include "dma.h"
+#include "plugin-api/device.h" // REMOVE
+#include "models/dma.h"
 #include "filters.h"
 #include "io.h"
-#include "pic.h"
-#include "pit.h"
+#include "models/pic.h"
+#include "models/pit.h"
 #include "sound.h"
 #include "sound_opl.h"
 #include "sound_pas16.h"
 #include "sound_sb_dsp.h"
 #include "timer.h"
-#include "x86.h"
+#include "cpu/x86.h"
 
 /*      Original PAS uses
                 2 x OPL2

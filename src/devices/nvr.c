@@ -1,19 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "nvr.h"
+#include "devices/nvr.h"
 #include "nvr_tc8521.h"
-#include "pic.h"
+#include "models/pic.h"
 #include "timer.h"
 #include "rtc.h"
-#include "paths.h"
-#include "config.h"
-#include "model.h"
-#include "nmi.h"
-#include "t1000.h"
-#include "x86.h"
+#include "plugin-api/paths.h" // REMOVE
+#include "plugin-api/config.h" // REMOVE
+#include "models/model.h"
+#include "models/nmi.h"
+#include "models/t1000.h"
+#include "cpu/x86.h"
 
 int oldromset;
 int nvrmask = 63;

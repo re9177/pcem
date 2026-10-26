@@ -1,14 +1,14 @@
 #ifdef __amd64__
 
 #include "ibm.h"
-#include "codegen.h"
-#include "codegen_allocator.h"
-#include "codegen_backend.h"
-#include "codegen_backend_x86-64_defs.h"
-#include "codegen_backend_x86-64_ops.h"
-#include "codegen_backend_x86-64_ops_sse.h"
-#include "codegen_reg.h"
-#include "x86.h"
+#include "codegen/codegen.h"
+#include "codegen/codegen_allocator.h"
+#include "codegen/codegen_backend.h"
+#include "codegen/codegen_backend_x86-64_defs.h"
+#include "codegen/codegen_backend_x86-64_ops.h"
+#include "codegen/codegen_backend_x86-64_ops_sse.h"
+#include "codegen/codegen_reg.h"
+#include "cpu/x86.h"
 
 #if defined(__linux__) || defined(__APPLE__)
 #include <sys/mman.h>

@@ -6,13 +6,13 @@
 #include <wx/spinctrl.h>
 #include <wx/xrc/xmlres.h>
 #include <string>
-#include "viewer.h"
+#include "wx-ui/viewer.h"
 extern "C"
 {
 #include "ibm.h"
-#include "mem.h"
-#include "video.h"
-#include "vid_svga.h"
+#include "memory/mem.h"
+#include "video/video.h"
+#include "video/vid_svga.h"
 }
 
 enum ColourDepth

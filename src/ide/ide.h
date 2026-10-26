@@ -1,7 +1,7 @@
 #ifndef __IDE__
 #define __IDE__
 
-#include "device.h"
+#include "plugin-api/device.h" //remove
 #include "timer.h"
 
 struct IDE;

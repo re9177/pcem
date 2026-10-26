@@ -1,8 +1,8 @@
 #include "ibm.h"
-#include "fdc.h"
+#include "floppy/fdc.h"
 #include "io.h"
-#include "lpt.h"
-#include "serial.h"
+#include "lpt/lpt.h"
+#include "models/serial.h"
 
 #include "pc87306.h"
 

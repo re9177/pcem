@@ -1,9 +1,9 @@
 #include "ibm.h"
 
-#include "fdc.h"
+#include "floppy/fdc.h"
 #include "io.h"
-#include "lpt.h"
-#include "serial.h"
+#include "lpt/lpt.h"
+#include "models/serial.h"
 #include "pc87307.h"
 
 typedef struct pc87307_t {

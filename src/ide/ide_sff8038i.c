@@ -1,9 +1,9 @@
 /*Emulation of SFF-8038i IDE bus mastering interface.
   Used by PIIX and VT82C586B IDE controllers*/
 #include "ibm.h"
-#include "ide.h"
+#include "ide/ide.h"
 #include "ide_sff8038i.h"
-#include "mem.h"
+#include "memory/mem.h"
 
 static void sff_bus_master_next_addr(sff_busmaster_t *busmaster, int channel) {
         busmaster[channel].addr = (*(uint32_t *)(&ram[busmaster[channel].ptr_cur])) & ~1;

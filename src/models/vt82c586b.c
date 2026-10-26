@@ -1,12 +1,12 @@
 #include <string.h>
 
 #include "ibm.h"
-#include "ide.h"
-#include "ide_sff8038i.h"
+#include "ide/ide.h"
+#include "ide/ide_sff8038i.h"
 #include "io.h"
-#include "mem.h"
-#include "pci.h"
-#include "x86.h"
+#include "memory/mem.h"
+#include "bus/pci.h"
+#include "cpu/x86.h"
 
 #include "vt82c586b.h"
 

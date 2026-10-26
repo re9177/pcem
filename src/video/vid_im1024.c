@@ -2,11 +2,11 @@
 #include <math.h>
 #include <ctype.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 #include "thread.h"
-#include "video.h"
+#include "video/video.h"
 #include "vid_pgc.h"
 #include "vid_im1024.h"
 

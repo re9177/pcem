@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
-#include "pci.h"
-#include "pic.h"
+#include "memory/mem.h"
+#include "bus/pci.h"
+#include "models/pic.h"
 
 #include "sis496.h"
 

@@ -1,6 +1,6 @@
 #include "ibm.h"
 #include "plat-keyboard.h"
-#include "keyboard.h"
+#include "keyboard/keyboard.h"
 
 int keybsendcallback = 0;
 

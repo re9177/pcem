@@ -14,8 +14,8 @@
 #include "wx-hostconfig.h"
 
 #include "ibm.h"
-#include "config.h"
-#include "nethandler.h"
+#include "plugin-api/config.h" // REMOVE
+#include "networking/nethandler.h"
 
 #ifdef USE_PCAP_NETWORKING
 static char *dev_names[20];

@@ -1,15 +1,15 @@
 #ifdef __amd64__
 
 #include "ibm.h"
-#include "x86.h"
-#include "x87.h"
-#include "386_common.h"
-#include "codegen.h"
-#include "codegen_backend.h"
-#include "codegen_backend_x86-64_defs.h"
-#include "codegen_backend_x86-64_ops.h"
-#include "codegen_backend_x86-64_ops_sse.h"
-#include "codegen_ir_defs.h"
+#include "cpu/x86.h"
+#include "cpu/x87.h"
+#include "cpu/386_common.h"
+#include "codegen/codegen.h"
+#include "codegen/codegen_backend.h"
+#include "codegen/codegen_backend_x86-64_defs.h"
+#include "codegen/codegen_backend_x86-64_ops.h"
+#include "codegen/codegen_backend_x86-64_ops_sse.h"
+#include "codegen/codegen_ir_defs.h"
 
 #define STACK_ARG0 (0)
 #define STACK_ARG1 (4)

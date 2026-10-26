@@ -1,9 +1,9 @@
 #include "ibm.h"
-#include "amstrad.h"
-#include "ide.h"
+#include "models/amstrad.h"
+#include "ide/ide.h"
 #include "io.h"
-#include "video.h"
-#include "cpu.h"
+#include "video/video.h"
+#include "cpu/cpu.h"
 
 uint8_t (*port_inb[0x10000][2])(uint16_t addr, void *priv);
 uint16_t (*port_inw[0x10000][2])(uint16_t addr, void *priv);

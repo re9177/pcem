@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
 #include "sound.h"
-#include "mca.h"
+#include "bus/mca.h"
 
 #include "sound_adlib.h"
 #include "sound_opl.h"

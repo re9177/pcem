@@ -22,9 +22,9 @@
 
 #include <stdlib.h>
 #include "ibm.h"
-#include "cpu.h"
-#include "x86.h"
-#include "device.h"
+#include "cpu/cpu.h"
+#include "cpu/x86.h"
+#include "plugin-api/device.h" // REMOVE
 #include "pzx.h"
 
 char cassettefn[256];

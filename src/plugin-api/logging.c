@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
-#include "config.h"
+#include "plugin-api/config.h" // REMOVE
 #include "paths.h"
 #include "plugin.h"
 

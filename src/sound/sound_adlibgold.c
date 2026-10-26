@@ -2,17 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 
 #include "sound_opl.h"
 #include "sound_ym7128.h"
-#include "dma.h"
+#include "models/dma.h"
 #include "io.h"
-#include "pic.h"
-#include "pit.h"
+#include "models/pic.h"
+#include "models/pit.h"
 #include "sound.h"
 #include "timer.h"
-#include "nvr.h"
+#include "devices/nvr.h"
 
 #include "filters.h"
 

@@ -1,9 +1,3 @@
-set(PCEM_PRIVATE_API ${PCEM_PRIVATE_API}
-        ${CMAKE_SOURCE_DIR}/includes/private/networking/queue.h
-        ${CMAKE_SOURCE_DIR}/includes/private/networking/ne2000.h
-        ${CMAKE_SOURCE_DIR}/includes/private/networking/nethandler.h
-        )
-
 set(PCEM_DEFINES ${PCEM_DEFINES} USE_NETWORKING)
 
 find_package(PkgConfig REQUIRED)

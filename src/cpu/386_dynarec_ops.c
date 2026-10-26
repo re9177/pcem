@@ -1,13 +1,13 @@
 #include "ibm.h"
-#include "cpu.h"
-#include "x86.h"
+#include "cpu/cpu.h"
+#include "cpu/x86.h"
 #include "x86_ops.h"
 #include "x87.h"
 #include "x86_flags.h"
-#include "mem.h"
-#include "nmi.h"
-#include "pic.h"
-#include "codegen.h"
+#include "memory/mem.h"
+#include "models/nmi.h"
+#include "models/pic.h"
+#include "codegen/codegen.h"
 
 #define CPU_BLOCK_END() cpu_block_end = 1
 

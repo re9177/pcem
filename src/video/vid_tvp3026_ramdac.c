@@ -1,6 +1,6 @@
 #include "ibm.h"
-#include "mem.h"
-#include "video.h"
+#include "memory/mem.h"
+#include "video/video.h"
 #include "vid_svga.h"
 #include "vid_tvp3026_ramdac.h"
 

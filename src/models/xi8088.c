@@ -1,7 +1,7 @@
 #include "ibm.h"
 #include "io.h"
-#include "cpu.h"
-#include "keyboard_at.h"
+#include "cpu/cpu.h"
+#include "keyboard/keyboard_at.h"
 
 #include "xi8088.h"
 

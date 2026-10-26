@@ -1,8 +1,8 @@
 #include "ibm.h"
-#include "x86.h"
+#include "cpu/x86.h"
 #include "386_common.h"
 #include "x86_flags.h"
-#include "codegen.h"
+#include "codegen/codegen.h"
 
 cpu_state_t cpu_state;
 cyrix_t cyrix;

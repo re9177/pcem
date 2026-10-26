@@ -6,7 +6,7 @@
   */
 
 #include "ibm.h"
-#include "pit.h"
+#include "models/pit.h"
 
 #include "plat-keyboard.h"
 #include "plat-mouse.h"

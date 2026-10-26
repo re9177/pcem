@@ -1,19 +1,19 @@
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "hdd.h"
 
-#include "esdi_at.h"
+#include "devices/esdi_at.h"
 #include "hdd_esdi.h"
-#include "ide.h"
-#include "mfm_at.h"
-#include "mfm_xebec.h"
-#include "scsi_53c400.h"
-#include "scsi_aha1540.h"
-#include "scsi_ibm.h"
-#include "xtide.h"
+#include "ide/ide.h"
+#include "mfm/mfm_at.h"
+#include "mfm/mfm_xebec.h"
+#include "scsi/scsi_53c400.h"
+#include "scsi/scsi_aha1540.h"
+#include "scsi/scsi_ibm.h"
+#include "ide/xtide.h"
 
-#include <pcem/devices.h>
-#include <pcem/defines.h>
+#include <pcem/devices.h> // REMOVE
+#include <pcem/defines.h> // REMOVE
 
 PcemHDC hdc[7];
 

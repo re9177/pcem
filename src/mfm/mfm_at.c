@@ -10,10 +10,10 @@
 #include <sys/types.h>
 
 #include "ibm.h"
-#include "device.h"
-#include "hdd_file.h"
+#include "plugin-api/device.h" // REMOVE
+#include "hdd/hdd_file.h"
 #include "io.h"
-#include "pic.h"
+#include "models/pic.h"
 #include "timer.h"
 
 #include "mfm_at.h"

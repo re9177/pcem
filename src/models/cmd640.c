@@ -2,8 +2,8 @@
   Currently only legacy mode emulated*/
 #include "ibm.h"
 #include "cmd640.h"
-#include "ide.h"
-#include "pci.h"
+#include "ide/ide.h"
+#include "bus/pci.h"
 
 static uint8_t card_cmd640[256];
 

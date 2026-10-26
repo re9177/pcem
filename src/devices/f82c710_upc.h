@@ -1,6 +1,6 @@
 #ifndef _F82C710_UPC_H_
 #define _F82C710_UPC_H_
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 
 void upc_set_mouse(void (*mouse_write)(uint8_t val, void *p), void *p);
 

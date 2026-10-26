@@ -43,7 +43,8 @@ if(${PCEM_CPU_TYPE} STREQUAL "x86_64")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=${PCEM_MARCH}")
 endif()
 
-option(PLUGIN_ENGINE "Build PCem with plugin support" ON)
+# FIXME: This will be removed :)
+option(PLUGIN_ENGINE "Build PCem with plugin support" OFF)
 message("Plugin Support: ${PLUGIN_ENGINE}")
 
 option(USE_NETWORKING "Build PCem with networking support" ON)

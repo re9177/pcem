@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "mem.h"
+#include "memory/mem.h"
 #include "mem_bios.h"
-#include "rom.h"
-#include "video.h"
-#include "xi8088.h"
+#include "flash/rom.h"
+#include "video/video.h"
+#include "models/xi8088.h"
 
 static void romfread(uint8_t *buf, size_t size, size_t count, FILE *fp) {
         int result = fread(buf, size, count, fp);
@@ -70,6 +70,7 @@ int loadbios() {
 
         pclog("Starting with romset %i\n", romset);
 
+        // unfuck this so each machine has a handler so we don't have to keep doing this ugly garbage
         switch (romset) {
         case ROM_PC1512:
                 f = romfopen("pc1512/40043.v1", "rb");

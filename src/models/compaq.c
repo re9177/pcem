@@ -1,5 +1,5 @@
 #include "ibm.h"
-#include "mem.h"
+#include "memory/mem.h"
 
 /* Compaq Deskpro 386 remaps RAM from 0xA0000-0xFFFFF to 0xFA0000-0xFFFFFF */
 

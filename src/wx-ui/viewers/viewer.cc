@@ -4,7 +4,7 @@
 #endif
 #include <wx/xrc/xmlres.h>
 
-#include "viewer.h"
+#include "wx-ui/viewer.h"
 #include <list>
 #include <string>
 #include <vector>

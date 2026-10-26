@@ -2,13 +2,6 @@ if(PLUGIN_ENGINE)
         set(PCEM_DEFINES ${PCEM_DEFINES} PLUGIN_ENGINE)
 endif()
 
-set(PCEM_PRIVATE_API ${PCEM_PRIVATE_API}
-        ${CMAKE_SOURCE_DIR}/includes/private/plugin-api/config.h
-        ${CMAKE_SOURCE_DIR}/includes/private/plugin-api/paths.h
-        ${CMAKE_SOURCE_DIR}/includes/private/plugin-api/plugin.h
-        ${CMAKE_SOURCE_DIR}/includes/private/plugin-api/device.h
-        )
-
 set(PCEM_PUBLIC_API ${PCEM_PUBLIC_API}
         ${CMAKE_SOURCE_DIR}/includes/public/pcem/api.h
         ${CMAKE_SOURCE_DIR}/includes/public/pcem/cpu.h
@@ -30,9 +23,6 @@ set(PCEM_SRC_PLUGINAPI
 
 if(${PCEM_DISPLAY_ENGINE} STREQUAL "wxWidgets")
         set(PCEM_SRC_PLUGINAPI ${PCEM_SRC_PLUGINAPI} plugin-api/wx-utils.cc)
-endif()
-if(${PCEM_DISPLAY_ENGINE} STREQUAL "Qt")
-        set(PCEM_SRC_PLUGINAPI ${PCEM_SRC_PLUGINAPI} plugin-api/qt-utils.cc)
 endif()
 
 if(PLUGIN_ENGINE)

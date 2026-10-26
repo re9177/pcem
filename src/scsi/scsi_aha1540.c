@@ -9,12 +9,12 @@
   BIOS command table - f4b*/
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
-#include "nvr.h"
-#include "pic.h"
-#include "rom.h"
+#include "memory/mem.h"
+#include "devices/nvr.h"
+#include "models/pic.h"
+#include "flash/rom.h"
 #include "scsi.h"
 #include "scsi_aha1540.h"
 #include "timer.h"

@@ -1,8 +1,8 @@
 #include <string.h>
 #include "ibm.h"
 #include "io.h"
-#include "mem.h"
-#include "cpu.h"
+#include "memory/mem.h"
+#include "cpu/cpu.h"
 
 #include "ali1429.h"
 

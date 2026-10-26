@@ -1,8 +1,8 @@
 #include "ibm.h"
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 
-#include "mca.h"
+#include "bus/mca.h"
 
 void (*mca_card_write[8])(int addr, uint8_t val, void *priv);
 uint8_t (*mca_card_read[8])(int addr, void *priv);

@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mca.h"
-#include "mem.h"
-#include "rom.h"
+#include "bus/mca.h"
+#include "memory/mem.h"
+#include "flash/rom.h"
 #include "sound.h"
 #include "sound_emu8k.h"
 #include "sound_mpu401_uart.h"

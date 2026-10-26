@@ -14,8 +14,8 @@
 
 #include "plugin.h"
 #include "paths.h"
-#include "config.h"
-#include "ui-utils.h"
+#include "plugin-api/config.h" // REMOVE
+#include "wx-ui/ui-utils.h"
 
 #include <pcem/logging.h>
 

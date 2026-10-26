@@ -2,7 +2,7 @@
 #include <sys/ioctl.h>
 #include <stdlib.h>
 #include "ibm.h"
-#include "ide.h"
+#include "ide/ide.h"
 #include "cdrom-ioctl.h"
 #include <util.h>
 #include <IOKit/IOKitLib.h>

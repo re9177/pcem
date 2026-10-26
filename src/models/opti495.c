@@ -1,9 +1,9 @@
 /*OPTi 82C495 emulation
   This is the chipset used in the AMI386 model*/
 #include "ibm.h"
-#include "cpu.h"
+#include "cpu/cpu.h"
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 
 static uint8_t optiregs[0x10];
 static int optireg;

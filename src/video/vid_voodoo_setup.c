@@ -1,8 +1,8 @@
 #include "ibm.h"
-#include "device.h"
-#include "mem.h"
+#include "plugin-api/device.h" // REMOVE
+#include "memory/mem.h"
 #include "thread.h"
-#include "video.h"
+#include "video/video.h"
 #include "vid_svga.h"
 #include "vid_voodoo.h"
 #include "vid_voodoo_common.h"

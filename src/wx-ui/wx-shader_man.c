@@ -4,7 +4,7 @@
 #include "wx-display.h"
 #include "wx-glslp-parser.h"
 #include "wx-shaderconfig.h"
-#include "config.h"
+#include "plugin-api/config.h" // REMOVE
 #include <pcem/api.h>
 
 #define MAX_USER_SHADERS 20

@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
 #include "plat-joystick.h"
 #include "timer.h"
-#include "x86.h"
+#include "cpu/x86.h"
 
 #include "gameport.h"
 #include "joystick_ch_flightstick_pro.h"

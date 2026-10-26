@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "wx-sdl2.h"
-#include "video.h"
+#include "video/video.h"
 #include "wx-sdl2-video.h"
 
 #include "wx-sdl2-video-gl3.h"

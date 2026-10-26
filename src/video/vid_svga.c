@@ -2,13 +2,13 @@
 /*This is intended to be used by another SVGA driver, and not as a card in it's own right*/
 #include <stdlib.h>
 #include "ibm.h"
-#include "mem.h"
-#include "video.h"
+#include "memory/mem.h"
+#include "video/video.h"
 #include "vid_svga.h"
 #include "vid_svga_render.h"
 #include "io.h"
 #include "timer.h"
-#include "viewer.h"
+#include "wx-ui/viewer.h" // fix up?
 
 #define svga_output 0
 

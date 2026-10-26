@@ -47,15 +47,15 @@
 #endif
 
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 
 #include "nethandler.h"
 
-#include "config.h"
+#include "plugin-api/config.h" // REMOVE
 #include "io.h"
 #include "ne2000.h"
-#include "pic.h"
-#include "pci.h"
+#include "models/pic.h"
+#include "bus/pci.h"
 #include "timer.h"
 
 /*MAC address*/

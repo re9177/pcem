@@ -4,7 +4,7 @@
 
 extern "C" {
 #include "ibm.h"
-#include "ide.h"
+#include "ide/ide.h"
 }
 
 char image_path[1024];

@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "keyboard_at.h"
-#include "mouse.h"
+#include "keyboard/keyboard_at.h"
+#include "mouse/mouse.h"
 #include "mouse_ps2.h"
 #include "plat-mouse.h"
-#include "x86.h"
-#include "f82c710_upc.h"
+#include "cpu/x86.h"
+#include "devices/f82c710_upc.h"
 
 int mouse_scan = 0;
 

@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include <math.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
-#include "pic.h"
+#include "memory/mem.h"
+#include "models/pic.h"
 #include "timer.h"
-#include "video.h"
+#include "video/video.h"
 #include "dosbox/vid_cga_comp.h"
 #include "vid_pcjr.h"
 

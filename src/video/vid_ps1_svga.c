@@ -9,11 +9,11 @@
 */
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
-#include "rom.h"
-#include "video.h"
+#include "memory/mem.h"
+#include "flash/rom.h"
+#include "video/video.h"
 #include "vid_svga.h"
 #include "vid_vga.h"
 

@@ -1,13 +1,13 @@
 #include <string.h>
 
 #include "ibm.h"
-#include "ide.h"
+#include "ide/ide.h"
 #include "io.h"
-#include "keyboard_at.h"
-#include "mem.h"
-#include "pci.h"
+#include "keyboard/keyboard_at.h"
+#include "memory/mem.h"
+#include "bus/pci.h"
 #include "sio.h"
-#include "x86.h"
+#include "cpu/x86.h"
 
 #include "i430lx.h"
 

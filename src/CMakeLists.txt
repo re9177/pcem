@@ -2,28 +2,6 @@ if(FORCE_X11)
         set(PCEM_DEFINES ${PCEM_DEFINES} FORCE_X11)
 endif()
 
-set(PCEM_PRIVATE_API ${PCEM_PRIVATE_API}
-        ${CMAKE_SOURCE_DIR}/includes/private/bswap.h
-        ${CMAKE_SOURCE_DIR}/includes/private/fdi2raw.h
-        ${CMAKE_SOURCE_DIR}/includes/private/filters.h
-        ${CMAKE_SOURCE_DIR}/includes/private/ibm.h
-        ${CMAKE_SOURCE_DIR}/includes/private/io.h
-        ${CMAKE_SOURCE_DIR}/includes/private/pch.h
-        ${CMAKE_SOURCE_DIR}/includes/private/pgc_palettes.h
-        ${CMAKE_SOURCE_DIR}/includes/private/plat-dinput.h
-        ${CMAKE_SOURCE_DIR}/includes/private/plat-joystick.h
-        ${CMAKE_SOURCE_DIR}/includes/private/plat-keyboard.h
-        ${CMAKE_SOURCE_DIR}/includes/private/plat-midi.h
-        ${CMAKE_SOURCE_DIR}/includes/private/plat-mouse.h
-        ${CMAKE_SOURCE_DIR}/includes/private/pzx.h
-        ${CMAKE_SOURCE_DIR}/includes/private/resources.h
-        ${CMAKE_SOURCE_DIR}/includes/private/rtc.h
-        ${CMAKE_SOURCE_DIR}/includes/private/rtc_tc8521.h
-        ${CMAKE_SOURCE_DIR}/includes/private/scamp.h
-        ${CMAKE_SOURCE_DIR}/includes/private/thread.h
-        ${CMAKE_SOURCE_DIR}/includes/private/timer.h
-        )
-
 include(${CMAKE_CURRENT_SOURCE_DIR}/bus/bus.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cdrom/cdrom.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/codegen/codegen.cmake)
@@ -72,8 +50,17 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/plugin-api/plugin-api.cmake)
 
 set(PCEM_LIBRARIES ${PCEM_LIBRARIES} PARENT_SCOPE)
 if(${PCEM_DISPLAY_ENGINE} STREQUAL "wxWidgets")
-add_executable(pcem ${PCEM_SRC} ${PCEM_PRIVATE_API} ${PCEM_EMBEDDED_PLUGIN_API})
+add_executable(pcem ${PCEM_SRC} ${PCEM_EMBEDDED_PLUGIN_API})
 endif()
+# Pull in private includes
+target_include_directories(pcem PRIVATE
+        ${PROJECT_SOURCE_DIR}/src
+        # MiniVHD - TODO Submodule
+        ${PROJECT_SOURCE_DIR}/src/hdd/
+        # Ayumi - TODO submodule
+        ${PROJECT_SOURCE_DIR}/src/sound/
+)
+
 target_compile_definitions(pcem PUBLIC ${PCEM_DEFINES})
 target_compile_options(pcem PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fno-common> $<$<COMPILE_LANGUAGE:C>:-fno-common>)
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")

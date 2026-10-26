@@ -1,8 +1,8 @@
 #include "ibm.h"
 
 #include "io.h"
-#include "lpt.h"
-#include "serial.h"
+#include "lpt/lpt.h"
+#include "models/serial.h"
 
 static void cbm_io_write(uint16_t port, uint8_t val, void *p) {
         serial1_remove();

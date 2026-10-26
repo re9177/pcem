@@ -2,7 +2,7 @@
 
 #include <math.h>
 #include "ibm.h"
-#include "x86.h"
+#include "cpu/x86.h"
 #include "x87.h"
 #include "386_common.h"
 #include "codegen.h"

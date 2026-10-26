@@ -9,7 +9,7 @@
 #include "nethandler.h"
 
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 
 #include "ne2000.h"
 #include "timer.h"

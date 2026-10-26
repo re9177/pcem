@@ -1,7 +1,7 @@
 #include "ibm.h"
-#include "disc.h"
-#include "fdc.h"
-#include "fdd.h"
+#include "disc/disc.h"
+#include "floppy/fdc.h"
+#include "floppy/fdd.h"
 
 char discfns[2][256];
 

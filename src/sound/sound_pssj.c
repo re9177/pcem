@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
 #include "sound.h"
 #include "sound_pssj.h"
 #include "sound_sn76489.h"
 
-#include "dma.h"
-#include "pic.h"
+#include "models/dma.h"
+#include "models/pic.h"
 #include "timer.h"
 
 typedef struct pssj_t {

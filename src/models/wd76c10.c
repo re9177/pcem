@@ -1,9 +1,9 @@
 #include "ibm.h"
-#include "fdc.h"
+#include "floppy/fdc.h"
 #include "io.h"
-#include "mem.h"
-#include "rom.h"
-#include "serial.h"
+#include "memory/mem.h"
+#include "flash/rom.h"
+#include "models/serial.h"
 #include "wd76c10.h"
 
 static uint16_t wd76c10_0092;

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
-#include "mem.h"
+#include "plugin-api/device.h" // REMOVE
+#include "memory/mem.h"
 
 #define FLASH_2MBIT 4
 #define FLASH_IS_BXB 2

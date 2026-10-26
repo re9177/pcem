@@ -1,19 +1,19 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "cpu.h"
+#include "cpu/cpu.h"
 #include "model.h"
 #include "io.h"
-#include "fdc.h"
-#include "fdd.h"
-#include "mouse.h"
-#include "mem.h"
-#include "nmi.h"
-#include "nvr.h"
-#include "nvr_tc8521.h"
-#include "pit.h"
-#include "device.h"
-#include "keyboard_xt.h"
-#include "vid_t1000.h"
+#include "floppy/fdc.h"
+#include "floppy/fdd.h"
+#include "mouse/mouse.h"
+#include "memory/mem.h"
+#include "models/nmi.h"
+#include "devices/nvr.h"
+#include "devices/nvr_tc8521.h"
+#include "models/pit.h"
+#include "plugin-api/device.h" // REMOVE
+#include "keyboard/keyboard_xt.h"
+#include "video/vid_t1000.h"
 
 /* The T1000 is the T3100e's little brother -- a real laptop with a
  * rechargeable battery.

@@ -1,7 +1,7 @@
 /*STG1702 true colour RAMDAC emulation*/
 #include "ibm.h"
-#include "mem.h"
-#include "video.h"
+#include "memory/mem.h"
+#include "video/video.h"
 #include "vid_svga.h"
 #include "vid_stg_ramdac.h"
 

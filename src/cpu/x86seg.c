@@ -3,14 +3,14 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include "ibm.h"
-#include "mem.h"
-#include "x86.h"
+#include "memory/mem.h"
+#include "cpu/x86.h"
 #include "x86_flags.h"
 #include "386_common.h"
-#include "cpu.h"
-#include "config.h"
-#include "paths.h"
-#include "i440bx.h"
+#include "cpu/cpu.h"
+#include "plugin-api/config.h" // REMOVE
+#include "plugin-api/paths.h" // REMOVE
+//#include "models/i440bx.h"
 #include "logging-internal.h"
 
 /*Controls whether the accessed bit in a descriptor is set when CS is loaded.*/

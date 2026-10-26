@@ -1,10 +1,10 @@
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h"
 #include "io.h"
-#include "mem.h"
-#include "pic.h"
+#include "memory/mem.h"
+#include "models/pic.h" // move
 
-#include "pci.h"
+#include "bus/pci.h"
 
 void (*pci_card_write[32])(int func, int addr, uint8_t val, void *priv);
 uint8_t (*pci_card_read[32])(int func, int addr, void *priv);
@@ -205,6 +205,7 @@ int pci_add(uint8_t (*read)(int func, int addr, void *priv), void (*write)(int f
                 }
         }
 
+        // TODO: Remove when plugin api is removed
         if (current_device_name)
                 warning("Failed to initialise PCI device '%s' due to insufficient available slots", current_device_name);
         else

@@ -5,16 +5,15 @@
 #include <pthread.h>
 #endif
 #include "ibm.h"
-#include "x86.h"
+#include "cpu/x86.h"
 #include "x86_ops.h"
 #include "x87.h"
-#include "mem.h"
-#include "codegen.h"
-#include "codegen_backend.h"
-#include "cpu.h"
-#include "fdc.h"
-#include "nmi.h"
-#include "pic.h"
+#include "memory/mem.h"
+#include "codegen/codegen.h"
+#include "codegen/codegen_backend.h"
+#include "cpu/cpu.h"
+#include "models/nmi.h"
+#include "models/pic.h"
 #include "timer.h"
 
 #include "386_common.h"

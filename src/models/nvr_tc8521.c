@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include "ibm.h"
 #include "io.h"
-#include "nvr.h"
-#include "nvr_tc8521.h"
+#include "devices/nvr.h"
+#include "devices/nvr_tc8521.h" // MOVE THIS .c file HERE! why is the incldue in devices/ you manley bastard WHY
 #include "rtc_tc8521.h"
-#include "pic.h"
+#include "models/pic.h"
 #include "timer.h"
 #include "rtc.h"
 #include "paths.h"
-#include "config.h"
-#include "nmi.h"
+#include "plugin-api/config.h" // REMOVE
+#include "models/nmi.h"
 
 static pc_timer_t nvr_onesec_timer;
 static int nvr_onesec_cnt = 0;

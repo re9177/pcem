@@ -9,13 +9,13 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "video.h"
+#include "video/video.h"
 #include "wx-sdl2-video.h"
 #include "wx-sdl2-video-renderer.h"
 #include "ibm.h"
 #include "wx-glslp-parser.h"
 #include "wx-utils.h"
-#include "config.h"
+#include "plugin-api/config.h" // REMOVE
 #include "wx-glsl.h"
 #include <pcem/api.h>
 

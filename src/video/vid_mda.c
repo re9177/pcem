@@ -1,11 +1,11 @@
 /*MDA emulation*/
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 #include "timer.h"
-#include "video.h"
+#include "video/video.h"
 #include "vid_mda.h"
 
 static uint32_t mdacols[256][2][2];

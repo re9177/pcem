@@ -2,8 +2,8 @@
 
 #include "ibm.h"
 #include "io.h"
-#include "mem.h"
-#include "pci.h"
+#include "memory/mem.h"
+#include "bus/pci.h"
 
 #include "i430vx.h"
 

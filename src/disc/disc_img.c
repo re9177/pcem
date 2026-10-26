@@ -1,5 +1,5 @@
 #include "ibm.h"
-#include "fdd.h"
+#include "floppy/fdd.h"
 #include "disc.h"
 #include "disc_img.h"
 #include "disc_sector.h"

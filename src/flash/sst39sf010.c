@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
-#include "mem.h"
+#include "plugin-api/device.h" // REMOVE
+#include "memory/mem.h"
 #include "sst39sf010.h"
-#include "xi8088.h"
+#include "models/xi8088.h"
 
 typedef struct sst_t {
         int command_state;

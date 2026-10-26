@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "cpu.h"
-#include "x86.h"
-#include "x86_flags.h"
-#include "x86_ops.h"
-#include "x87.h"
-#include "mem.h"
+#include "cpu/cpu.h"
+#include "cpu/x86.h"
+#include "cpu/x86_flags.h"
+#include "cpu/x86_ops.h"
+#include "cpu/x87.h"
+#include "memory/mem.h"
 
-#include "386_common.h"
+#include "cpu/386_common.h"
 
 #include "codegen.h"
 #include "codegen_accumulate.h"

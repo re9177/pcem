@@ -1,15 +1,15 @@
 #include <stdlib.h>
 #include "ibm.h"
 #include "io.h"
-#include "mem.h"
-#include "mouse.h"
-#include "pic.h"
-#include "pit.h"
-#include "sound.h"
-#include "sound_speaker.h"
+#include "memory/mem.h"
+#include "mouse/mouse.h"
+#include "models/pic.h"
+#include "models/pit.h"
+#include "sound/sound.h"
+#include "sound/sound_speaker.h"
 #include "timer.h"
 
-#include "keyboard.h"
+#include "keyboard/keyboard.h"
 #include "keyboard_olim24.h"
 
 #define STAT_PARITY 0x80

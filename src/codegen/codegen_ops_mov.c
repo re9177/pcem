@@ -1,7 +1,7 @@
 #include "ibm.h"
 
-#include "x86.h"
-#include "386_common.h"
+#include "cpu/x86.h"
+#include "cpu/386_common.h"
 #include "codegen.h"
 #include "codegen_ir.h"
 #include "codegen_ops.h"

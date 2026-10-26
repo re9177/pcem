@@ -1,6 +1,6 @@
 #include "ibm.h"
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 #include "sl82c460.h"
 
 static struct {

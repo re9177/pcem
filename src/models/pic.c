@@ -1,8 +1,8 @@
 #include "ibm.h"
 #include "io.h"
-#include "pic.h"
-#include "pit.h"
-#include "video.h"
+#include "models/pic.h"
+#include "models/pit.h"
+#include "video/video.h"
 
 PIC pic, pic2;
 

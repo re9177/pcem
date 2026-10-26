@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include "ibm.h"
 #include "filters.h"
-#include "lpt.h"
+#include "lpt/lpt.h"
 #include "lpt_dac.h"
-#include "sound.h"
+#include "sound/sound.h"
 
 typedef struct lpt_dac_t {
         uint8_t dac_val_l, dac_val_r;

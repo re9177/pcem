@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include "ibm.h"
 #include "io.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "tandy_eeprom.h"
-#include "nvr.h"
+#include "devices/nvr.h"
 
 typedef struct {
         int state;

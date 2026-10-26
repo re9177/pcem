@@ -1,11 +1,11 @@
 #include "ibm.h"
-#include "cpu.h"
+#include "cpu/cpu.h"
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 #include "model.h"
-#include "pit.h"
+#include "models/pit.h"
 #include "timer.h"
-#include "x86.h"
+#include "cpu/x86.h"
 
 #include "intel.h"
 

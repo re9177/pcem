@@ -3,10 +3,10 @@
 #include <string.h>
 #include "ibm.h"
 
-#include "device.h"
-#include "dma.h"
+#include "plugin-api/device.h" // REMOVE
+#include "models/dma.h"
 #include "io.h"
-#include "pic.h"
+#include "models/pic.h"
 #include "sound.h"
 #include "sound_gus.h"
 #include "timer.h"

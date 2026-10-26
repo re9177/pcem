@@ -1,9 +1,9 @@
 #include "ibm.h"
 
-#include "fdc.h"
+#include "floppy/fdc.h"
 #include "io.h"
-#include "lpt.h"
-#include "serial.h"
+#include "lpt/lpt.h"
+#include "models/serial.h"
 #include "w83877tf.h"
 
 enum { CHIP_W83877F, CHIP_W83877TF };

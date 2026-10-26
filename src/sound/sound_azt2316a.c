@@ -137,11 +137,11 @@
 #include <stdlib.h>
 #include "ibm.h"
 
-#include "device.h"
-#include "dma.h"
+#include "plugin-api/device.h" // REMOVE
+#include "models/dma.h"
 #include "io.h"
-#include "nvr.h"
-#include "pic.h"
+#include "devices/nvr.h"
+#include "models/pic.h"
 #include "sound.h"
 #include "sound_ad1848.h"
 #include "sound_azt2316a.h"

@@ -1,5 +1,5 @@
 #include "ibm.h"
-#include "ide.h"
+#include "ide/ide.h"
 #include "cdrom-ioctl.h"
 
 extern int cdrom_drive;

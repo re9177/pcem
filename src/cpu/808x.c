@@ -17,16 +17,16 @@
 #include "ibm.h"
 
 #include "x86_ops.h"
-#include "codegen.h"
-#include "cpu.h"
-#include "keyboard.h"
-#include "mem.h"
-#include "nmi.h"
-#include "pic.h"
+#include "codegen/codegen.h"
+#include "cpu/cpu.h"
+#include "keyboard/keyboard.h"
+#include "memory/mem.h"
+#include "models/nmi.h"
+#include "models/pic.h"
 #include "timer.h"
-#include "x86.h"
+#include "cpu/x86.h"
 #include "x87.h"
-#include "paths.h"
+#include "plugin-api/paths.h" // REMOVE
 
 uint64_t xt_cpu_multi;
 int nmi = 0;

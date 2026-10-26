@@ -2,10 +2,10 @@
 #include <string.h>
 #include <math.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
-#include "pci.h"
+#include "memory/mem.h"
+#include "bus/pci.h"
 #include "sound.h"
 
 #define N 16

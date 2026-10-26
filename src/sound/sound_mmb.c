@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
 #include "sound.h"
 #include "sound_mmb.h"
-#include "cpu.h"
+#include "cpu/cpu.h"
 
 void mmb_update(mmb_t *mmb) {
         for (; mmb->pos < sound_pos_global; mmb->pos++) {

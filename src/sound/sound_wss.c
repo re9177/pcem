@@ -6,10 +6,10 @@
 #include <stdlib.h>
 #include "ibm.h"
 
-#include "device.h"
-#include "dma.h"
+#include "plugin-api/device.h" // REMOVE
+#include "models/dma.h"
 #include "io.h"
-#include "pic.h"
+#include "models/pic.h"
 #include "sound.h"
 #include "sound_ad1848.h"
 #include "sound_opl.h"

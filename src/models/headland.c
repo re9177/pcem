@@ -1,8 +1,8 @@
 #include "ibm.h"
 #include "io.h"
-#include "mem.h"
-#include "cpu.h"
-#include "x86.h"
+#include "memory/mem.h"
+#include "cpu/cpu.h"
+#include "cpu/x86.h"
 
 #include "headland.h"
 

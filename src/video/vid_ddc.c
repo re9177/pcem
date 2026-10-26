@@ -1,6 +1,6 @@
 #include "ibm.h"
 #include "vid_ddc.h"
-#include "x86.h"
+#include "cpu/x86.h"
 
 static uint8_t edid_data[128] = {
         0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, /*Fixed header pattern*/

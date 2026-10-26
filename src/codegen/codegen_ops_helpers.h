@@ -1,7 +1,7 @@
 #ifndef _CODEGEN_OPS_HELPERS_H_
 #define _CODEGEN_OPS_HELPERS_H_
 
-#include "386_common.h"
+#include "cpu/386_common.h"
 #include "codegen_backend.h"
 
 static inline int LOAD_SP_WITH_OFFSET(ir_data_t *ir, int offset) {

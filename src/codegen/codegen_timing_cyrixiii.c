@@ -12,11 +12,11 @@
   - Prefixes other than 0x0f cost 1 cycle each
   - AGI stalls cost 1 cycle, except for implicit references to ESP*/
 #include "ibm.h"
-#include "cpu.h"
-#include "x86.h"
-#include "x86_ops.h"
-#include "x87.h"
-#include "mem.h"
+#include "cpu/cpu.h"
+#include "cpu/x86.h"
+#include "cpu/x86_ops.h"
+#include "cpu/x87.h"
+#include "memory/mem.h"
 #include "codegen.h"
 #include "codegen_ops.h"
 #include "codegen_timing_common.h"

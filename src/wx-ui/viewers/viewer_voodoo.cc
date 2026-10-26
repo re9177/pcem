@@ -13,18 +13,18 @@
 #include <mutex>
 #include <string>
 #include <vector>
-#include "viewer.h"
-#include "viewer_voodoo.h"
+#include "wx-ui/viewer.h"
+#include "wx-ui/viewer_voodoo.h"
 extern "C"
 {
 #include "ibm.h"
-#include "mem.h"
+#include "memory/mem.h"
 #include "thread.h"
-#include "video.h"
-#include "vid_svga.h"
-#include "vid_voodoo_common.h"
-#include "vid_voodoo_regs.h"
-#include "vid_voodoo_texture.h"
+#include "video/video.h"
+#include "video/vid_svga.h"
+#include "video/vid_voodoo_common.h"
+#include "video/vid_voodoo_regs.h"
+#include "video/vid_voodoo_texture.h"
 }
 
 static std::mutex voodoo_viewer_refcount_mutex;

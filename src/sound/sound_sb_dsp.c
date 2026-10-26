@@ -9,16 +9,16 @@
 #include <math.h>
 #include "ibm.h"
 
-#include "device.h"
-#include "dma.h"
+#include "plugin-api/device.h" // REMOVE
+#include "models/dma.h"
 #include "filters.h"
 #include "io.h"
-#include "pic.h"
+#include "models/pic.h"
 #include "sound.h"
 #include "sound_azt2316a.h"
 #include "sound_sb_dsp.h"
 #include "timer.h"
-#include "x86.h"
+#include "cpu/x86.h"
 
 /*The recording safety margin is intended for uneven "len" calls to the get_buffer mixer calls on sound_sb*/
 #define SB_DSP_REC_SAFEFTY_MARGIN 4096

@@ -28,7 +28,7 @@
 #include <fstream>
 #include <sstream>
 //#include "dosbox.h"
-//#include "mem.h"
+//#include "memory/mem.h"
 //#include "mixer.h"
 //#include "SDL.h"
 //#include "SDL_thread.h"

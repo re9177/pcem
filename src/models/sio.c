@@ -1,10 +1,10 @@
 #include <string.h>
 
 #include "ibm.h"
-#include "ide.h"
+#include "ide/ide.h"
 #include "io.h"
-#include "mem.h"
-#include "pci.h"
+#include "memory/mem.h"
+#include "bus/pci.h"
 
 #include "sio.h"
 

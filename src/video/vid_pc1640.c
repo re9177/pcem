@@ -2,12 +2,12 @@
   Mostly standard EGA, but with CGA & Hercules emulation*/
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
-#include "rom.h"
+#include "memory/mem.h"
+#include "flash/rom.h"
 #include "timer.h"
-#include "video.h"
+#include "video/video.h"
 #include "vid_cga.h"
 #include "vid_ega.h"
 #include "vid_pc1640.h"

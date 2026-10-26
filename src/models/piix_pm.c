@@ -2,7 +2,7 @@
 #include "io.h"
 #include "piix.h"
 #include "piix_pm.h"
-#include "x86.h"
+#include "cpu/x86.h"
 
 #define DEVSTS_TRP_STS_DEV13 (1 << 29)
 

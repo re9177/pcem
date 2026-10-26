@@ -1,11 +1,11 @@
 /*This is the chipset used in the Award 286 clone model*/
 #include "ibm.h"
-#include "cpu.h"
+#include "cpu/cpu.h"
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 #include "scat.h"
-#include "x86.h"
-#include "nmi.h"
+#include "cpu/x86.h"
+#include "models/nmi.h"
 
 static uint8_t scat_regs[256];
 static int scat_index;

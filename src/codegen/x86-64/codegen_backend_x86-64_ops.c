@@ -1,12 +1,12 @@
 #ifdef __amd64__
 
 #include "ibm.h"
-#include "codegen.h"
-#include "codegen_allocator.h"
-#include "codegen_backend.h"
-#include "codegen_backend_x86-64_defs.h"
-#include "codegen_backend_x86-64_ops.h"
-#include "codegen_backend_x86-64_ops_helpers.h"
+#include "codegen/codegen.h"
+#include "codegen/codegen_allocator.h"
+#include "codegen/codegen_backend.h"
+#include "codegen/codegen_backend_x86-64_defs.h"
+#include "codegen/codegen_backend_x86-64_ops.h"
+#include "codegen/codegen_backend_x86-64_ops_helpers.h"
 
 #define RM_OP_ADD 0x00
 #define RM_OP_OR 0x08

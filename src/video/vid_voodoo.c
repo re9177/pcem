@@ -2,12 +2,12 @@
 #include <stddef.h>
 #include <math.h>
 #include "ibm.h"
-#include "device.h"
-#include "mem.h"
-#include "pci.h"
+#include "plugin-api/device.h" // REMOVE
+#include "memory/mem.h"
+#include "bus/pci.h"
 #include "thread.h"
 #include "timer.h"
-#include "video.h"
+#include "video/video.h"
 #include "vid_svga.h"
 #include "vid_voodoo.h"
 #include "vid_voodoo_common.h"
@@ -20,7 +20,7 @@
 #include "vid_voodoo_regs.h"
 #include "vid_voodoo_render.h"
 #include "vid_voodoo_texture.h"
-#include "viewer.h"
+#include "wx-ui/viewer.h" // fix up?
 
 rgba8_t rgb332[0x100];
 rgba8_t ai44[0x100];

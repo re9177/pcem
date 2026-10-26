@@ -10,12 +10,12 @@
 #include <sys/types.h>
 
 #include "ibm.h"
-#include "device.h"
-#include "hdd_file.h"
+#include "plugin-api/device.h" // REMOVE
+#include "hdd/hdd_file.h"
 #include "io.h"
-#include "mem.h"
-#include "pic.h"
-#include "rom.h"
+#include "memory/mem.h"
+#include "models/pic.h"
+#include "flash/rom.h"
 #include "timer.h"
 
 #include "esdi_at.h"

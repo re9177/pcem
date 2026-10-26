@@ -1,8 +1,8 @@
 #include "ibm.h"
 #include "disc.h"
 #include "disc_sector.h"
-#include "fdc.h"
-#include "fdd.h"
+#include "floppy/fdc.h"
+#include "floppy/fdd.h"
 
 /*Handling for 'sector based' image formats (like .IMG) as opposed to 'stream based' formats (eg .FDI)*/
 

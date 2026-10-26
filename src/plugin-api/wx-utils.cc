@@ -1,4 +1,4 @@
-#include "wx-utils.h"
+#include "wx-ui/wx-utils.h"
 
 #include <sys/stat.h>
 #include <string.h>

@@ -1,8 +1,8 @@
 #include "ibm.h"
 #include "io.h"
-#include "mouse.h"
-#include "pic.h"
-#include "serial.h"
+#include "mouse/mouse.h"
+#include "models/pic.h"
+#include "models/serial.h"
 #include "timer.h"
 
 enum { SERIAL_INT_LSR = 1, SERIAL_INT_RECEIVE = 2, SERIAL_INT_TRANSMIT = 4, SERIAL_INT_MSR = 8 };

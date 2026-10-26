@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 
-#include "cdrom-ioctl.h"
-#include "cdrom-image.h"
-#include "ide.h"
+#include "cdrom/cdrom-ioctl.h"
+#include "cdrom/cdrom-image.h"
+#include "ide/ide.h"
 
 #include "filters.h"
 

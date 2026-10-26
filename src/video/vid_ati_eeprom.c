@@ -1,5 +1,5 @@
 #include "ibm.h"
-#include "nvr.h"
+#include "devices/nvr.h"
 #include "vid_ati_eeprom.h"
 
 enum { EEPROM_IDLE, EEPROM_WAIT, EEPROM_OPCODE, EEPROM_INPUT, EEPROM_OUTPUT };

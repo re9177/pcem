@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "ibm.h"
-#include "config.h"
-#include "mem.h"
-#include "rom.h"
-#include "paths.h"
+#include "plugin-api/config.h" // REMOVE
+#include "memory/mem.h"
+#include "flash/rom.h"
+#include "plugin-api/paths.h" // REMOVE
 
 FILE *romfopen(char *fn, char *mode) {
         FILE *f;

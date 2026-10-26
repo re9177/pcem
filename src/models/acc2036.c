@@ -1,7 +1,7 @@
 #include "ibm.h"
 #include "acc2036.h"
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 
 static struct {
         int reg_idx;

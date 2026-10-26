@@ -1,10 +1,10 @@
 #include <math.h>
 #include "ibm.h"
-#include "dma.h"
-#include "pic.h"
+#include "models/dma.h"
+#include "models/pic.h"
 #include "sound.h"
 #include "sound_ad1848.h"
-#include "x86.h"
+#include "cpu/x86.h"
 
 static int ad1848_vols_6bits[64];
 static uint32_t ad1848_vols_5bits_aux_gain[32];

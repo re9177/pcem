@@ -12,8 +12,8 @@
 
 #include <math.h>
 #include "ibm.h"
-#include "pic.h"
-#include "x86.h"
+#include "models/pic.h"
+#include "cpu/x86.h"
 #include "x86_flags.h"
 #include "x86_ops.h"
 #include "x87.h"

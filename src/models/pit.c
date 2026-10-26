@@ -6,15 +6,15 @@
 #include <string.h>
 #include "ibm.h"
 
-#include "cpu.h"
-#include "device.h"
-#include "dma.h"
+#include "cpu/cpu.h"
+#include "plugin-api/device.h" // REMOVE
+#include "models/dma.h"
 #include "io.h"
-#include "pic.h"
-#include "pit.h"
-#include "sound_speaker.h"
+#include "models/pic.h"
+#include "models/pit.h"
+#include "sound/sound_speaker.h"
 #include "timer.h"
-#include "video.h"
+#include "video/video.h"
 #include "model.h"
 
 PIT pit, pit2;

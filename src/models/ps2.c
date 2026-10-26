@@ -1,10 +1,10 @@
 #include "ibm.h"
 #include "io.h"
-#include "lpt.h"
-#include "mem.h"
+#include "lpt/lpt.h"
+#include "memory/mem.h"
 #include "ps2.h"
-#include "rom.h"
-#include "serial.h"
+#include "flash/rom.h"
+#include "models/serial.h"
 
 static uint8_t ps2_92, ps2_94, ps2_102, ps2_103, ps2_104, ps2_105, ps2_190;
 

@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <pcem/logging.h>
-#include "config.h"
+#include "plugin-api/config.h" // REMOVE
 
 char config_file_default[256];
 char config_name[256];

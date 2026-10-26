@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include "ibm.h"
 #include "filters.h"
-#include "lpt.h"
+#include "lpt/lpt.h"
 #include "lpt_dac.h"
-#include "sound.h"
+#include "sound/sound.h"
 
 typedef struct dss_t {
         uint8_t fifo[16];

@@ -3,7 +3,7 @@
 #include "ibm.h"
 #include "disc.h"
 #include "disc_fdi.h"
-#include "fdc.h"
+#include "floppy/fdc.h"
 #include "fdi2raw.h"
 
 static struct {

@@ -1,12 +1,12 @@
 /*EGA emulation*/
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
-#include "rom.h"
+#include "memory/mem.h"
+#include "flash/rom.h"
 #include "timer.h"
-#include "video.h"
+#include "video/video.h"
 #include "vid_ega.h"
 
 extern uint8_t edatlookup[4][4];

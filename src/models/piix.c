@@ -6,13 +6,13 @@
 #include <string.h>
 
 #include "ibm.h"
-#include "ide.h"
-#include "ide_sff8038i.h"
-#include "keyboard_at.h"
+#include "ide/ide.h"
+#include "ide/ide_sff8038i.h"
+#include "keyboard/keyboard_at.h"
 #include "io.h"
-#include "mem.h"
-#include "pci.h"
-#include "pic.h"
+#include "memory/mem.h"
+#include "bus/pci.h"
+#include "models/pic.h"
 #include "piix.h"
 #include "piix_pm.h"
 

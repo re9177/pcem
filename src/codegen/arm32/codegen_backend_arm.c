@@ -8,7 +8,7 @@
 #include "codegen_backend_arm_defs.h"
 #include "codegen_backend_arm_ops.h"
 #include "codegen_reg.h"
-#include "x86.h"
+#include "cpu/x86.h"
 #include "x87.h"
 
 #if defined(__linux__) || defined(__APPLE__)

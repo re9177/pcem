@@ -1,11 +1,11 @@
 #include "ibm.h"
-#include "cpu.h"
-#include "model.h"
+#include "cpu/cpu.h"
+#include "models/model.h"
 #include "io.h"
 #include "x86_ops.h"
-#include "mem.h"
-#include "pci.h"
-#include "codegen.h"
+#include "memory/mem.h"
+#include "bus/pci.h"
+#include "codegen/codegen.h"
 #include "x87_timings.h"
 
 int fpu_type;

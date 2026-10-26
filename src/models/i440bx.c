@@ -2,10 +2,10 @@
 
 #include "ibm.h"
 #include "io.h"
-#include "keyboard_at.h"
-#include "mem.h"
-#include "pci.h"
-#include "x86.h"
+#include "keyboard/keyboard_at.h"
+#include "memory/mem.h"
+#include "bus/pci.h"
+#include "cpu/x86.h"
 
 #include "i440bx.h"
 

@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "ibm.h"
-#include "ide.h"
+#include "ide/ide.h"
 #include "cdrom-ioctl.h"
 
 static ATAPI ioctl_atapi;

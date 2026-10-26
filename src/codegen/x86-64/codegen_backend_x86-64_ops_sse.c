@@ -1,12 +1,12 @@
 #ifdef __amd64__
 
 #include "ibm.h"
-#include "codegen.h"
-#include "codegen_allocator.h"
-#include "codegen_backend.h"
-#include "codegen_backend_x86-64_defs.h"
-#include "codegen_backend_x86-64_ops_sse.h"
-#include "codegen_backend_x86-64_ops_helpers.h"
+#include "codegen/codegen.h"
+#include "codegen/codegen_allocator.h"
+#include "codegen/codegen_backend.h"
+#include "codegen/codegen_backend_x86-64_defs.h"
+#include "codegen/codegen_backend_x86-64_ops_sse.h"
+#include "codegen/codegen_backend_x86-64_ops_helpers.h"
 
 void host_x86_ADDPS_XREG_XREG(codeblock_t *block, int dst_reg, int src_reg) {
         codegen_alloc_bytes(block, 3);

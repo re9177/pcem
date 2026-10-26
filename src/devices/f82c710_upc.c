@@ -31,14 +31,14 @@
 
 #include "ibm.h"
 
-#include "fdc.h"
-#include "ide.h"
+#include "floppy/fdc.h"
+#include "ide/ide.h"
 #include "io.h"
-#include "lpt.h"
-#include "serial.h"
-#include "x86.h"
-#include "keyboard_at.h"
-#include "pic.h"
+#include "lpt/lpt.h"
+#include "models/serial.h"
+#include "cpu/x86.h"
+#include "keyboard/keyboard_at.h"
+#include "models/pic.h"
 
 #define UPC_MOUSE_DEV_IDLE 0x01   /* bit 0, Device Idle */
 #define UPC_MOUSE_RX_FULL 0x02    /* bit 1, Device Char received */

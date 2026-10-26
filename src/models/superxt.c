@@ -1,7 +1,7 @@
 /*This is the Chips and Technologies C82100 chipset used in the Amstrad PC5086 model*/
 #include "ibm.h"
 #include "io.h"
-#include "x86.h"
+#include "cpu/x86.h"
 #include "superxt.h"
 
 static uint8_t superxt_regs[256];

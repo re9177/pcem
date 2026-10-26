@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include "ibm.h"
 
-#include "device.h"
-#include "dma.h"
+#include "plugin-api/device.h" // REMOVE
+#include "models/dma.h"
 #include "io.h"
-#include "mca.h"
-#include "mem.h"
-#include "pic.h"
-#include "rom.h"
+#include "bus/mca.h"
+#include "memory/mem.h"
+#include "models/pic.h"
+#include "flash/rom.h"
 #include "scsi.h"
 #include "timer.h"
 

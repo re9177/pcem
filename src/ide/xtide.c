@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include "ibm.h"
 
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "ide.h"
-#include "mem.h"
-#include "rom.h"
+#include "ide/ide.h"
+#include "memory/mem.h"
+#include "flash/rom.h"
 #include "xtide.h"
 
 typedef struct xtide_t {

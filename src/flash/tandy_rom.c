@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "mem.h"
+#include "memory/mem.h"
 #include "tandy_rom.h"
 
 static uint8_t *tandy_rom;

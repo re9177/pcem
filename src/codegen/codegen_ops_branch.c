@@ -1,8 +1,8 @@
 #include "ibm.h"
 
-#include "x86.h"
-#include "386_common.h"
-#include "x86_flags.h"
+#include "cpu/x86.h"
+#include "cpu/386_common.h"
+#include "cpu/x86_flags.h"
 #include "codegen.h"
 #include "codegen_backend.h"
 #include "codegen_ir.h"

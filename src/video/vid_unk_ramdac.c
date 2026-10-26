@@ -6,8 +6,8 @@
   It's addressed by the TLIVESA1 driver for ET4000*/
 /* Note by Tenshi: Not possibly, this *IS* a Sierra 1502x. */
 #include "ibm.h"
-#include "mem.h"
-#include "video.h"
+#include "memory/mem.h"
+#include "video/video.h"
 #include "vid_svga.h"
 #include "vid_unk_ramdac.h"
 

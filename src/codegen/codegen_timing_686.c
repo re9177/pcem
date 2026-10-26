@@ -10,11 +10,11 @@
 */
 
 #include "ibm.h"
-#include "cpu.h"
-#include "x86.h"
-#include "x86_ops.h"
-#include "x87.h"
-#include "mem.h"
+#include "cpu/cpu.h"
+#include "cpu/x86.h"
+#include "cpu/x86_ops.h"
+#include "cpu/x87.h"
+#include "memory/mem.h"
 #include "codegen.h"
 #include "codegen_timing_common.h"
 

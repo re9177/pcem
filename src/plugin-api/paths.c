@@ -1,10 +1,10 @@
 #include "paths.h"
-#include "config.h"
+#include "plugin-api/config.h" // REMOVE
 #include <string.h>
 #include <SDL.h>
 #include <sys/stat.h>
 #include "ibm.h"
-#include "ui-utils.h"
+#include "wx-ui/ui-utils.h"
 
 char default_roms_paths[4096];
 char default_nvr_path[512];

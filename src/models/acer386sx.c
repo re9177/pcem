@@ -1,11 +1,11 @@
 #include "ibm.h"
-#include "device.h"
+#include "plugin-api/device.h" // REMOVE
 #include "io.h"
-#include "cpu.h"
-#include "lpt.h"
-#include "mem.h"
-#include "serial.h"
-#include "vid_oti067.h"
+#include "cpu/cpu.h"
+#include "lpt/lpt.h"
+#include "memory/mem.h"
+#include "models/serial.h"
+#include "video/vid_oti067.h"
 
 #include "acer386sx.h"
 

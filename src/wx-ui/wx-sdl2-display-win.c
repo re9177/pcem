@@ -1,10 +1,10 @@
 #define _WIN32_WINNT 0x0501
 #include <SDL2/SDL.h>
-#include "video.h"
+#include "video/video.h"
 #include "wx-sdl2-video.h"
 #include "wx-utils.h"
 #include "ibm.h"
-#include "mouse.h"
+#include "mouse/mouse.h"
 #include "wx-display.h"
 #include "plat-keyboard.h"
 

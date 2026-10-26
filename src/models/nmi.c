@@ -1,6 +1,6 @@
 #include "ibm.h"
 #include "io.h"
-#include "nmi.h"
+#include "models/nmi.h"
 
 int nmi_mask;
 

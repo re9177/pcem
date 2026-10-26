@@ -1,9 +1,9 @@
 #include "ibm.h"
 #include "acc2168.h"
-#include "cpu.h"
+#include "cpu/cpu.h"
 #include "io.h"
-#include "mem.h"
-#include "x86.h"
+#include "memory/mem.h"
+#include "cpu/x86.h"
 
 static struct {
         int reg_idx;
