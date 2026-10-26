@@ -6,7 +6,6 @@
 #include "hdd_esdi.h"
 #include "ide/ide.h"
 #include "mfm/mfm_at.h"
-#include "mfm/mfm_xebec.h"
 #include "scsi/scsi_53c400.h"
 #include "scsi/scsi_aha1540.h"
 #include "scsi/scsi_ibm.h"
@@ -146,8 +145,6 @@ static device_t null_hdd_device = {"Null HDD controller", 0, null_hdd_init, null
 
 HDD_CONTROLLER h_none = {"None", "none", &null_hdd_device, 0, 0, 0};
 HDD_CONTROLLER h_mfm_at = {"[MFM] AT Fixed Disk Adapter", "mfm_at", &mfm_at_device, 1, 0, 0};
-HDD_CONTROLLER h_dtc5150x = {"[MFM] DTC 5150X", "dtc5150x", &dtc_5150x_device, 1, 0, 0};
-HDD_CONTROLLER h_mfm_xebec = {"[MFM] Fixed Disk Adapter (Xebec)", "mfm_xebec", &mfm_xebec_device, 1, 0, 0};
 HDD_CONTROLLER h_esdi_mca = {"[ESDI] IBM ESDI Fixed Disk Controller", "esdi_mca", &hdd_esdi_device, 1, 0, 0};
 HDD_CONTROLLER h_wd1007vse1 = {"[ESDI] Western Digital WD1007V-SE1", "wd1007vse1", &wd1007vse1_device, 0, 0, 0};
 HDD_CONTROLLER h_ide = {"[IDE] Standard IDE", "ide", &ide_device, 0, 1, 0};
@@ -164,8 +161,6 @@ HDD_CONTROLLER h_t130b = {"[SCSI] Trantor T130B", "t130b", &scsi_t130b_device, 0
 void hdd_controller_init_builtin() {
         pcem_add_hddcontroller(&h_none);
         pcem_add_hddcontroller(&h_mfm_at);
-        pcem_add_hddcontroller(&h_dtc5150x);
-        pcem_add_hddcontroller(&h_mfm_xebec);
         pcem_add_hddcontroller(&h_esdi_mca);
         pcem_add_hddcontroller(&h_wd1007vse1);
         pcem_add_hddcontroller(&h_ide);
