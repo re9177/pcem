@@ -15,7 +15,7 @@
 #include "ibm.h"
 #include "wx-glslp-parser.h"
 #include "wx-utils.h"
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include "wx-glsl.h"
 #include <pcem/api.h>
 

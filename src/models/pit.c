@@ -7,7 +7,7 @@
 #include "ibm.h"
 
 #include "cpu/cpu.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "models/dma.h"
 #include "io.h"
 #include "models/pic.h"

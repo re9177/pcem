@@ -12,7 +12,7 @@
 #include "wx/xrc/xmlres.h"
 
 extern "C" {
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include "plat-midi.h"
 void saveconfig(char *);
 void resetpchard();

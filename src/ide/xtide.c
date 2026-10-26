@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "ibm.h"
 
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "io.h"
 #include "ide/ide.h"
 #include "memory/mem.h"

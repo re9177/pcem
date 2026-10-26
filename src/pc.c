@@ -9,7 +9,7 @@
 #endif
 #endif
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 
 #include "models/ali1429.h"
 #include "cdrom/cdrom-ioctl.h"
@@ -21,7 +21,7 @@
 #include "cpu/x86_ops.h"
 #include "codegen/codegen.h"
 #include "cdrom/cdrom-null.h"
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include "cpu/cpu.h"
 #include "disc/disc_fdi.h"
 #include "models/dma.h"
@@ -245,8 +245,6 @@ void initpc(int argc, char *argv[]) {
 
         loadconfig(NULL);
         pclog("Config loaded\n");
-
-        load_plugins();
 
         //        if (config_file)
         //                saveconfig();

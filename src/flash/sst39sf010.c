@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "memory/mem.h"
 #include "sst39sf010.h"
 #include "models/xi8088.h"

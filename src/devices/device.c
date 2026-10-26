@@ -2,7 +2,7 @@
 #include <pcem/devices.h>
 #include <pcem/logging.h>
 #include <string.h>
-#include <pcem/config.h>
+#include "config.h"
 
 extern void *device_priv[256];
 extern device_t *devices[DEV_MAX];

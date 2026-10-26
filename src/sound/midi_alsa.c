@@ -1,7 +1,7 @@
 #include <alsa/asoundlib.h>
 #include <stdbool.h>
 #include "ibm.h"
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include "plat-midi.h"
 
 #define MAX_MIDI_DEVICES 128

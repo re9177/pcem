@@ -1,7 +1,7 @@
 /*Compaq CGA emulation*/
 #include <stdlib.h>
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "io.h"
 #include "memory/mem.h"
 #include "timer.h"

@@ -1,7 +1,7 @@
 #ifndef _AMSTRAD_H_
 #define _AMSTRAD_H_
 #include "mouse/mouse.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 
 void amstrad_init();
 

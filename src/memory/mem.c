@@ -10,7 +10,7 @@
 #include <string.h>
 #include "ibm.h"
 
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include "memory/mem.h"
 #include "video/video.h"
 #include "cpu/x86.h"

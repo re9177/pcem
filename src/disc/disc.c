@@ -1,6 +1,6 @@
 #include "ibm.h"
 
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include "disc.h"
 #include "disc_fdi.h"
 #include "disc_img.h"

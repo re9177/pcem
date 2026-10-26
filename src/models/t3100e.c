@@ -5,7 +5,7 @@
 #include "floppy/fdd.h"
 #include "mouse/mouse.h"
 #include "memory/mem.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "t3100e.h"
 #include "video/vid_t3100e.h"
 

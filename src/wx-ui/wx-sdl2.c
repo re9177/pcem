@@ -17,11 +17,11 @@
 #include <stdlib.h>
 #include <math.h>
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "devices/cassette.h"
 #include "cdrom/cdrom-ioctl.h"
 #include "cdrom/cdrom-image.h"
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include "video/video.h"
 #include "cpu/cpu.h"
 #include "ide/ide.h"
@@ -451,7 +451,6 @@ int pc_main(int argc, char **argv) {
 
         paths_init();
 
-        init_plugin_engine();
         model_init_builtin();
         video_init_builtin();
         lpt_init_builtin();

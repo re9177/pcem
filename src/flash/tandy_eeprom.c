@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "ibm.h"
 #include "io.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "tandy_eeprom.h"
 #include "devices/nvr.h"
 

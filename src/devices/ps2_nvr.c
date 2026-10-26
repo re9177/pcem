@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "io.h"
 #include "devices/ps2_nvr.h"
 #include "devices/nvr.h"

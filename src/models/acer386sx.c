@@ -1,5 +1,5 @@
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "io.h"
 #include "cpu/cpu.h"
 #include "lpt/lpt.h"

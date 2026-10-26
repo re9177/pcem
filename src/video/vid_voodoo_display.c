@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "memory/mem.h"
 #include "thread.h"
 #include "video/video.h"

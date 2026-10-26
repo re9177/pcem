@@ -8,7 +8,7 @@
 #include "x86_flags.h"
 #include "386_common.h"
 #include "cpu/cpu.h"
-#include "plugin-api/config.h" // REMOVE
+#include "config.h"
 #include "plugin-api/paths.h" // REMOVE
 //#include "models/i440bx.h"
 #include "logging-internal.h"

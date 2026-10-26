@@ -3,7 +3,7 @@
 #include "wx-sdl2.h"
 #include "wx-sdl2-video.h"
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "cpu/x86_ops.h"
 #include "memory/mem.h"
 #include "codegen/codegen.h"

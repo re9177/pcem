@@ -11,7 +11,7 @@
 #include "devices/nvr.h"
 #include "devices/nvr_tc8521.h"
 #include "models/pit.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "keyboard/keyboard_xt.h"
 #include "video/vid_t1000.h"
 

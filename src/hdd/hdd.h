@@ -1,6 +1,6 @@
 #ifndef _HDD_H_
 #define _HDD_H_
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 
 char *hdd_controller_get_name(int hdd);
 char *hdd_controller_get_internal_name(int hdd);

@@ -1,5 +1,5 @@
 #include "ibm.h"
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include "wx-utils.h"
 #include "plugin-api/paths.h"
 #include "wx-hostconfig.h"

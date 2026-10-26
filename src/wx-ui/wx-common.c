@@ -1,5 +1,5 @@
 #include "wx-common.h"
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 
 void wx_loadconfig() {
         show_machine_info = config_get_int(CFG_GLOBAL, "wxWidgets", "show_machine_info", show_machine_info);

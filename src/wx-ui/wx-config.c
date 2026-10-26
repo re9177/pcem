@@ -5,7 +5,7 @@
 #include "ibm.h"
 #include "ide/ide.h"
 #include "cpu/cpu.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "floppy/fdd.h"
 #include "joystick/gameport.h"
 #include "hdd.h"

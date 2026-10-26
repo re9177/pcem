@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "ibm.h"
 
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "models/dma.h"
 #include "io.h"
 #include "bus/mca.h"

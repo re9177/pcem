@@ -1,5 +1,5 @@
 #include "paths.h"
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include <string.h>
 #include <SDL.h>
 #include <sys/stat.h>

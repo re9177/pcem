@@ -14,8 +14,8 @@
 
 extern "C" {
 PCEM_API void pclog(const char *format, ...);
-#include "plugin-api/config.h" // REMOVE
-#include "plugin-api/device.h" // REMOVE
+#include "config.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "joystick/gameport.h"
 #include "plat-joystick.h"
 }

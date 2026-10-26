@@ -2,7 +2,7 @@
 #include <math.h>
 #include <SDL2/SDL.h>
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "joystick/gameport.h"
 #include "plat-joystick.h"
 

@@ -3,7 +3,7 @@
 
 extern "C" {
 #include <stdint.h>
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 void deviceconfig_open(void *hwnd, device_t *device);
 }
 

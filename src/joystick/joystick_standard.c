@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "timer.h"
 #include "gameport.h"
 #include "joystick_standard.h"

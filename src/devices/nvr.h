@@ -1,6 +1,6 @@
 #ifndef _NVR_H_
 #define _NVR_H_
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 
 extern device_t nvr_device;
 

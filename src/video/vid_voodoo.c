@@ -2,7 +2,7 @@
 #include <stddef.h>
 #include <math.h>
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "memory/mem.h"
 #include "bus/pci.h"
 #include "thread.h"

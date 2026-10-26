@@ -24,7 +24,7 @@
 #include "ibm.h"
 #include "cpu/cpu.h"
 #include "cpu/x86.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "pzx.h"
 
 char cassettefn[256];

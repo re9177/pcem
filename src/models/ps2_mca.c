@@ -1,6 +1,6 @@
 #include "ibm.h"
 #include "cpu/cpu.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "io.h"
 #include "lpt/lpt.h"
 #include "bus/mca.h"

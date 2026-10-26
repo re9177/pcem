@@ -4,8 +4,8 @@
 #include <pcem/devices.h>
 #include <pcem/defines.h>
 
-void init_plugin_engine();
-void load_plugins();
+//void init_plugin_engine();
+//void load_plugins();
 
 extern void (*_savenvr)();
 extern void (*_dumppic)();

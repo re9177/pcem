@@ -10,7 +10,7 @@
 #include <sys/types.h>
 #include "ibm.h"
 
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "models/dma.h"
 #include "hdd_file.h"
 #include "io.h"

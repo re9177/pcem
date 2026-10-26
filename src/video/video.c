@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "memory/mem.h"
 #include "video/video.h"
 #include "vid_svga.h"

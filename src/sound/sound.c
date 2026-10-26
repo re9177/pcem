@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 
 #include "cdrom/cdrom-ioctl.h"
 #include "cdrom/cdrom-image.h"

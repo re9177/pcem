@@ -1,6 +1,9 @@
 #for f in $(rg '\#include \"device.h\"' -l); do sed -i 's/\"device.h\"/\"plugin-api\/device.h\" \/\/\ REMOVE/' $f && echo $f; done
 #for f in $(rg '\#include \"config.h\"' -l); do sed -i 's/\"config.h\"/\"plugin-api\/config.h\" \/\/\ REMOVE/' $f && echo $f; done
 
+for f in $(rg '\#include \"plugin-api/device.h\"' -l); do sed -i 's/\"plugin-api\/device.h\"/\"devices\/device.h\"/' $f && echo $f; done
+#for f in $(rg '\#include \"plugin-api/config.h\"' -l); do sed -i 's/\"plugin-api\/config.h\"/\"config.h\"/' $f && echo $f; done
+
 # bus/
 for f in $(rg '\#include \"pci.h\"' -l); do sed -i 's/\"pci.h\"/\"bus\/pci.h\"/' $f && echo $f; done
 for f in $(rg '\#include \"mca.h\"' -l); do sed -i 's/\"mca.h\"/\"bus\/mca.h\"/' $f && echo $f; done

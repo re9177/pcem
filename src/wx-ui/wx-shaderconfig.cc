@@ -14,7 +14,7 @@
 #include "wx-shaderconfig.h"
 
 extern "C" {
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 void saveconfig(char *);
 void resetpchard();
 int deviceconfig_dlgproc(void *hdlg, int message, INT_PARAM wParam, LONG_PARAM lParam);

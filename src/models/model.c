@@ -16,7 +16,7 @@
 #include "compaq.h"
 #include "cs8230.h"
 #include "dells200.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "devices/cassette.h"
 #include "models/dma.h"
 #include "devices/f82c710_upc.h"

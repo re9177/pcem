@@ -33,6 +33,7 @@ if(${PCEM_DISPLAY_ENGINE} STREQUAL "wxWidgets")
 endif()
 
 set(PCEM_SRC ${PCEM_SRC}
+        config.c
         fdi2raw.c
         io.c
         mcr.c

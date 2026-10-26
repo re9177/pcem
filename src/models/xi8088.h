@@ -1,6 +1,6 @@
 #ifndef _XI8088_H_
 #define _XI8088_H_
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 
 extern device_t xi8088_device;
 

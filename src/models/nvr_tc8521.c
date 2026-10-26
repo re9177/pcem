@@ -8,7 +8,7 @@
 #include "timer.h"
 #include "rtc.h"
 #include "paths.h"
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include "models/nmi.h"
 
 static pc_timer_t nvr_onesec_timer;

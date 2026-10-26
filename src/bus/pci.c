@@ -1,5 +1,5 @@
 #include "ibm.h"
-#include "plugin-api/device.h"
+#include "devices/device.h"
 #include "io.h"
 #include "memory/mem.h"
 #include "models/pic.h" // move

@@ -1,5 +1,5 @@
 #include "ibm.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "devices/cassette.h"
 #include "floppy/fdd.h"
 #include "io.h"

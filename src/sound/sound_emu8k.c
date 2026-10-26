@@ -2,7 +2,7 @@
 #include <math.h>
 #include "ibm.h"
 #include "io.h"
-#include "plugin-api/device.h" // REMOVE
+#include "devices/device.h" // REMOVE
 #include "sound.h"
 #include "sound_emu8k.h"
 #include "timer.h"

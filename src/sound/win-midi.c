@@ -1,7 +1,7 @@
 #include <windows.h>
 #include <mmsystem.h>
 #include "ibm.h"
-#include "plugin-api/config.h" // REMOVE
+#include "config.h" // REMOVE
 #include "plat-midi.h"
 
 static int midi_id;
