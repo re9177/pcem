@@ -12,8 +12,4 @@ set(PCEM_SRC_PLUGINAPI
         plugin-api/paths.c
         )
 
-if(${PCEM_DISPLAY_ENGINE} STREQUAL "wxWidgets")
-        set(PCEM_SRC_PLUGINAPI ${PCEM_SRC_PLUGINAPI} plugin-api/wx-utils.cc)
-endif()
-
 set(PCEM_EMBEDDED_PLUGIN_API ${PCEM_SRC_PLUGINAPI} ${PCEM_PUBLIC_API})
