@@ -168,6 +168,8 @@ endif()
 
 find_package(OpenGL REQUIRED)
 
+add_subdirectory(3rdparty)
+
 add_subdirectory(src)
 
 if(USE_EXPERIMENTAL)

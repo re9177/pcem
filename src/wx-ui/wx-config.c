@@ -8,7 +8,7 @@
 #include "devices/device.h" // REMOVE
 #include "floppy/fdd.h"
 #include "joystick/gameport.h"
-#include "hdd.h"
+#include "hdd/hdd.h"
 #include "lpt/lpt.h"
 #include "models/model.h"
 #include "mouse/mouse.h"
@@ -21,7 +21,7 @@
 #include "video/vid_voodoo.h"
 #include "wx-config-eventbinder.h"
 
-#include "minivhd/minivhd.h"
+#include <minivhd.h>
 
 //#define MAX_CYLINDERS ((((1 << 28)-1) / 16) / 63)
 #define MAX_CYLINDERS 265264 /*Award 430VX won't POST with a larger drive*/

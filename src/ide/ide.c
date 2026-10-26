@@ -11,11 +11,11 @@
 #include <sys/types.h>
 
 #include "ibm.h"
-#include "hdd.h"
+#include "hdd/hdd.h"
 #include "io.h"
 #include "models/pic.h"
 #include "timer.h"
-#include "hdd_file.h"
+#include "hdd/hdd_file.h"
 #include "scsi/scsi.h"
 #include "scsi/scsi_cd.h"
 #include "scsi/scsi_zip.h"

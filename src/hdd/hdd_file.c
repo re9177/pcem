@@ -6,8 +6,7 @@
 #include "ibm.h"
 #include "hdd_file.h"
 #include "ramdisk/ramdisk.h"
-#include "minivhd/minivhd.h"
-#include "minivhd/minivhd_util.h"
+#include <minivhd.h>
 
 bool is_ramdisk_file(const char *fn) {
         const char *ext1 = ".rdimg";

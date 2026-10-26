@@ -46,24 +46,29 @@ set(PCEM_SRC ${PCEM_SRC}
         timer.c
         )
 
-set(PCEM_LIBRARIES ${DISPLAY_ENGINE_LIBRARIES} ${SDL2_LIBRARIES} ${OPENAL_LIBRARY} ${OPENGL_LIBRARIES} ${PCEM_ADDITIONAL_LIBS})
 
-set(PCEM_LIBRARIES ${PCEM_LIBRARIES} PARENT_SCOPE)
-if(${PCEM_DISPLAY_ENGINE} STREQUAL "wxWidgets")
-add_executable(pcem ${PCEM_SRC} ${PCEM_EMBEDDED_PLUGIN_API})
-endif()
+add_executable(pcem ${PCEM_SRC})
+
+
 # Pull in private includes
 target_include_directories(pcem PRIVATE
         ${PROJECT_SOURCE_DIR}/src
-        # MiniVHD - TODO Submodule
-        ${PROJECT_SOURCE_DIR}/src/hdd/
         # Ayumi - TODO submodule
         ${PROJECT_SOURCE_DIR}/src/sound/
 )
 
 target_compile_definitions(pcem PUBLIC ${PCEM_DEFINES})
 target_compile_options(pcem PUBLIC $<$<COMPILE_LANGUAGE:CXX>:-fno-common> $<$<COMPILE_LANGUAGE:C>:-fno-common>)
+
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
         target_link_options(pcem PRIVATE "-Wl,--subsystem,windows")
 endif()
-target_link_libraries(pcem PRIVATE ${PCEM_LIBRARIES})
+
+target_link_libraries(pcem PRIVATE
+        ${DISPLAY_ENGINE_LIBRARIES}
+        ${SDL2_LIBRARIES}
+        ${OPENAL_LIBRARY}
+        ${OPENGL_LIBRARIES}
+        minivhd
+        ${PCEM_ADDITIONAL_LIBS}
+        )

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ibm.h"
-#include "hdd_file.h"
+#include "hdd/hdd_file.h"
 #include "scsi.h"
 #include "scsi_hd.h"
 #include "timer.h"

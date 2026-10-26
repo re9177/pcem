@@ -1,0 +1,3 @@
+[submodule "3rdparty/minivhd"]
+	path = 3rdparty/minivhd
+	url = https://github.com/shermp/MiniVHD
