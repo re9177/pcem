@@ -16,7 +16,6 @@
 #include "cs8230.h"
 #include "dells200.h"
 #include "devices/device.h" // REMOVE
-#include "devices/cassette.h"
 #include "models/dma.h"
 #include "devices/f82c710_upc.h"
 #include "floppy/fdc.h"

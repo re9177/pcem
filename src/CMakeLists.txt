@@ -41,7 +41,6 @@ set(PCEM_SRC ${PCEM_SRC}
         mcr.c
         pc.c
         ppi.c
-        pzx.c
         rtc.c
         rtc_tc8521.c
         timer.c
