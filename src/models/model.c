@@ -10,7 +10,6 @@
 #include "acc3221.h"
 #include "acer386sx.h"
 #include "ali1429.h"
-#include "amstrad.h"
 #include "cbm_io.h"
 #include "cmd640.h"
 #include "compaq.h"
@@ -35,13 +34,7 @@
 #include "ide/ide.h"
 #include "intel.h"
 #include "flash/intel_flash.h"
-#include "jim.h"
-#include "keyboard/keyboard_amstrad.h"
 #include "keyboard/keyboard_at.h"
-#include "keyboard/keyboard_olim24.h"
-#include "keyboard/keyboard_pcjr.h"
-#include "keyboard/keyboard_xt.h"
-#include "laserxt.h"
 #include "lpt/lpt.h"
 #include "memory/mem.h"
 #include "mouse/mouse_ps2.h"
@@ -49,7 +42,6 @@
 #include "neat.h"
 #include "models/nmi.h"
 #include "devices/nvr.h"
-#include "olivetti_m24.h"
 #include "opti495.h"
 #include "pc87306.h"
 #include "pc87307.h"
@@ -66,35 +58,18 @@
 #include "sio.h"
 #include "devices/sis496.h"
 #include "sl82c460.h"
-#include "sound/sound_ps1.h"
-#include "sound/sound_pssj.h"
-#include "sound/sound_sn76489.h"
-#include "superxt.h"
 #include "flash/sst39sf010.h"
-#include "flash/tandy_eeprom.h"
-#include "flash/tandy_rom.h"
 #include "um8669f.h"
-#include "video/vid_pcjr.h"
-#include "video/vid_tandy.h"
-#include "video/vid_t1000.h"
 #include "vl82c480.h"
 #include "vt82c586b.h"
 #include "w83877tf.h"
 #include "w83977tf.h"
 #include "wd76c10.h"
-#include "xi8088.h"
-#include "zenith.h"
+#include "sound/sound_ps1.h"
+
 
 #include "devices/device.h"
 
-void xt_init();
-void pcjr_init();
-void tandy1k_init();
-void tandy1ksl2_init();
-void ams_init();
-void pc5086_init();
-void europc_init();
-void olim24_init();
 void at_init();
 void ibm_at_init();
 void at_cbm_init();
@@ -143,7 +118,7 @@ void at_mvp3_init();
 void at_vs440fx_init();
 void at_ga686bx_init();
 
-int AMSTRAD, AT, PCI, TANDY, MCA;
+int AT, PCI, MCA;
 
 int model_getromset() { return models[model]->id; }
 
@@ -199,138 +174,6 @@ void common_init() {
         serial2_init(0x2f8, 3, 1);
 }
 
-void xt_init() {
-        common_init();
-        mem_add_bios();
-        pit_set_out_func(&pit, 1, pit_refresh_timer_xt);
-        keyboard_xt_init();
-        nmi_init();
-        device_add(&gameport_device);
-        if (romset == ROM_IBMPC)
-                device_add(&cassette_device);
-}
-
-void compaq_xt_init() {
-        xt_init();
-        lpt1_remove();
-        lpt2_remove();
-        lpt1_init(0x3bc);
-}
-
-void pcjr_init() {
-        mem_add_bios();
-        fdc_add_pcjr();
-        pic_init();
-        pit_init();
-        pit_set_out_func(&pit, 0, pit_irq0_timer_pcjr);
-        serial1_init(0x2f8, 3, 1);
-        keyboard_pcjr_init();
-        device_add(&sn76489_device);
-        nmi_mask = 0x80;
-        device_add(&cassette_device);
-}
-
-void tandy1k_init() {
-        TANDY = 1;
-        common_init();
-        mem_add_bios();
-        keyboard_tandy_init();
-        if (romset == ROM_TANDY)
-                device_add(&sn76489_device);
-        else
-                device_add(&ncr8496_device);
-        nmi_init();
-        if (romset != ROM_TANDY)
-                device_add(&tandy_eeprom_device);
-        device_add(&gameport_device);
-}
-void tandy1ksl2_init() {
-        //        TANDY = 1;
-        common_init();
-        mem_add_bios();
-        keyboard_tandy_init();
-        device_add(&pssj_device);
-        nmi_init();
-        device_add(&tandy_rom_device);
-        device_add(&tandy_eeprom_device);
-        device_add(&gameport_device);
-}
-
-void ams_init() {
-        AMSTRAD = 1;
-        common_init();
-        mem_add_bios();
-        lpt1_remove();
-        amstrad_init();
-        keyboard_amstrad_init();
-        device_add(&nvr_device);
-        nmi_init();
-        fdc_set_dskchg_activelow();
-        device_add(&gameport_device);
-}
-
-void pc5086_init() {
-        xt_init();
-        lpt1_remove(); /* remove LPT ports, they will be enabled by 82C710 */
-        lpt2_remove();
-        serial1_remove(); /* remove COM ports, they will be enabled by 82C710 */
-        serial2_remove();
-        device_add(&nvr_device);
-        fdc_set_dskchg_activelow();
-        superxt_init();
-}
-
-void europc_init() {
-        common_init();
-        mem_add_bios();
-        jim_init();
-        keyboard_xt_init();
-        nmi_init();
-        device_add(&gameport_device);
-}
-
-void olim24_init() {
-        common_init();
-        mem_add_bios();
-        keyboard_olim24_init();
-        device_add(&nvr_device);
-        olivetti_m24_init();
-        nmi_init();
-        device_add(&gameport_device);
-}
-
-void xt_laserxt_init() {
-        xt_init();
-        laserxt_init();
-}
-
-void xt_zenith_init() /* [8088] Zenith Data Systems SupersPort */
-{
-        dma_init();
-        fdc_add();
-        lpt_init();
-        lpt2_remove(); /* only one parallel port */
-        pic_init();
-        pit_init();
-        serial1_init(0x3f8, 4, 1); /* only one serial port */
-        mem_add_bios();
-        device_add(&zenith_scratchpad_device);
-        pit_set_out_func(&pit, 1, pit_refresh_timer_xt);
-        keyboard_xt_init();
-        nmi_init();
-}
-
-void xt_xi8088_init() {
-        common_init();
-        mem_add_bios();
-        keyboard_at_init();
-        keyboard_at_init_ps2();
-        nmi_init();
-        device_add(&nvr_device);
-        pic2_init();
-        device_add(&gameport_device);
-        device_add(&sst_39sf010_device);
-}
 
 void at_init() {
         AT = 1;
@@ -685,7 +528,7 @@ void at_ga686bx_init() {
 
 void model_init() {
         pclog("Initting as %s\n", model_getname());
-        AMSTRAD = AT = PCI = TANDY = MCA = 0;
+        AT = PCI = MCA = 0;
         ide_set_bus_master(NULL, NULL, NULL, NULL);
 
         models[model]->init();
@@ -693,294 +536,6 @@ void model_init() {
                 device_add(models[model]->device);
 }
 
-/* 8088 PC's */
-MODEL m_amixt = {"[8088] AMI XT clone",
-                 ROM_AMIXT,
-                 "amixt",
-                 {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                 MODEL_GFX_NONE,
-                 64,
-                 640,
-                 64,
-                 xt_init,
-                 NULL};
-MODEL m_ataripc3 = {"[8088] Atari PC3",
-                    ROM_ATARIPC3,
-                    "ataripc3",
-                    {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                    MODEL_GFX_NONE,
-                    64,
-                    640,
-                    64,
-                    xt_init,
-                    NULL};
-MODEL m_cbm_pc10 = {"[8088] Commodore PC-10",
-                    ROM_CBM_PC10,
-                    "cbm_pc10",
-                    {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                    MODEL_GFX_NONE,
-                    640,
-                    640,
-                    64,
-                    xt_init,
-                    NULL};
-MODEL m_compaq_pip = {"[8088] Compaq Portable Plus",
-                      ROM_COMPAQ_PIP,
-                      "compaq_pip",
-                      {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                      MODEL_GFX_NONE,
-                      128,
-                      640,
-                      64,
-                      compaq_xt_init,
-                      NULL};
-MODEL m_dtk = {"[8088] DTK XT clone",
-               ROM_DTKXT,
-               "dtk",
-               {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-               MODEL_GFX_NONE,
-               64,
-               640,
-               64,
-               xt_init,
-               NULL};
-MODEL m_genxt = {"[8088] Generic XT clone",
-                 ROM_GENXT,
-                 "genxt",
-                 {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                 MODEL_GFX_NONE,
-                 32,
-                 704,
-                 16,
-                 xt_init,
-                 NULL};
-MODEL m_super16t = {"[8088] Hyundai Super16T",
-                     ROM_HYUNDAI_SUPER16T,
-                     "super16t",
-                     {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                     MODEL_GFX_NONE,
-                     640,
-                     640,
-                     64,
-                     xt_init,
-                     NULL};
-MODEL m_super16te = {"[8088] Hyundai Super16TE",
-                      ROM_HYUNDAI_SUPER16TE,
-                      "super16te",
-                      {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                      MODEL_GFX_NONE,
-                      640,
-                      640,
-                      64,
-                      xt_init,
-                      NULL};
-MODEL m_ibmpc = {"[8088] IBM PC", ROM_IBMPC, "ibmpc", {{"", cpus_8088}, {"", NULL}, {"", NULL}}, MODEL_GFX_NONE, 64, 640, 32,
-                 xt_init,         NULL};
-MODEL m_ibmpcjr = {"[8088] IBM PCjr", ROM_IBMPCJR, "ibmpcjr", {{"", cpus_pcjr}, {"", NULL}, {"", NULL}},
-                   MODEL_GFX_FIXED,   128,         640,       64,
-                   pcjr_init,         &pcjr_device};
-MODEL m_ibmxt = {"[8088] IBM XT", ROM_IBMXT, "ibmxt", {{"", cpus_8088}, {"", NULL}, {"", NULL}}, MODEL_GFX_NONE, 64, 640, 64,
-                 xt_init,         NULL};
-MODEL m_jukopc = {"[8088] Juko XT clone",
-                  ROM_JUKOPC,
-                  "jukopc",
-                  {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                  MODEL_GFX_NONE,
-                  64,
-                  640,
-                  64,
-                  xt_init,
-                  NULL};
-MODEL m_ledge_modelm = {"[8088] Leading Edge Model M",
-                        ROM_LEDGE_MODELM,
-                        "ledge_modelm",
-                        {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                        MODEL_GFX_NONE,
-                        128,
-                        704,
-                        64,
-                        xt_init,
-                        NULL};
-MODEL m_ncr_pc4i = {"[8088] NCR PC4i", ROM_NCR_PC4I, "ncr_pc4i", {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                    MODEL_GFX_NONE,    256,          640,        64,
-                    xt_init,           NULL};
-MODEL m_pxxt = {"[8088] Phoenix XT clone",
-                ROM_PXXT,
-                "pxxt",
-                {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                MODEL_GFX_NONE,
-                64,
-                640,
-                64,
-                xt_init,
-                NULL};
-MODEL m_europc = {"[8088] Schneider EuroPC",
-                  ROM_EUROPC,
-                  "europc",
-                  {{"", cpus_europc}, {"", NULL}, {"", NULL}},
-                  MODEL_GFX_NONE,
-                  512,
-                  640,
-                  128,
-                  europc_init,
-                  NULL};
-MODEL m_tandy = {
-        "[8088] Tandy 1000", ROM_TANDY,        "tandy", {{"", cpus_8088}, {"", NULL}, {"", NULL}}, MODEL_GFX_FIXED, 128, 640, 128,
-        tandy1k_init,        &tandy1000_device};
-MODEL m_tandy1000hx = {"[8088] Tandy 1000 HX",
-                       ROM_TANDY1000HX,
-                       "tandy1000hx",
-                       {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                       MODEL_GFX_FIXED,
-                       256,
-                       640,
-                       128,
-                       tandy1k_init,
-                       &tandy1000hx_device};
-MODEL m_to16_pc = {"[8088] Thomson TO16 PC",
-                   ROM_TO16_PC,
-                   "to16_pc",
-                   {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                   MODEL_GFX_NONE,
-                   512,
-                   640,
-                   128,
-                   xt_init,
-                   NULL};
-MODEL m_t1000 = {"[8088] Toshiba T1000", ROM_T1000, "t1000", {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                 MODEL_GFX_FIXED,        512,       1280,    768,
-                 xt_t1000_init,          NULL};
-MODEL m_ltxt = {"[8088] VTech Laser Turbo XT",
-                ROM_LTXT,
-                "ltxt",
-                {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                MODEL_GFX_NONE,
-                64,
-                1152,
-                64,
-                xt_laserxt_init,
-                NULL};
-MODEL m_xi8088 = {"[8088] Xi8088",
-                  ROM_XI8088,
-                  "xi8088",
-                  {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                  MODEL_GFX_NONE | MODEL_AT | MODEL_PS2,
-                  64,
-                  1024,
-                  128,
-                  xt_xi8088_init,
-                  &xi8088_device};
-MODEL m_zdsupers = {"[8088] Zenith Data SupersPort",
-                    ROM_ZD_SUPERS,
-                    "zdsupers",
-                    {{"", cpus_8088}, {"", NULL}, {"", NULL}},
-                    MODEL_GFX_NONE,
-                    128,
-                    640,
-                    128,
-                    xt_zenith_init,
-                    NULL};
-
-/* 8086 PC's */
-MODEL m_pc1512 = {"[8086] Amstrad PC1512",
-                  ROM_PC1512,
-                  "pc1512",
-                  {{"", cpus_pc1512}, {"", NULL}, {"", NULL}},
-                  MODEL_GFX_FIXED | MODEL_AMSTRAD,
-                  512,
-                  640,
-                  128,
-                  ams_init,
-                  &ams1512_device};
-MODEL m_pc1640 = {"[8086] Amstrad PC1640",
-                  ROM_PC1640,
-                  "pc1640",
-                  {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                  MODEL_GFX_DISABLE_HW | MODEL_AMSTRAD,
-                  640,
-                  640,
-                  0,
-                  ams_init,
-                  &ams1512_device};
-MODEL m_pc2086 = {"[8086] Amstrad PC2086",
-                  ROM_PC2086,
-                  "pc2086",
-                  {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                  MODEL_GFX_DISABLE_HW | MODEL_AMSTRAD,
-                  640,
-                  640,
-                  0,
-                  ams_init,
-                  &ams2086_device};
-MODEL m_pc3086 = {"[8086] Amstrad PC3086",
-                  ROM_PC3086,
-                  "pc3086",
-                  {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                  MODEL_GFX_DISABLE_HW | MODEL_AMSTRAD,
-                  640,
-                  640,
-                  0,
-                  ams_init,
-                  &ams3086_device};
-MODEL m_pc5086 = {"[8086] Amstrad PC5086",
-                  ROM_PC5086,
-                  "pc5086",
-                  {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                  MODEL_GFX_NONE | MODEL_PS2,
-                  640,
-                  640,
-                  0,
-                  pc5086_init,
-                  &f82c710_upc_device};
-MODEL m_ppc512 = {"[8086] Amstrad PPC512/640",
-                  ROM_PPC512,
-                  "ppc512",
-                  {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                  MODEL_GFX_DISABLE_HW | MODEL_AMSTRAD,
-                  512,
-                  640,
-                  128,
-                  ams_init,
-                  &ams1512_device};
-MODEL m_deskpro = {"[8086] Compaq Deskpro", ROM_DESKPRO, "deskpro", {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                   MODEL_GFX_NONE,          128,         640,       128,
-                   compaq_xt_init,          NULL};
-MODEL m_olivetti_m24 = {"[8086] Olivetti M24",
-                        ROM_OLIM24,
-                        "olivetti_m24",
-                        {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                        MODEL_GFX_FIXED | MODEL_OLIM24,
-                        128,
-                        640,
-                        128,
-                        olim24_init,
-                        NULL};
-MODEL m_pc200 = {"[8086] Sinclair PC200",
-                 ROM_PC200,
-                 "pc200",
-                 {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                 MODEL_GFX_DISABLE_HW | MODEL_AMSTRAD,
-                 512,
-                 640,
-                 128,
-                 ams_init,
-                 &ams1512_device};
-MODEL m_tandy1000sl2 = {"[8086] Tandy 1000 SL/2",
-                        ROM_TANDY1000SL2,
-                        "tandy1000sl2",
-                        {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                        MODEL_GFX_FIXED,
-                        512,
-                        768,
-                        128,
-                        tandy1ksl2_init,
-                        NULL};
-MODEL m_t1200 = {"[8088] Toshiba T1200", ROM_T1200, "t1200", {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                 MODEL_GFX_FIXED,        1024,      2048,    1024,
-                 xt_t1200_init,          NULL};
-MODEL m_lxt3 = {"[8086] VTech Laser XT3", ROM_LXT3, "lxt3", {{"", cpus_8086}, {"", NULL}, {"", NULL}},
-                MODEL_GFX_NONE,           512,      1152,   128,
-                xt_laserxt_init,          NULL};
 
 /* 286 PC's */
 MODEL m_ami286 = {"[286] AMI 286 clone",
@@ -1623,44 +1178,6 @@ MODEL m_ga686bx = {"[Slot 1] Gigabyte GA-686BX",
                    NULL};
 
 void model_init_builtin() {
-        /* 8088 PC's */
-        pcem_add_model(&m_amixt);
-        pcem_add_model(&m_ataripc3);
-        pcem_add_model(&m_cbm_pc10);
-        pcem_add_model(&m_compaq_pip);
-        pcem_add_model(&m_dtk);
-        pcem_add_model(&m_genxt);
-        pcem_add_model(&m_super16t);
-        pcem_add_model(&m_super16te);
-        pcem_add_model(&m_ibmpc);
-        pcem_add_model(&m_ibmpcjr);
-        pcem_add_model(&m_ibmxt);
-        pcem_add_model(&m_jukopc);
-        pcem_add_model(&m_ledge_modelm);
-        pcem_add_model(&m_ncr_pc4i);
-        pcem_add_model(&m_pxxt);
-        pcem_add_model(&m_europc);
-        pcem_add_model(&m_tandy);
-        pcem_add_model(&m_tandy1000hx);
-        pcem_add_model(&m_to16_pc);
-        pcem_add_model(&m_t1000);
-        pcem_add_model(&m_ltxt);
-        pcem_add_model(&m_xi8088);
-        pcem_add_model(&m_zdsupers);
-
-        /* 8086 PC's */
-        pcem_add_model(&m_pc1512);
-        pcem_add_model(&m_pc1640);
-        pcem_add_model(&m_pc2086);
-        pcem_add_model(&m_pc3086);
-        pcem_add_model(&m_pc5086);
-        pcem_add_model(&m_ppc512);
-        pcem_add_model(&m_deskpro);
-        pcem_add_model(&m_olivetti_m24);
-        pcem_add_model(&m_pc200);
-        pcem_add_model(&m_tandy1000sl2);
-        pcem_add_model(&m_t1200);
-        pcem_add_model(&m_lxt3);
 
         /* 286 PC's */
         pcem_add_model(&m_ami286);

@@ -156,38 +156,14 @@ extern int pic_intpending;
 extern char discfns[2][256];
 extern int driveempty[2];
 
-#define PCJR (romset == ROM_IBMPCJR)
-
 extern int GAMEBLASTER, GUS, SSI2001, voodoo_enabled;
-extern int AMSTRAD, AT, is386, PCI, TANDY, MCA;
+extern int AT, is386, PCI, MCA;
 
+// TODO: Prune this enum of unused values
 enum {
-        ROM_IBMPC = 0,
-        ROM_IBMXT,
-        ROM_IBMPCJR,
-        ROM_GENXT, /*'Generic XT BIOS'*/
-        ROM_CBM_PC10,
-        ROM_HYUNDAI_SUPER16T,
-        ROM_HYUNDAI_SUPER16TE,
-        ROM_DTKXT,
-        ROM_EUROPC,
-        ROM_OLIM24,
-        ROM_TANDY,
-        ROM_PC1512,
-        ROM_PC200,
-        ROM_PC1640,
-        ROM_PC2086,
-        ROM_PC3086,
-        ROM_AMIXT, /*XT Clone with AMI BIOS*/
-        ROM_LTXT,
-        ROM_LXT3,
         ROM_PX386,
         ROM_DTK386,
-        ROM_PXXT,
         ROM_JUKOPC,
-        ROM_TANDY1000HX,
-        ROM_TANDY1000SL2,
-        ROM_IBMAT,
         ROM_CMDPC30,
         ROM_AMI286,
         ROM_TG286M,
@@ -200,6 +176,7 @@ enum {
         ROM_SPC4620P,
         ROM_DELL200,
         ROM_MISC286,
+        ROM_IBMAT,
         ROM_IBMAT386,
         ROM_ACER386,
         ROM_KMXC02,
@@ -227,13 +204,11 @@ enum {
         ROM_IBMPS2_M50,
         ROM_IBMPS2_M55SX,
         ROM_IBMPS2_M80,
-        ROM_ATARIPC3,
         ROM_IBMXT286,
         ROM_EPSON_PCAX,
         ROM_EPSON_PCAX2E,
         ROM_EPSON_PCAX3,
         ROM_T3100E,
-        ROM_T1000,
         ROM_T1200,
         ROM_PB_L300SX,
         ROM_NCR_PC4I,
@@ -244,11 +219,9 @@ enum {
         ROM_ZAPPA,
         ROM_PB520R,
         ROM_COMPAQ_PIP,
-        ROM_XI8088,
         ROM_IBMPS2_M70_TYPE3,
         ROM_IBMPS2_M70_TYPE4,
         ROM_TULIP_TC7,
-        ROM_ZD_SUPERS, /* [8088] Zenith Data Systems SupersPort */
         ROM_PB410A,
         ROM_PPC512,
         ROM_BULL_MICRAL_45,
@@ -259,10 +232,8 @@ enum {
         ROM_LEDGE_MODELM,
         ROM_HYUNDAI_SUPER286TR,
         ROM_ITAUTEC_INFOWAYM,
-        ROM_DESKPRO,
         ROM_VS440FX,
         ROM_GA686BX,
-        ROM_PC5086,
 
         ROM_BUILTIN_MAX,
 };

@@ -11,7 +11,7 @@ int keywaiting = 0;
 int pic_intpending;
 
 void pic_updatepending() {
-        if (AT || romset == ROM_XI8088) {
+        if (AT) {
                 if ((pic2.pend & ~pic2.mask) & ~pic2.mask2)
                         pic.pend |= (1 << 2);
                 else
@@ -62,7 +62,7 @@ static void pic_autoeoi() {
                         pic.ins &= ~(1 << c);
                         pic_update_mask(&pic.mask2, pic.ins);
 
-                        if ((AT || romset == ROM_XI8088) && c == 2 && (pic2.pend & ~pic2.mask) & ~pic2.mask2)
+                        if ((AT) && c == 2 && (pic2.pend & ~pic2.mask) & ~pic2.mask2)
                                 pic.pend |= (1 << 2);
 
                         pic_updatepending();
@@ -296,10 +296,10 @@ void clearpic() {
 int pic_current[16];
 
 void picint(uint16_t num) {
-        if ((AT || romset == ROM_XI8088) && num == (1 << 2))
+        if ((AT) && num == (1 << 2))
                 num = 1 << 9;
         //        pclog("picint : %04X\n", num);
-        if ((AT || romset == ROM_XI8088) && num > 0xFF) {
+        if ((AT) && num > 0xFF) {
                 pic2.pend |= (num >> 8);
                 if ((pic2.pend & ~pic2.mask) & ~pic2.mask2)
                         pic.pend |= (1 << 2);
@@ -314,7 +314,7 @@ void picintlevel(uint16_t num) {
         int c = 0;
         while (!(num & (1 << c)))
                 c++;
-        if ((AT || romset == ROM_XI8088) && num == (1 << 2)) {
+        if ((AT) && num == (1 << 2)) {
                 c = 9;
                 num = 1 << 9;
         }
@@ -335,14 +335,14 @@ void picintc(uint16_t num) {
                 return;
         while (!(num & (1 << c)))
                 c++;
-        if ((AT || romset == ROM_XI8088) && num == (1 << 2)) {
+        if ((AT) && num == (1 << 2)) {
                 c = 9;
                 num = 1 << 9;
         }
         //        pclog("INTC %04X %i\n", num, c);
         pic_current[c] = 0;
 
-        if ((AT || romset == ROM_XI8088) && num > 0xff) {
+        if ((AT) && num > 0xff) {
                 pic2.pend &= ~(num >> 8);
                 if (!((pic2.pend & ~pic2.mask) & ~pic2.mask2))
                         pic.pend &= ~(1 << 2);
@@ -356,7 +356,7 @@ uint8_t picinterrupt() {
         uint8_t temp = pic.pend & ~pic.mask;
         int c;
         for (c = 0; c < 8; c++) {
-                if ((AT || romset == ROM_XI8088) && (temp & (1 << 2))) {
+                if ((AT) && (temp & (1 << 2))) {
                         uint8_t temp2 = pic2.pend & ~pic2.mask;
                         for (c = 0; c < 8; c++) {
                                 if (temp2 & (1 << c)) {

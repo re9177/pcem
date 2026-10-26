@@ -1423,11 +1423,9 @@ void keyboard_set_scancode_set(int set) {
 void keyboard_process() {
         int c;
         int d;
-        scancode *scancodes = (AT || romset == ROM_XI8088) ? at_scancodes : scancode_xt;
+        scancode *scancodes = (AT) ? at_scancodes : scancode_xt;
         if (!keyboard_scan)
                 return;
-        if (TANDY)
-                scancodes = scancode_tandy;
 
         for (c = 0; c < 272; c++) {
                 if (pcem_key[c])
@@ -1470,7 +1468,7 @@ void keyboard_process() {
 }
 
 void keyboard_send_scancode(int code, int is_break) {
-        scancode *scancodes = (AT || romset == ROM_XI8088) ? at_scancodes : scancode_xt;
+        scancode *scancodes = (AT) ? at_scancodes : scancode_xt;
         int d = 0;
 
         if (!keyboard_scan)

@@ -9,7 +9,6 @@
 #include "timer.h"
 #include "video/video.h"
 #include "cpu/x86.h"
-#include "models/xi8088.h"
 
 #include "keyboard/keyboard.h"
 #include "keyboard/keyboard_at.h"
@@ -245,8 +244,6 @@ void keyboard_at_adddata_mouse(uint8_t val) {
 
 void keyboard_at_write(uint16_t port, uint8_t val, void *priv) {
         //        pclog("keyboard_at : write %04X %02X %i  %02X\n", port, val, keyboard_at.key_wantdata, ram[8]);
-        if (romset == ROM_XI8088 && port == 0x63)
-                port = 0x61;
         /*        if (ram[8] == 0xc3)
                 {
                         output = 3;
@@ -468,13 +465,6 @@ void keyboard_at_write(uint16_t port, uint8_t val, void *priv) {
                 if (speaker_enable)
                         was_speaker_enable = 1;
                 pit_set_gate(&pit, 2, val & 1);
-
-                if (romset == ROM_XI8088) {
-                        if (val & 0x04)
-                                xi8088_turbo_set(1);
-                        else
-                                xi8088_turbo_set(0);
-                }
                 break;
 
         case 0x64:
@@ -765,11 +755,9 @@ void keyboard_at_write(uint16_t port, uint8_t val, void *priv) {
 uint8_t keyboard_at_read(uint16_t port, void *priv) {
         uint8_t temp = 0xff;
 
-        if (romset != ROM_IBMAT && romset != ROM_IBMXT286)
+        if (romset != ROM_IBMXT286)
                 cycles -= ISA_CYCLES(8);
         //        if (port != 0x61) pclog("keyboard_at : read %04X ", port);
-        if (romset == ROM_XI8088 && port == 0x63)
-                port = 0x61;
         switch (port) {
         case 0x60:
                 temp = keyboard_at.out;
@@ -787,12 +775,6 @@ uint8_t keyboard_at_read(uint16_t port, void *priv) {
                                 temp |= 0x10;
                         else
                                 temp &= ~0x10;
-                }
-                if (romset == ROM_XI8088) {
-                        if (xi8088_turbo_get())
-                                temp |= 0x04;
-                        else
-                                temp &= ~0x04;
                 }
                 break;
 
@@ -813,10 +795,7 @@ void keyboard_at_reset() {
         keyboard_at.mem[0] = 0x11;
         keyboard_at.wantirq = 0;
         keyboard_at.output_port = 0xcf;
-        if (romset == ROM_XI8088)
-                keyboard_at.input_port = (video_is_mda()) ? 0xb0 : 0xf0;
-        else
-                keyboard_at.input_port = (video_is_mda()) ? 0xf0 : 0xb0;
+        keyboard_at.input_port = (video_is_mda()) ? 0xf0 : 0xb0;
         keyboard_at.out_new = -1;
         keyboard_at.out_delayed = -1;
         keyboard_at.last_irq = 0;

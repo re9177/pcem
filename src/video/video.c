@@ -29,28 +29,20 @@
 #include "vid_colorplus.h"
 #include "vid_mda.h"
 #include "vid_mga.h"
-#include "vid_olivetti_m24.h"
 #include "vid_oti037.h"
 #include "vid_oti067.h"
 #include "vid_paradise.h"
-#include "vid_pc1512.h"
-#include "vid_pc1640.h"
-#include "vid_pc200.h"
-#include "vid_pcjr.h"
 #include "vid_pgc.h"
 #include "vid_ps1_svga.h"
 #include "vid_quadcolor.h"
 #include "vid_s3.h"
 #include "vid_s3_virge.h"
 #include "vid_sigma.h"
-#include "vid_tandy.h"
-#include "vid_tandysl.h"
 #include "vid_tgui9440.h"
 #include "vid_tvga.h"
 #include "vid_vga.h"
 #include "vid_wy700.h"
 #include "vid_t3100e.h"
-#include "vid_t1000.h"
 #include "vid_v6355.h"
 #include "vid_voodoo_banshee.h"
 
@@ -207,7 +199,6 @@ static video_timings_t timing_oti067 = {VIDEO_ISA, 6, 8, 16, 6, 8, 16};
 static video_timings_t timing_vga = {VIDEO_ISA, 8, 16, 32, 8, 16, 32};
 static video_timings_t timing_ps1_svga = {VIDEO_ISA, 6, 8, 16, 6, 8, 16};
 static video_timings_t timing_t3100e = {VIDEO_ISA, 8, 16, 32, 8, 16, 32};
-static video_timings_t timing_t1000 = {VIDEO_ISA, 8, 16, 32, 8, 16, 32};
 static video_timings_t timing_spc4620p = {VIDEO_ISA, 2, 2, 4, 4, 4, 8};
 static video_timings_t timing_pc425x = {VIDEO_BUS, 5, 5, 9, 20, 20, 30};
 static video_timings_t timing_pb410a = {VIDEO_BUS, 5, 5, 9, 20, 20, 30};
@@ -235,47 +226,6 @@ char *video_card_getname(int card) {
 
 device_t *video_card_getdevice(int card, int romset) {
         switch (romset) {
-        case ROM_IBMPCJR:
-                return &pcjr_video_device;
-
-        case ROM_TANDY:
-        case ROM_TANDY1000HX:
-                return &tandy_device;
-
-        case ROM_TANDY1000SL2:
-                return &tandysl_device;
-
-        case ROM_PC1512:
-                return &pc1512_device;
-
-        case ROM_PC1640:
-                if (card == GFX_BUILTIN)
-                        return &pc1640_device;
-                break;
-
-        case ROM_PC200:
-                if (card == GFX_BUILTIN)
-                        return &pc200_device;
-                break;
-
-        case ROM_PPC512:
-                if (card == GFX_BUILTIN)
-                        return &ppc512_device;
-                break;
-
-        case ROM_OLIM24:
-                return &m24_device;
-
-        case ROM_PC2086:
-                if (card == GFX_BUILTIN)
-                        return &paradise_pvga1a_pc2086_device;
-                break;
-
-        case ROM_PC3086:
-                if (card == GFX_BUILTIN)
-                        return &paradise_pvga1a_pc3086_device;
-                break;
-
         case ROM_MEGAPC:
                 return &paradise_wd90c11_megapc_device;
 
@@ -316,10 +266,6 @@ device_t *video_card_getdevice(int card, int romset) {
 
         case ROM_T3100E:
                 return &t3100e_device;
-
-        case ROM_T1000:
-        case ROM_T1200:
-                return &t1000_device;
 
         case ROM_ELX_PC425X:
                 return &tgui9400cxi_elx_device;
@@ -410,29 +356,12 @@ int video_get_video_from_internal_name(char *s) {
 
 int video_is_mda() {
         switch (romset) {
-        case ROM_PC200:
-        case ROM_PPC512:
-                if (gfxcard == GFX_BUILTIN) {
-                        /* The chipset here can emulate either CGA or MDA. Find out which */
-                        return (pc200_is_mda);
-                }
-                break;
-
-        case ROM_PC1640:
-        case ROM_PC2086:
-        case ROM_PC3086:
         case ROM_MEGAPC:
         case ROM_ACER386:
         case ROM_SPC4620P:
         case ROM_SPC6033P:
                 if (gfxcard != GFX_BUILTIN)
                         break;
-        case ROM_IBMPCJR:
-        case ROM_TANDY:
-        case ROM_TANDY1000HX:
-        case ROM_TANDY1000SL2:
-        case ROM_PC1512:
-        case ROM_OLIM24:
         case ROM_IBMPS1_2011:
         case ROM_IBMPS2_M30_286:
         case ROM_IBMPS2_M50:
@@ -443,7 +372,6 @@ int video_is_mda() {
         case ROM_IBMPS1_2121:
         case ROM_IBMPS1_2133_451:
         case ROM_T3100E:
-        case ROM_T1000:
         case ROM_AMA932J:
         case ROM_ELX_PC425X:
         case ROM_PB410A:
@@ -456,27 +384,6 @@ int video_is_mda() {
 }
 int video_is_cga() {
         switch (romset) {
-        case ROM_PC200:
-        case ROM_PPC512:
-                if (gfxcard == GFX_BUILTIN) {
-                        /* The chipset here can emulate either CGA or MDA. Find out which */
-                        return (!pc200_is_mda);
-                }
-                break;
-
-        case ROM_IBMPCJR:
-        case ROM_TANDY:
-        case ROM_TANDY1000HX:
-        case ROM_TANDY1000SL2:
-        case ROM_PC1512:
-        case ROM_OLIM24:
-        case ROM_T3100E:
-        case ROM_T1000:
-                return 1;
-
-        case ROM_PC1640:
-        case ROM_PC2086:
-        case ROM_PC3086:
         case ROM_MEGAPC:
         case ROM_ACER386:
         case ROM_SPC4620P:
@@ -504,21 +411,6 @@ int video_is_cga() {
 }
 int video_is_ega_vga() {
         switch (romset) {
-        case ROM_IBMPCJR:
-        case ROM_TANDY:
-        case ROM_TANDY1000HX:
-        case ROM_TANDY1000SL2:
-        case ROM_PC1512:
-        case ROM_PC200:
-        case ROM_PPC512:
-        case ROM_OLIM24:
-        case ROM_T3100E:
-        case ROM_T1000:
-                return 0;
-
-        case ROM_PC1640:
-        case ROM_PC2086:
-        case ROM_PC3086:
         case ROM_MEGAPC:
         case ROM_ACER386:
         case ROM_AMA932J:
@@ -606,38 +498,6 @@ void video_updatetiming() {
                 timing = &video_cards[new_gfxcard]->timing;
 
                 switch (romset) {
-                case ROM_IBMPCJR:
-                case ROM_TANDY:
-                case ROM_TANDY1000HX:
-                case ROM_TANDY1000SL2:
-                        timing = &timing_dram;
-                        break;
-
-                case ROM_PC1512:
-                        timing = &timing_pc1512;
-                        break;
-
-                case ROM_PC1640:
-                        if (gfxcard == GFX_BUILTIN)
-                                timing = &timing_pc1640;
-                        break;
-
-                case ROM_PC200:
-                case ROM_PPC512:
-                        if (gfxcard == GFX_BUILTIN)
-                                timing = &timing_pc200;
-                        break;
-
-                case ROM_OLIM24:
-                        timing = &timing_m24;
-                        break;
-
-                case ROM_PC2086:
-                case ROM_PC3086:
-                        if (gfxcard == GFX_BUILTIN)
-                                timing = &timing_pvga1a;
-                        break;
-
                 case ROM_MEGAPC:
                         if (gfxcard == GFX_BUILTIN)
                                 timing = &timing_wd90c11;
@@ -683,10 +543,6 @@ void video_updatetiming() {
 
                 case ROM_T3100E:
                         timing = &timing_t3100e;
-                        break;
-
-                case ROM_T1000:
-                        timing = &timing_t1000;
                         break;
 
                 case ROM_ELX_PC425X:
@@ -761,62 +617,6 @@ void video_init() {
         pclog("Video_init %i %i\n", romset, gfxcard);
 
         switch (romset) {
-        case ROM_IBMPCJR:
-                device_add(&pcjr_video_device);
-                return;
-
-        case ROM_TANDY:
-        case ROM_TANDY1000HX:
-                device_add(&tandy_device);
-                return;
-
-        case ROM_TANDY1000SL2:
-                device_add(&tandysl_device);
-                return;
-
-        case ROM_PC1512:
-                device_add(&pc1512_device);
-                return;
-
-        case ROM_PC1640:
-                if (gfxcard == GFX_BUILTIN) {
-                        device_add(&pc1640_device);
-                        return;
-                }
-                break;
-
-        case ROM_PC200:
-                if (gfxcard == GFX_BUILTIN) {
-                        device_add(&pc200_device);
-                        return;
-                }
-                break;
-
-        case ROM_PPC512:
-                if (gfxcard == GFX_BUILTIN) {
-                        device_add(&ppc512_device);
-                        return;
-                }
-                break;
-
-        case ROM_OLIM24:
-                device_add(&m24_device);
-                return;
-
-        case ROM_PC2086:
-                if (gfxcard == GFX_BUILTIN) {
-                        device_add(&paradise_pvga1a_pc2086_device);
-                        return;
-                }
-                break;
-
-        case ROM_PC3086:
-                if (gfxcard == GFX_BUILTIN) {
-                        device_add(&paradise_pvga1a_pc3086_device);
-                        return;
-                }
-                break;
-
         case ROM_MEGAPC:
                 if (gfxcard == GFX_BUILTIN) {
                         device_add(&paradise_wd90c11_megapc_device);
@@ -875,11 +675,6 @@ void video_init() {
 
         case ROM_T3100E:
                 device_add(&t3100e_device);
-                return;
-
-        case ROM_T1000:
-        case ROM_T1200:
-                device_add(&t1000_device);
                 return;
 
         case ROM_ELX_PC425X:

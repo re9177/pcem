@@ -56,7 +56,6 @@
 #include "timer.h"
 #include "video/vid_voodoo.h"
 #include "video/video.h"
-#include "models/amstrad.h"
 #include "hdd/hdd.h"
 #include "cpu/x86.h"
 #include "paths.h"

@@ -3,7 +3,6 @@
 #include "devices/device.h" // REMOVE
 #include "memory/mem.h"
 #include "sst39sf010.h"
-#include "models/xi8088.h"
 
 typedef struct sst_t {
         int command_state;
@@ -26,14 +25,7 @@ static void set_id_mode(sst_t *sst);
 static void clear_id_mode(sst_t *sst);
 
 static uint32_t sst_masked_rom_addr(uint32_t addr) {
-        // The flipped MSB of the Xi 8088 is only present in the on-disk files,
-        // in ram the mapping is as the software sees. This does not cause
-        // problems with the programming commands because they only use the
-        // lower 2 bytes.
-        if (romset == ROM_XI8088 && !xi8088_bios_128kb())
-                return addr & 0xffff;
-        else
-                return addr & 0x1ffff;
+        return addr & 0x1ffff;
 }
 
 static void sst_new_command(sst_t *sst, uint8_t val) {
@@ -164,10 +156,6 @@ static void *sst_39sf010_init() {
         memset(sst, 0, sizeof(sst_t));
 
         switch (romset) {
-        case ROM_XI8088:
-                strcpy(sst->flash_path, "xi8088/");
-                break;
-
         case ROM_FIC_VA503P:
                 strcpy(sst->flash_path, "fic_va503p/");
                 break;
@@ -179,12 +167,6 @@ static void *sst_39sf010_init() {
         f = romfopen(sst->flash_path, "rb");
         if (f) {
                 switch (romset) {
-                case ROM_XI8088:
-                        if (xi8088_bios_128kb())
-                                fread(rom + 0x10000, 0x10000, 1, f);
-                        fread(rom, 0x10000, 1, f);
-                        break;
-
                 case ROM_FIC_VA503P:
                         fread(rom, 0x20000, 1, f);
                         break;
@@ -207,12 +189,6 @@ static void sst_39sf010_close(void *p) {
         if (sst->dirty) {
                 FILE *f = romfopen(sst->flash_path, "wb");
                 switch (romset) {
-                case ROM_XI8088:
-                        if (xi8088_bios_128kb())
-                                fwrite(sst->data + 0x10000, 0x10000, 1, f);
-                        fwrite(sst->data, 0x10000, 1, f);
-                        break;
-
                 case ROM_FIC_VA503P:
                         fwrite(sst->data, 0x20000, 1, f);
                         break;

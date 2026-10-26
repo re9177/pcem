@@ -95,7 +95,7 @@ void fdc_reset() {
         fdc.lock = 0;
         fdc.head = 0;
         fdc.abort = 0;
-        if (!AT && romset != ROM_XI8088 && romset != ROM_PC5086) {
+        if (!AT) {
                 fdc.rate = 2;
                 // fdc_update_rate();
         }
@@ -631,7 +631,7 @@ void fdc_write(uint16_t addr, uint8_t val, void *priv) {
                 }
                 return;
         case 7:
-                if (!AT && romset != ROM_XI8088 && romset != ROM_PC5086)
+                if (!AT)
                         return;
                 fdc.rate = val & 3;
 

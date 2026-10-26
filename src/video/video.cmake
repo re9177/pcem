@@ -25,14 +25,9 @@ set(PCEM_SRC ${PCEM_SRC}
         video/vid_incolor.c
         video/vid_mda.c
         video/vid_mga.c
-        video/vid_olivetti_m24.c
         video/vid_oti037.c
         video/vid_oti067.c
         video/vid_paradise.c
-        video/vid_pc1512.c
-        video/vid_pc1640.c
-        video/vid_pc200.c
-        video/vid_pcjr.c
         video/vid_pgc.c
         video/vid_ps1_svga.c
         video/vid_quadcolor.c
@@ -43,10 +38,7 @@ set(PCEM_SRC ${PCEM_SRC}
         video/vid_stg_ramdac.c
         video/vid_svga.c
         video/vid_svga_render.c
-        video/vid_t1000.c
         video/vid_t3100e.c
-        video/vid_tandy.c
-        video/vid_tandysl.c
         video/vid_tgui9440.c
         video/vid_tkd8001_ramdac.c
         video/vid_tvga.c

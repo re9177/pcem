@@ -12,7 +12,6 @@
 #include "config.h" // REMOVE
 #include "models/model.h"
 #include "models/nmi.h"
-#include "models/t1000.h"
 #include "cpu/x86.h"
 
 int oldromset;
@@ -80,10 +79,7 @@ static void nvr_rtc(void *p) {
                 nvrram[RTC_REGC] |= RTC_PF;
                 if (nvrram[RTC_REGB] & RTC_PIE) {
                         nvrram[RTC_REGC] |= RTC_IRQF;
-                        if (AMSTRAD)
-                                picint(2);
-                        else
-                                picint(0x100);
+                        picint(0x100);
                         //                        pclog("RTC int\n");
                 }
         }
@@ -109,10 +105,7 @@ static void nvr_update_end(void *p) {
                         nvrram[RTC_REGC] |= RTC_AF;
                         if (nvrram[RTC_REGB] & RTC_AIE) {
                                 nvrram[RTC_REGC] |= RTC_IRQF;
-                                if (AMSTRAD)
-                                        picint(2);
-                                else
-                                        picint(0x100);
+                                picint(0x100);
                         }
                 }
 
@@ -120,10 +113,7 @@ static void nvr_update_end(void *p) {
                 nvrram[RTC_REGC] |= RTC_UF;
                 if (nvrram[RTC_REGB] & RTC_UIE) {
                         nvrram[RTC_REGC] |= RTC_IRQF;
-                        if (AMSTRAD)
-                                picint(2);
-                        else
-                                picint(0x100);
+                        picint(0x100);
                 }
         }
 
@@ -215,10 +205,7 @@ uint8_t readnvr(uint16_t addr, void *p) {
                 if (nvraddr == RTC_REGD)
                         nvrram[RTC_REGD] |= RTC_VRT;
                 if (nvraddr == RTC_REGC) {
-                        if (AMSTRAD)
-                                picintc(2);
-                        else
-                                picintc(0x100);
+                        picintc(0x100);
                         temp = nvrram[RTC_REGC];
                         nvrram[RTC_REGC] = 0;
                         return temp;
@@ -236,30 +223,6 @@ void loadnvr() {
         nvrmask = 63;
         oldromset = romset;
         switch (romset) {
-        case ROM_PC1512:
-                f = nvrfopen("pc1512.nvr", "rb");
-                break;
-        case ROM_PC1640:
-                f = nvrfopen("pc1640.nvr", "rb");
-                break;
-        case ROM_PC200:
-                f = nvrfopen("pc200.nvr", "rb");
-                break;
-        case ROM_PC2086:
-                f = nvrfopen("pc2086.nvr", "rb");
-                break;
-        case ROM_PC3086:
-                f = nvrfopen("pc3086.nvr", "rb");
-                break;
-        case ROM_PC5086:
-                f = nvrfopen("pc5086.nvr", "rb");
-                break;
-        case ROM_PPC512:
-                f = nvrfopen("ppc512.nvr", "rb");
-                break;
-        case ROM_IBMAT:
-                f = nvrfopen("at.nvr", "rb");
-                break;
         case ROM_IBMXT286:
                 f = nvrfopen("ibmxt286.nvr", "rb");
                 break;
@@ -443,16 +406,6 @@ void loadnvr() {
         case ROM_T3100E:
                 f = nvrfopen("t3100e.nvr", "rb");
                 break;
-        case ROM_T1000:
-                tc8521_loadnvr();
-                t1000_configsys_loadnvr();
-                t1000_emsboard_loadnvr();
-                return;
-        case ROM_T1200:
-                tc8521_loadnvr();
-                t1200_state_loadnvr();
-                t1000_emsboard_loadnvr();
-                return;
         case ROM_ELX_PC425X:
                 f = nvrfopen("elx_pc425.nvr", "rb");
                 nvrmask = 127;
@@ -471,10 +424,6 @@ void loadnvr() {
                 break;
         case ROM_PB520R:
                 f = nvrfopen("pb520r.nvr", "rb");
-                nvrmask = 127;
-                break;
-        case ROM_XI8088:
-                f = nvrfopen("xi8088.nvr", "rb");
                 nvrmask = 127;
                 break;
         case ROM_IBMPS2_M70_TYPE3:
@@ -544,30 +493,6 @@ void loadnvr() {
 void savenvr() {
         FILE *f;
         switch (oldromset) {
-        case ROM_PC1512:
-                f = nvrfopen("pc1512.nvr", "wb");
-                break;
-        case ROM_PC1640:
-                f = nvrfopen("pc1640.nvr", "wb");
-                break;
-        case ROM_PC200:
-                f = nvrfopen("pc200.nvr", "wb");
-                break;
-        case ROM_PC2086:
-                f = nvrfopen("pc2086.nvr", "wb");
-                break;
-        case ROM_PC3086:
-                f = nvrfopen("pc3086.nvr", "wb");
-                break;
-        case ROM_PC5086:
-                f = nvrfopen("pc5086.nvr", "wb");
-                break;
-        case ROM_PPC512:
-                f = nvrfopen("ppc512.nvr", "wb");
-                break;
-        case ROM_IBMAT:
-                f = nvrfopen("at.nvr", "wb");
-                break;
         case ROM_IBMXT286:
                 f = nvrfopen("ibmxt286.nvr", "wb");
                 break;
@@ -712,16 +637,6 @@ void savenvr() {
         case ROM_T3100E:
                 f = nvrfopen("t3100e.nvr", "wb");
                 break;
-        case ROM_T1000:
-                tc8521_savenvr();
-                t1000_configsys_savenvr();
-                t1000_emsboard_savenvr();
-                return;
-        case ROM_T1200:
-                tc8521_savenvr();
-                t1200_state_savenvr();
-                t1000_emsboard_savenvr();
-                return;
         case ROM_ELX_PC425X:
                 f = nvrfopen("elx_pc425.nvr", "wb");
                 break;
@@ -736,9 +651,6 @@ void savenvr() {
                 break;
         case ROM_PB520R:
                 f = nvrfopen("pb520r.nvr", "wb");
-                break;
-        case ROM_XI8088:
-                f = nvrfopen("xi8088.nvr", "wb");
                 break;
         case ROM_IBMPS2_M70_TYPE3:
                 f = nvrfopen("ibmps2_m70_type3.nvr", "wb");

@@ -5,7 +5,6 @@ set(PCEM_SRC ${PCEM_SRC}
         models/acc3221.c
         models/acer386sx.c
         models/ali1429.c
-        models/amstrad.c
         models/cbm_io.c
         models/cmd640.c
         models/compaq.c
@@ -21,14 +20,10 @@ set(PCEM_SRC ${PCEM_SRC}
         models/i440bx.c
         models/i440fx.c
         models/intel.c
-        models/jim.c
-        models/laserxt.c
         models/model.c
         models/mvp3.c
         models/neat.c
         models/nmi.c
-        models/nvr_tc8521.c
-        models/olivetti_m24.c
         models/opti495.c
         models/pc87306.c
         models/pc87307.c
@@ -44,8 +39,6 @@ set(PCEM_SRC ${PCEM_SRC}
         models/serial.c
         models/sio.c
         models/sl82c460.c
-        models/superxt.c
-        models/t1000.c
         models/t3100e.c
         models/um8669f.c
         models/um8881f.c
@@ -54,6 +47,4 @@ set(PCEM_SRC ${PCEM_SRC}
         models/w83877tf.c
         models/w83977tf.c
         models/wd76c10.c
-        models/xi8088.c
-        models/zenith.c
         )

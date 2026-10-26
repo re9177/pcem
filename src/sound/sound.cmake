@@ -14,7 +14,6 @@ set(PCEM_SRC ${PCEM_SRC}
         sound/sound_opl.c
         sound/sound_pas16.c
         sound/sound_ps1.c
-        sound/sound_pssj.c
         sound/sound_resid.cc
         sound/sound_sb.c
         sound/sound_sb_dsp.c

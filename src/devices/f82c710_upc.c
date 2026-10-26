@@ -309,10 +309,7 @@ static void *upc_init() {
         upc.cri = 0;
 
         /********************* Initialize mouse interface ********************/
-        if (romset == ROM_PC5086) /* IRQ is 2 for PC5086 and 12 for others */
-                upc.mouse_irq = 2;
-        else
-                upc.mouse_irq = 12;
+        upc.mouse_irq = 12;
         upc.mdata_addr = upc.regs[13] * 4;
         upc.mstat_addr = upc.mdata_addr + 1;
         upc.mouse_status = UPC_MOUSE_DEV_IDLE | UPC_MOUSE_TX_IDLE;

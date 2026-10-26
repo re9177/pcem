@@ -39,7 +39,7 @@ void serial_update_ints(SERIAL *serial) {
                 serial->iir = 0;
         }
 
-        if (stat && ((serial->mctrl & 8) || PCJR))
+        if (stat && ((serial->mctrl & 8)))
                 picintlevel(1 << serial->irq);
         else
                 picintc(1 << serial->irq);

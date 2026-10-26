@@ -18,7 +18,6 @@
 #include "flash/rom.h"
 #include "cpu/x86_ops.h"
 #include "codegen/codegen.h"
-#include "models/xi8088.h"
 
 page_t *pages;
 page_t **page_lookup;
@@ -1233,7 +1232,7 @@ void mem_set_mem_state(uint32_t base, uint32_t size, int state) {
 }
 
 void mem_add_bios() {
-        if (AT || (romset == ROM_XI8088 && xi8088_bios_128kb())) {
+        if (AT) {
                 mem_mapping_add(&bios_mapping[0], 0xe0000, 0x04000, mem_read_bios, mem_read_biosw, mem_read_biosl, mem_write_null,
                                 mem_write_nullw, mem_write_nulll, rom + (0x20000 & biosmask),
                                 MEM_MAPPING_EXTERNAL | MEM_MAPPING_ROM, 0);
@@ -1375,31 +1374,7 @@ void mem_alloc() {
         memset(_mem_state, 0, sizeof(_mem_state));
 
         mem_set_mem_state(0x000000, (mem_size > 640) ? 0xa0000 : mem_size * 1024, MEM_READ_INTERNAL | MEM_WRITE_INTERNAL);
-        if (romset == ROM_XI8088) {
-                // Xi 8088 UMBs are selected by DIP Switches
-                mem_set_mem_state(0x0a0000, 0x20000, MEM_READ_EXTERNAL | MEM_WRITE_EXTERNAL);
-                mem_set_mem_state(0x0c0000, 0x08000,
-                                  model_get_config_int("umb_c0000h_c7fff") ? (MEM_READ_INTERNAL | MEM_WRITE_INTERNAL)
-                                                                           : (MEM_READ_EXTERNAL | MEM_WRITE_EXTERNAL));
-                mem_set_mem_state(0x0c8000, 0x08000,
-                                  model_get_config_int("umb_c8000h_cffff") ? (MEM_READ_INTERNAL | MEM_WRITE_INTERNAL)
-                                                                           : (MEM_READ_EXTERNAL | MEM_WRITE_EXTERNAL));
-                mem_set_mem_state(0x0d0000, 0x08000,
-                                  model_get_config_int("umb_d0000h_d7fff") ? (MEM_READ_INTERNAL | MEM_WRITE_INTERNAL)
-                                                                           : (MEM_READ_EXTERNAL | MEM_WRITE_EXTERNAL));
-                mem_set_mem_state(0x0d8000, 0x08000,
-                                  model_get_config_int("umb_d8000h_dffff") ? (MEM_READ_INTERNAL | MEM_WRITE_INTERNAL)
-                                                                           : (MEM_READ_EXTERNAL | MEM_WRITE_EXTERNAL));
-                mem_set_mem_state(0x0e0000, 0x08000,
-                                  model_get_config_int("umb_e0000h_e7fff") ? (MEM_READ_INTERNAL | MEM_WRITE_INTERNAL)
-                                                                           : (MEM_READ_EXTERNAL | MEM_WRITE_EXTERNAL));
-                mem_set_mem_state(0x0e8000, 0x08000,
-                                  model_get_config_int("umb_e8000h_effff") ? (MEM_READ_INTERNAL | MEM_WRITE_INTERNAL)
-                                                                           : (MEM_READ_EXTERNAL | MEM_WRITE_EXTERNAL));
-                mem_set_mem_state(0x0f0000, 0x10000, MEM_READ_EXTERNAL | MEM_WRITE_EXTERNAL);
-        } else {
-                mem_set_mem_state(0x0a0000, 0x60000, MEM_READ_EXTERNAL | MEM_WRITE_EXTERNAL);
-        }
+        mem_set_mem_state(0x0a0000, 0x60000, MEM_READ_EXTERNAL | MEM_WRITE_EXTERNAL);
 
         mem_mapping_add(&ram_low_mapping, 0x00000, (mem_size > 640) ? 0xa0000 : mem_size * 1024, mem_read_ram, mem_read_ramw,
                         mem_read_raml, mem_write_ram, mem_write_ramw, mem_write_raml, ram, MEM_MAPPING_INTERNAL, NULL);
