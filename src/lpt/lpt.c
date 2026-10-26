@@ -8,11 +8,6 @@
 #include <pcem/devices.h>
 #include <pcem/defines.h>
 
-#ifdef USE_EXPERIMENTAL_PRINTER
-#include "lpt_epsonlx810.h"
-#include <pcem/api.h>
-#endif
-
 char lpt1_device_name[16];
 
 int lpt1_current = 0;
