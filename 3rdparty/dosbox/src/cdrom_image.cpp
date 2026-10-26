@@ -30,7 +30,7 @@
 #include <vector>
 #include <sys/stat.h>
 #include "dosbox/cdrom.h"
-#include "ide/ide.h"
+//#include "ide/ide.h"
 
 #if !defined(WIN32)
 #include <libgen.h>

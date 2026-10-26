@@ -6,7 +6,7 @@
 #include <math.h>
 
 #include "ibm.h"
-#include "devices/device.h" // REMOVE
+#include "devices/device.h"
 #include "memory/mem.h"
 #include "video/vid_cga.h"
 #include "dosbox/vid_cga_comp.h"

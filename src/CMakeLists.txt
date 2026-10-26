@@ -2,13 +2,13 @@ if(FORCE_X11)
         set(PCEM_DEFINES ${PCEM_DEFINES} FORCE_X11)
 endif()
 
+# Remove this and just use add_subdirectory like a normal person
 include(${CMAKE_CURRENT_SOURCE_DIR}/bus/bus.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cdrom/cdrom.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/codegen/codegen.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cpu/cpu.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/devices/devices.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/disc/disc.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/dosbox/dosbox.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/flash/flash.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/floppy/floppy.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/hdd/hdd.cmake)
@@ -69,6 +69,8 @@ target_link_libraries(pcem PRIVATE
         ${SDL2_LIBRARIES}
         ${OPENAL_LIBRARY}
         ${OPENGL_LIBRARIES}
-        minivhd
+        # Third party code
+        3rdparty-minivhd
+        3rdparty-dosbox
         ${PCEM_ADDITIONAL_LIBS}
         )
