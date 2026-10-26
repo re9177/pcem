@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <pcem/logging.h>
+#include "logging.h"
 #include "config.h" // REMOVE
 
 char config_file_default[256];

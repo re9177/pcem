@@ -34,6 +34,7 @@ endif()
 
 set(PCEM_SRC ${PCEM_SRC}
         config.c
+        logging.c
         fdi2raw.c
         io.c
         mcr.c

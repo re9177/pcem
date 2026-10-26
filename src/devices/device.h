@@ -1,6 +1,14 @@
 #ifndef _DEVICE_H_
 #define _DEVICE_H_
 
+#define DEV_MAX 256
+#define ROM_MAX 256
+#define GFX_MAX 256
+#define SOUND_MAX 256
+#define HDDCONTROLLERS_MAX 256
+#define NETWORK_CARD_MAX 256
+#define LPT_MAX 256
+
 #include <pcem/devices.h>
 
 extern device_t *current_device;

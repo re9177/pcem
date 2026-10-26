@@ -6,8 +6,9 @@
 
 #include "timer.h"
 
-#include <pcem/defines.h>
-#include <pcem/logging.h>
+#include "logging.h"
+
+#include "devices/device.h"
 
 #ifdef ABS
 #undef ABS

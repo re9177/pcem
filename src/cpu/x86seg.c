@@ -11,7 +11,7 @@
 #include "config.h"
 #include "plugin-api/paths.h" // REMOVE
 //#include "models/i440bx.h"
-#include "logging-internal.h"
+#include "logging.h"
 
 /*Controls whether the accessed bit in a descriptor is set when CS is loaded.*/
 #define CS_ACCESSED

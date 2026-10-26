@@ -1,6 +1,8 @@
+#include "device.h"
+
 #include <pcem/defines.h>
 #include <pcem/devices.h>
-#include <pcem/logging.h>
+#include "logging.h"
 #include <string.h>
 #include "config.h"
 

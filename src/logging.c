@@ -6,9 +6,10 @@
 #include <stdlib.h>
 #include <errno.h>
 
+#include "logging.h"
+
 #include "config.h" // REMOVE
-#include "paths.h"
-#include "plugin.h"
+#include "plugin-api/paths.h"
 
 void (*_savenvr)();
 void (*_dumppic)();

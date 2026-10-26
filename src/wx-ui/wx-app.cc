@@ -4,7 +4,7 @@
 #include <wx/event.h>
 #include "wx-utils.h"
 #include "wx-common.h"
-#include "logging-internal.h"
+#include "logging.h"
 
 #ifdef _WIN32
 #define BITMAP WINDOWS_BITMAP
