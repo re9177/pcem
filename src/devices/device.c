@@ -1,12 +1,13 @@
 #include "device.h"
-
-#include <pcem/defines.h>
-#include <pcem/devices.h>
 #include "logging.h"
 #include <string.h>
 #include "config.h"
 
-extern void *device_priv[256];
+// FIXME: rewrite this file in c++
+// use std::vector<> for the arrays
+// or like, anything.
+
+extern void *device_priv[DEV_MAX];
 extern device_t *devices[DEV_MAX];
 extern device_t *current_device;
 extern char *current_device_name;
@@ -36,7 +37,7 @@ void device_add(device_t *d) { pcem_add_device(d); }
 void device_close_all() {
         int c;
 
-        for (c = 0; c < 256; c++) {
+        for (c = 0; c < DEV_MAX; c++) {
                 if (devices[c] != NULL) {
                         if (devices[c]->close != NULL)
                                 devices[c]->close(device_priv[c]);
@@ -59,7 +60,7 @@ int device_available(device_t *d) {
 void device_speed_changed() {
         int c;
 
-        for (c = 0; c < 256; c++) {
+        for (c = 0; c < DEV_MAX; c++) {
                 if (devices[c] != NULL) {
                         if (devices[c]->speed_changed != NULL) {
                                 devices[c]->speed_changed(device_priv[c]);
@@ -73,7 +74,7 @@ void device_speed_changed() {
 void device_force_redraw() {
         int c;
 
-        for (c = 0; c < 256; c++) {
+        for (c = 0; c < DEV_MAX; c++) {
                 if (devices[c] != NULL) {
                         if (devices[c]->force_redraw != NULL) {
                                 devices[c]->force_redraw(device_priv[c]);
@@ -85,7 +86,7 @@ void device_force_redraw() {
 void device_add_status_info(char *s, int max_len) {
         int c;
 
-        for (c = 0; c < 256; c++) {
+        for (c = 0; c < DEV_MAX; c++) {
                 if (devices[c] != NULL) {
                         if (devices[c]->add_status_info != NULL)
                                 devices[c]->add_status_info(s, max_len, device_priv[c]);
@@ -299,10 +300,10 @@ void pcem_add_device(device_t *d) {
         int c = 0;
         void *priv = NULL;
 
-        while (devices[c] != NULL && c < 256)
+        while (devices[c] != NULL && c < DEV_MAX)
                 c++;
 
-        if (c >= 256)
+        if (c >= DEV_MAX)
                 fatal("device_add : too many devices\n");
 
         current_device = d;

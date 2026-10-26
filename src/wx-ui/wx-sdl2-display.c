@@ -11,7 +11,7 @@
 #undef UNICODE
 #include <windows.h>
 #include <windowsx.h>
-#include <pcem/api.h>
+
 #undef BITMAP
 
 HHOOK hKeyboardHook;
@@ -54,7 +54,7 @@ int trigger_screenshot = 0;
 int trigger_togglewindow = 0;
 int trigger_inputrelease = 0;
 
-PCEM_API extern void device_force_redraw();
+ extern void device_force_redraw();
 extern void mouse_wheel_update(int);
 extern void toggle_fullscreen();
 

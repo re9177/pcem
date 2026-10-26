@@ -5,14 +5,13 @@
 #include "lpt_dac.h"
 #include "lpt_dss.h"
 
-#include <pcem/devices.h>
-#include <pcem/defines.h>
+#include "devices/device.h"
 
 char lpt1_device_name[16];
 
 int lpt1_current = 0;
 
-PCEM_API extern LPT_DEVICE *lpt_devices[LPT_MAX];
+extern LPT_DEVICE *lpt_devices[LPT_MAX];
 
 LPT_DEVICE l_none = {"None", "none", NULL};
 LPT_DEVICE l_dss = {"Disney Sound Source", "dss", &dss_device};

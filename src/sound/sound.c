@@ -25,7 +25,7 @@
 #include "timer.h"
 #include "thread.h"
 
-#include <pcem/devices.h>
+#include "devices/device.h"
 
 extern SOUND_CARD *sound_cards[SOUND_MAX];
 

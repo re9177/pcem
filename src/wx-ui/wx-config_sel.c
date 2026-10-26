@@ -1,7 +1,7 @@
 #include "ibm.h"
 #include "config.h" // REMOVE
 #include "wx-utils.h"
-#include "plugin-api/paths.h"
+#include "paths.h"
 #include "wx-hostconfig.h"
 
 static int active_config = -1;

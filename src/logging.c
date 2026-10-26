@@ -9,7 +9,7 @@
 #include "logging.h"
 
 #include "config.h" // REMOVE
-#include "plugin-api/paths.h"
+#include "paths.h"
 
 void (*_savenvr)();
 void (*_dumppic)();

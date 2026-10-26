@@ -85,7 +85,7 @@
 #include "xi8088.h"
 #include "zenith.h"
 
-#include <pcem/devices.h>
+#include "devices/device.h"
 
 void xt_init();
 void pcjr_init();

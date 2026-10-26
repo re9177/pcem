@@ -12,8 +12,7 @@
 #include "scsi/scsi_ibm.h"
 #include "ide/xtide.h"
 
-#include <pcem/devices.h> // REMOVE
-#include <pcem/defines.h> // REMOVE
+#include "devices/device.h" // REMOVE
 
 PcemHDC hdc[7];
 

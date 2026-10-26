@@ -10,10 +10,10 @@
 #endif
 
 #include "wx/xrc/xmlres.h"
-#include <pcem/api.h>
+
 
 extern "C" {
-PCEM_API void pclog(const char *format, ...);
+ void pclog(const char *format, ...);
 #include "config.h" // REMOVE
 #include "devices/device.h" // REMOVE
 #include "joystick/gameport.h"

@@ -38,7 +38,7 @@
 #include "disc/disc.h"
 #include "disc/disc_img.h"
 #include "memory/mem.h"
-#include "plugin-api/paths.h"
+#include "paths.h"
 #include "networking/nethandler.h"
 
 #include "wx-sdl2-video.h"
@@ -46,7 +46,6 @@
 #include "wx-common.h"
 #include "wx-display.h"
 
-#include "plugin-api/plugin.h" // REMOVE
 #include "models/pic.h"
 
 #include "viewer.h"
@@ -60,6 +59,14 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #endif
+
+// Internal callbacks used by logging.
+// Might be better to just call these functions directly...
+// Now is not the day to fix that though
+extern void (*_savenvr)();
+extern void (*_dumppic)();
+extern void (*_dumpregs)();
+extern void (*_sound_speed_changed)();
 
 extern void creatediscimage_open(void *hwnd);
 
@@ -442,8 +449,6 @@ extern void wx_loadconfig();
 extern void wx_saveconfig();
 
 int pc_main(int argc, char **argv) {
-        // Expose some functions to libpcem-plugin-api without moving them over to
-        // the plugin api proper
         _savenvr = savenvr;
         _dumppic = dumppic;
         _dumpregs = dumpregs;

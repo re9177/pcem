@@ -59,8 +59,7 @@
 #include "models/amstrad.h"
 #include "hdd/hdd.h"
 #include "cpu/x86.h"
-#include "plugin-api/paths.h"
-#include "plugin-api/plugin.h"
+#include "paths.h"
 #include "wx-ui/viewer.h"
 
 #ifdef USE_NETWORKING

@@ -5,7 +5,7 @@
 #include "config.h" // REMOVE
 #include "memory/mem.h"
 #include "flash/rom.h"
-#include "plugin-api/paths.h" // REMOVE
+#include "paths.h" // REMOVE
 
 FILE *romfopen(char *fn, char *mode) {
         FILE *f;

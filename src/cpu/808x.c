@@ -26,7 +26,7 @@
 #include "timer.h"
 #include "cpu/x86.h"
 #include "x87.h"
-#include "plugin-api/paths.h" // REMOVE
+#include "paths.h" // REMOVE
 
 uint64_t xt_cpu_multi;
 int nmi = 0;

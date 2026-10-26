@@ -17,9 +17,9 @@
 #include "wx-utils.h"
 #include "config.h" // REMOVE
 #include "wx-glsl.h"
-#include <pcem/api.h>
 
-PCEM_API extern char *get_filename(char *);
+
+ extern char *get_filename(char *);
 
 extern int take_screenshot;
 extern void screenshot_taken(unsigned char *rgb, int width, int height);

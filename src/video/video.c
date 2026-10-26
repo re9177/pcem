@@ -54,10 +54,10 @@
 #include "vid_v6355.h"
 #include "vid_voodoo_banshee.h"
 
-#include <pcem/devices.h>
-#include <pcem/api.h>
+#include "devices/device.h"
 
-PCEM_API extern VIDEO_CARD *video_cards[GFX_MAX];
+
+ extern VIDEO_CARD *video_cards[GFX_MAX];
 
 enum { VIDEO_ISA = 0, VIDEO_BUS };
 

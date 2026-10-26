@@ -8,9 +8,9 @@
 #include <list>
 #include <string>
 #include <vector>
-#include <pcem/api.h>
 
-extern "C" PCEM_API void pclog(const char *format, ...);
+
+extern "C"  void pclog(const char *format, ...);
 
 class ViewerRout
 {

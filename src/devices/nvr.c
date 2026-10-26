@@ -8,7 +8,7 @@
 #include "models/pic.h"
 #include "timer.h"
 #include "rtc.h"
-#include "plugin-api/paths.h" // REMOVE
+#include "paths.h" // REMOVE
 #include "config.h" // REMOVE
 #include "models/model.h"
 #include "models/nmi.h"

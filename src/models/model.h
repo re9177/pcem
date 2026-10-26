@@ -1,7 +1,7 @@
 #ifndef _MODEL_H_
 #define _MODEL_H_
 
-#include <pcem/devices.h>
+#include "devices/device.h"
 
 #define MODEL_AT 1
 #define MODEL_PS2 2

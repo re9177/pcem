@@ -9,7 +9,7 @@
 #include "386_common.h"
 #include "cpu/cpu.h"
 #include "config.h"
-#include "plugin-api/paths.h" // REMOVE
+#include "paths.h" // REMOVE
 //#include "models/i440bx.h"
 #include "logging.h"
 

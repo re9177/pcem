@@ -25,8 +25,6 @@ char configs_path[512];
 char logs_path[512];
 /* this is where screenshots as stored */
 char screenshots_path[512];
-/* this is where plugins are stored */
-char plugins_default_path[512];
 
 char nvr_default_path[512];
 
