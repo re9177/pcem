@@ -56,26 +56,26 @@ extern int fpu_type;
 #define MANU_VIA 4
 
 typedef struct FPU {
-    const char *name;
-    const char *internal_name;
-    const int type;
+	const char* name;
+	const char* internal_name;
+	const int type;
 } FPU;
 
 typedef struct CPU {
-    char name[32];
-    int cpu_type;
-    const FPU *fpus;
-    int speed;
-    int rspeed;
-    int multi;
-    int pci_speed;
-    uint32_t edx_reset;
-    uint32_t cpuid_model;
-    uint16_t cyrix_id;
-    int cpu_flags;
-    int mem_read_cycles, mem_write_cycles;
-    int cache_read_cycles, cache_write_cycles;
-    int atclk_div;
+	char name[32];
+	int cpu_type;
+	const FPU* fpus;
+	int speed;
+	int rspeed;
+	int multi;
+	int pci_speed;
+	uint32_t edx_reset;
+	uint32_t cpuid_model;
+	uint16_t cyrix_id;
+	int cpu_flags;
+	int mem_read_cycles, mem_write_cycles;
+	int cache_read_cycles, cache_write_cycles;
+	int atclk_div;
 } CPU;
 
 extern int timing_rr;
@@ -92,9 +92,14 @@ extern int timing_jmp_rm, timing_jmp_pm, timing_jmp_pm_gate;
 
 extern int timing_misaligned;
 
-enum { FPU_NONE, FPU_8087, FPU_287, FPU_287XL, FPU_387, FPU_BUILTIN };
+enum { FPU_NONE,
+	   FPU_8087,
+	   FPU_287,
+	   FPU_287XL,
+	   FPU_387,
+	   FPU_BUILTIN };
 
-extern CPU *cpu_s;
+extern CPU* cpu_s;
 
 extern CPU cpus_8088[];
 extern CPU cpus_8086[];
@@ -148,7 +153,9 @@ extern int cpu_cyrix_alignment;
 #define CPU_FEATURE_SYSCALL (1 << 7)
 
 extern uint32_t cpu_features;
-static inline int cpu_has_feature(int feature) { return cpu_features & feature; }
+static inline int cpu_has_feature(int feature) {
+	return cpu_features & feature;
+}
 
 #define CR4_TSD (1 << 2)
 #define CR4_DE (1 << 3)
@@ -167,8 +174,8 @@ extern int cpu_cache_int_enabled, cpu_cache_ext_enabled;
 
 extern uint64_t tsc;
 
-void cyrix_write(uint16_t addr, uint8_t val, void *priv);
-uint8_t cyrix_read(uint16_t addr, void *priv);
+void cyrix_write(uint16_t addr, uint8_t val, void* priv);
+uint8_t cyrix_read(uint16_t addr, void* priv);
 
 extern int is8086;
 extern int is486;
@@ -196,9 +203,9 @@ int cpu_get_speed();
 
 extern int has_vlb;
 
-int fpu_get_type(int model, int manu, int cpu, const char *internal_name);
-const char *fpu_get_internal_name(int model, int manu, int cpu, int type);
-const char *fpu_get_name_from_index(int model, int manu, int cpu, int c);
+int fpu_get_type(int model, int manu, int cpu, const char* internal_name);
+const char* fpu_get_internal_name(int model, int manu, int cpu, int type);
+const char* fpu_get_name_from_index(int model, int manu, int cpu, int c);
 int fpu_get_type_from_index(int model, int manu, int cpu, int c);
 
 #endif /* _CPU_H_ */

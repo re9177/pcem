@@ -6,7 +6,7 @@
   */
 #if 0
 
-#include "ibm.h"
+	#include "ibm.h"
 
 int et4k_b8000;
 
@@ -33,10 +33,10 @@ struct
 	int cpu_input_num;
 } acl;
 
-#define ACL_WRST 1
-#define ACL_RDST 2
-#define ACL_XYST 4
-#define ACL_SSO 8
+	#define ACL_WRST 1
+	#define ACL_RDST 2
+	#define ACL_XYST 4
+	#define ACL_SSO 8
 
 struct
 {

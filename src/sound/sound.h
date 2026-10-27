@@ -2,16 +2,16 @@
 #define _SOUND_H_
 #include "timer.h"
 
-void sound_add_handler(void (*get_buffer)(int32_t *buffer, int len, void *p), void *p);
+void sound_add_handler(void (*get_buffer)(int32_t* buffer, int len, void* p), void* p);
 
 extern int sound_card_current;
 
 int sound_card_available(int card);
-char *sound_card_getname(int card);
-struct device_t *sound_card_getdevice(int card);
+char* sound_card_getname(int card);
+struct device_t* sound_card_getdevice(int card);
 int sound_card_has_config(int card);
-char *sound_card_get_internal_name(int card);
-int sound_card_get_from_internal_name(char *s);
+char* sound_card_get_internal_name(int card);
+int sound_card_get_from_internal_name(char* s);
 void sound_card_init();
 void sound_set_cd_volume(unsigned int vol_l, unsigned int vol_r);
 
@@ -25,11 +25,11 @@ void sound_init();
 void sound_init_builtin();
 void sound_reset();
 
-void initalmain(int argc, char *argv[]);
+void initalmain(int argc, char* argv[]);
 void inital();
 
-void givealbuffer(int32_t *buf);
-void givealbuffer_cd(int16_t *buf);
+void givealbuffer(int32_t* buf);
+void givealbuffer_cd(int16_t* buf);
 
 extern int sound_buf_len;
 void sound_update_buf_length();

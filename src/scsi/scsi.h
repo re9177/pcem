@@ -5,46 +5,46 @@ struct scsi_bus_t;
 struct atapi_device_t;
 
 typedef struct scsi_device_t {
-        void *(*init)(struct scsi_bus_t *bus, int id);
-        void *(*atapi_init)(struct scsi_bus_t *bus, int id, struct atapi_device_t *atapi_dev);
-        void (*close)(void *p);
-        void (*reset)(void *p);
+	void* (*init)(struct scsi_bus_t* bus, int id);
+	void* (*atapi_init)(struct scsi_bus_t* bus, int id, struct atapi_device_t* atapi_dev);
+	void (*close)(void* p);
+	void (*reset)(void* p);
 
-        void (*start_command)(void *p);
-        int (*command)(uint8_t *cdb, void *p);
+	void (*start_command)(void* p);
+	int (*command)(uint8_t* cdb, void* p);
 
-        uint8_t (*get_status)(void *p);
-        uint8_t (*get_sense_key)(void *p);
-        int (*get_bytes_required)(void *p);
+	uint8_t (*get_status)(void* p);
+	uint8_t (*get_sense_key)(void* p);
+	int (*get_bytes_required)(void* p);
 
-        void (*atapi_identify)(uint16_t *buffer, void *p);
-        int (*atapi_set_feature)(uint8_t feature, uint8_t val, void *p);
+	void (*atapi_identify)(uint16_t* buffer, void* p);
+	int (*atapi_set_feature)(uint8_t feature, uint8_t val, void* p);
 
-        uint8_t (*read)(void *p);
-        void (*write)(uint8_t val, void *p);
-        int (*read_complete)(void *p);
-        int (*write_complete)(void *p);
+	uint8_t (*read)(void* p);
+	void (*write)(uint8_t val, void* p);
+	int (*read_complete)(void* p);
+	int (*write_complete)(void* p);
 } scsi_device_t;
 
 #define CDB_MAX_LEN 20
 
 typedef struct scsi_bus_t {
-        int state;
-        int new_state;
-        int clear_req;
-        uint32_t bus_in, bus_out;
-        int dev_id;
+	int state;
+	int new_state;
+	int clear_req;
+	uint32_t bus_in, bus_out;
+	int dev_id;
 
-        int command_pos;
-        uint8_t command[CDB_MAX_LEN];
+	int command_pos;
+	uint8_t command[CDB_MAX_LEN];
 
-        scsi_device_t *devices[8];
-        void *device_data[8];
+	scsi_device_t* devices[8];
+	void* device_data[8];
 
-        int change_state_delay;
-        int new_req_delay;
+	int change_state_delay;
+	int new_req_delay;
 
-        int is_atapi;
+	int is_atapi;
 } scsi_bus_t;
 
 // int scsi_add_data(uint8_t val);
@@ -99,15 +99,15 @@ void scsi_set_irq(uint8_t status);
 
 #define BUS_IDLE (1 << 31)
 
-int scsi_bus_update(scsi_bus_t *bus, int bus_assert);
-int scsi_bus_read(scsi_bus_t *bus);
-int scsi_bus_match(scsi_bus_t *bus, int bus_assert);
-void scsi_bus_kick(scsi_bus_t *bus);
-void scsi_bus_init(scsi_bus_t *bus);
-void scsi_bus_close(scsi_bus_t *bus);
-void scsi_bus_reset(scsi_bus_t *bus);
+int scsi_bus_update(scsi_bus_t* bus, int bus_assert);
+int scsi_bus_read(scsi_bus_t* bus);
+int scsi_bus_match(scsi_bus_t* bus, int bus_assert);
+void scsi_bus_kick(scsi_bus_t* bus);
+void scsi_bus_init(scsi_bus_t* bus);
+void scsi_bus_close(scsi_bus_t* bus);
+void scsi_bus_reset(scsi_bus_t* bus);
 
-void scsi_bus_atapi_init(scsi_bus_t *bus, scsi_device_t *device, int id, struct atapi_device_t *atapi_dev);
+void scsi_bus_atapi_init(scsi_bus_t* bus, scsi_device_t* device, int id, struct atapi_device_t* atapi_dev);
 
 #define KEY_NONE 0
 #define KEY_NOT_READY 2

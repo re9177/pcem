@@ -14,9 +14,9 @@
   instruction. ARMv7 is restricted to +/- 32 MB, ARMv8 to +/- 128 MB, x86 to
   +/- 2GB. As a result, total memory size is limited to 32 MB on ARMv7*/
 #ifdef __ARM_EABI__
-#define MEM_BLOCK_NR 32768
+	#define MEM_BLOCK_NR 32768
 #else
-#define MEM_BLOCK_NR 131072
+	#define MEM_BLOCK_NR 131072
 #endif
 
 #define MEM_BLOCK_MASK (MEM_BLOCK_NR - 1)
@@ -26,13 +26,13 @@ void codegen_allocator_init();
 /*Allocate a mem_block_t, and the associated backing memory.
   If parent is non-NULL, then the new block will be added to the list in
   parent->next*/
-struct mem_block_t *codegen_allocator_allocate(struct mem_block_t *parent, int code_block);
+struct mem_block_t* codegen_allocator_allocate(struct mem_block_t* parent, int code_block);
 /*Free a mem_block_t, and any subsequent blocks in the list at block->next*/
-void codegen_allocator_free(struct mem_block_t *block);
+void codegen_allocator_free(struct mem_block_t* block);
 /*Get a pointer to the backing memory associated with block*/
-uint8_t *codeblock_allocator_get_ptr(struct mem_block_t *block);
+uint8_t* codeblock_allocator_get_ptr(struct mem_block_t* block);
 /*Cache clean memory block list*/
-void codegen_allocator_clean_blocks(struct mem_block_t *block);
+void codegen_allocator_clean_blocks(struct mem_block_t* block);
 
 extern int codegen_allocator_usage;
 

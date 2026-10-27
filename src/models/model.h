@@ -21,7 +21,7 @@
 #define MODEL_GFX_DISABLE_SW 0x300
 #define MODEL_GFX_MASK 0x300
 
-extern MODEL *models[ROM_MAX];
+extern MODEL* models[ROM_MAX];
 
 extern int model;
 
@@ -29,9 +29,9 @@ int model_count();
 int model_getromset();
 int model_getromset_from_model(int model);
 int model_getmodel(int romset);
-char *model_getname();
-char *model_get_internal_name();
-int model_get_model_from_internal_name(char *s);
+char* model_getname();
+char* model_get_internal_name();
+int model_get_model_from_internal_name(char* s);
 void model_init();
 void model_init_builtin();
 int model_has_fixed_gfx(int model);

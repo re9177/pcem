@@ -22,8 +22,8 @@
 #define SCATSX_CAS_TIMING_FOR_DMA 0x64
 
 typedef struct scat_t {
-        uint8_t regs_2x8;
-        uint8_t regs_2x9;
+	uint8_t regs_2x8;
+	uint8_t regs_2x9;
 } scat_t;
 
 void scat_init();

@@ -57,8 +57,8 @@
 #define UOP_STORE_P_IMM_16 (UOP_TYPE_PARAMS_IMM | 0x19)
 
 #ifdef DEBUG_EXTRA
-/*UOP_LOG_INSTR - log non-recompiled instruction in imm_data*/
-#define UOP_LOG_INSTR (UOP_TYPE_PARAMS_IMM | 0x1f)
+	/*UOP_LOG_INSTR - log non-recompiled instruction in imm_data*/
+	#define UOP_LOG_INSTR (UOP_TYPE_PARAMS_IMM | 0x1f)
 #endif
 
 /*UOP_MOV_PTR - dest_reg = p*/
@@ -159,55 +159,55 @@
 #define UOP_ROR_IMM (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | 0x59)
 
 /*UOP_CMP_IMM_JZ_DEST - if (src_reg_a == imm_data) then jump to ptr*/
-#define UOP_CMP_IMM_JZ_DEST                                                                                                      \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x60 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_IMM_JZ_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x60 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_IMM_JNZ_DEST - if (src_reg_a != imm_data) then jump to ptr*/
-#define UOP_CMP_IMM_JNZ_DEST                                                                                                     \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x61 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_IMM_JNZ_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x61 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 
 /*UOP_CMP_JB_DEST - if (src_reg_a < src_reg_b) then jump to ptr*/
-#define UOP_CMP_JB_DEST                                                                                                          \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x62 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JB_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x62 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JNB_DEST - if (src_reg_a >= src_reg_b) then jump to ptr*/
-#define UOP_CMP_JNB_DEST                                                                                                         \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x63 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JNB_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x63 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JO_DEST - if (src_reg_a < src_reg_b) then jump to ptr*/
-#define UOP_CMP_JO_DEST                                                                                                          \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x64 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JO_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x64 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JNO_DEST - if (src_reg_a >= src_reg_b) then jump to ptr*/
-#define UOP_CMP_JNO_DEST                                                                                                         \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x65 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JNO_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x65 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JZ_DEST - if (src_reg_a == src_reg_b) then jump to ptr*/
-#define UOP_CMP_JZ_DEST                                                                                                          \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x66 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JZ_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x66 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JNZ_DEST - if (src_reg_a != src_reg_b) then jump to ptr*/
-#define UOP_CMP_JNZ_DEST                                                                                                         \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x67 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JNZ_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x67 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JL_DEST - if (signed)(src_reg_a < src_reg_b) then jump to ptr*/
-#define UOP_CMP_JL_DEST                                                                                                          \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x68 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JL_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x68 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JNL_DEST - if (signed)(src_reg_a >= src_reg_b) then jump to ptr*/
-#define UOP_CMP_JNL_DEST                                                                                                         \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x69 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JNL_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x69 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JBE_DEST - if (src_reg_a <= src_reg_b) then jump to ptr*/
-#define UOP_CMP_JBE_DEST                                                                                                         \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x6a | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JBE_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x6a | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JNBE_DEST - if (src_reg_a > src_reg_b) then jump to ptr*/
-#define UOP_CMP_JNBE_DEST                                                                                                        \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x6b | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JNBE_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x6b | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JLE_DEST - if (signed)(src_reg_a <= src_reg_b) then jump to ptr*/
-#define UOP_CMP_JLE_DEST                                                                                                         \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x6c | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JLE_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x6c | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_CMP_JNLE_DEST - if (signed)(src_reg_a > src_reg_b) then jump to ptr*/
-#define UOP_CMP_JNLE_DEST                                                                                                        \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x6d | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_CMP_JNLE_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x6d | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 
 /*UOP_TEST_JNS_DEST - if (src_reg_a positive) then jump to ptr*/
-#define UOP_TEST_JNS_DEST                                                                                                        \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x70 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_TEST_JNS_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x70 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 /*UOP_TEST_JS_DEST - if (src_reg_a positive) then jump to ptr*/
-#define UOP_TEST_JS_DEST                                                                                                         \
-        (UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x71 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
+#define UOP_TEST_JS_DEST \
+	(UOP_TYPE_PARAMS_REGS | UOP_TYPE_PARAMS_IMM | UOP_TYPE_PARAMS_POINTER | 0x71 | UOP_TYPE_ORDER_BARRIER | UOP_TYPE_JUMP)
 
 /*UOP_FP_ENTER - must be called before any FPU register accessed*/
 #define UOP_FP_ENTER (UOP_TYPE_PARAMS_IMM | 0x80 | UOP_TYPE_BARRIER)
@@ -347,251 +347,251 @@
 #define UOP_MASK 0xffff
 
 typedef struct uop_t {
-        uint32_t type;
-        ir_reg_t dest_reg_a;
-        ir_reg_t src_reg_a;
-        ir_reg_t src_reg_b;
-        ir_reg_t src_reg_c;
-        uint32_t imm_data;
-        void *p;
-        ir_host_reg_t dest_reg_a_real;
-        ir_host_reg_t src_reg_a_real, src_reg_b_real, src_reg_c_real;
-        int jump_dest_uop;
-        int jump_list_next;
-        void *jump_dest;
-        uint32_t pc;
+	uint32_t type;
+	ir_reg_t dest_reg_a;
+	ir_reg_t src_reg_a;
+	ir_reg_t src_reg_b;
+	ir_reg_t src_reg_c;
+	uint32_t imm_data;
+	void* p;
+	ir_host_reg_t dest_reg_a_real;
+	ir_host_reg_t src_reg_a_real, src_reg_b_real, src_reg_c_real;
+	int jump_dest_uop;
+	int jump_list_next;
+	void* jump_dest;
+	uint32_t pc;
 } uop_t;
 
 #define UOP_NR_MAX 4096
 
 typedef struct ir_data_t {
-        uop_t uops[UOP_NR_MAX];
-        int wr_pos;
-        struct codeblock_t *block;
+	uop_t uops[UOP_NR_MAX];
+	int wr_pos;
+	struct codeblock_t* block;
 } ir_data_t;
 
-static inline uop_t *uop_alloc(ir_data_t *ir, uint32_t uop_type) {
-        uop_t *uop;
+static inline uop_t* uop_alloc(ir_data_t* ir, uint32_t uop_type) {
+	uop_t* uop;
 
-        if (ir->wr_pos >= UOP_NR_MAX)
-                fatal("Exceeded uOP max\n");
+	if(ir->wr_pos >= UOP_NR_MAX)
+		fatal("Exceeded uOP max\n");
 
-        uop = &ir->uops[ir->wr_pos++];
+	uop = &ir->uops[ir->wr_pos++];
 
-        uop->dest_reg_a = invalid_ir_reg;
-        uop->src_reg_a = invalid_ir_reg;
-        uop->src_reg_b = invalid_ir_reg;
-        uop->src_reg_c = invalid_ir_reg;
+	uop->dest_reg_a = invalid_ir_reg;
+	uop->src_reg_a = invalid_ir_reg;
+	uop->src_reg_b = invalid_ir_reg;
+	uop->src_reg_c = invalid_ir_reg;
 
-        uop->pc = cpu_state.oldpc;
+	uop->pc = cpu_state.oldpc;
 
-        uop->jump_dest_uop = -1;
-        uop->jump_list_next = -1;
+	uop->jump_dest_uop = -1;
+	uop->jump_list_next = -1;
 
-        if (uop_type & (UOP_TYPE_BARRIER | UOP_TYPE_ORDER_BARRIER))
-                codegen_reg_mark_as_required();
+	if(uop_type & (UOP_TYPE_BARRIER | UOP_TYPE_ORDER_BARRIER))
+		codegen_reg_mark_as_required();
 
-        return uop;
+	return uop;
 }
 
-static inline void uop_set_jump_dest(ir_data_t *ir, int jump_uop) {
-        uop_t *uop = &ir->uops[jump_uop];
+static inline void uop_set_jump_dest(ir_data_t* ir, int jump_uop) {
+	uop_t* uop = &ir->uops[jump_uop];
 
-        uop->jump_dest_uop = ir->wr_pos;
+	uop->jump_dest_uop = ir->wr_pos;
 }
 
-static inline int uop_gen(uint32_t uop_type, ir_data_t *ir) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline int uop_gen(uint32_t uop_type, ir_data_t* ir) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
+	uop->type = uop_type;
 
-        return ir->wr_pos - 1;
+	return ir->wr_pos - 1;
 }
 
-static inline int uop_gen_reg_src1(uint32_t uop_type, ir_data_t *ir, int src_reg_a) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline int uop_gen_reg_src1(uint32_t uop_type, ir_data_t* ir, int src_reg_a) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
 
-        return ir->wr_pos - 1;
+	return ir->wr_pos - 1;
 }
 
-static inline void uop_gen_reg_src1_arg(uint32_t uop_type, ir_data_t *ir, int arg, int src_reg_a) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_src1_arg(uint32_t uop_type, ir_data_t* ir, int arg, int src_reg_a) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
 }
 
-static inline int uop_gen_reg_src1_imm(uint32_t uop_type, ir_data_t *ir, int src_reg, uint32_t imm) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline int uop_gen_reg_src1_imm(uint32_t uop_type, ir_data_t* ir, int src_reg, uint32_t imm) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg);
-        uop->imm_data = imm;
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg);
+	uop->imm_data = imm;
 
-        return ir->wr_pos - 1;
+	return ir->wr_pos - 1;
 }
 
-static inline void uop_gen_reg_dst_imm(uint32_t uop_type, ir_data_t *ir, int dest_reg, uint32_t imm) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_dst_imm(uint32_t uop_type, ir_data_t* ir, int dest_reg, uint32_t imm) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
-        uop->imm_data = imm;
+	uop->type = uop_type;
+	uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
+	uop->imm_data = imm;
 }
 
-static inline void uop_gen_reg_dst_pointer(uint32_t uop_type, ir_data_t *ir, int dest_reg, void *p) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_dst_pointer(uint32_t uop_type, ir_data_t* ir, int dest_reg, void* p) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
-        uop->p = p;
+	uop->type = uop_type;
+	uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
+	uop->p = p;
 }
 
-static inline void uop_gen_reg_dst_src1(uint32_t uop_type, ir_data_t *ir, int dest_reg, int src_reg) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_dst_src1(uint32_t uop_type, ir_data_t* ir, int dest_reg, int src_reg) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg);
-        uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg);
+	uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
 }
 
-static inline void uop_gen_reg_dst_src1_imm(uint32_t uop_type, ir_data_t *ir, int dest_reg, int src_reg_a, uint32_t imm) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_dst_src1_imm(uint32_t uop_type, ir_data_t* ir, int dest_reg, int src_reg_a, uint32_t imm) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
-        uop->imm_data = imm;
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
+	uop->imm_data = imm;
 }
 
-static inline void uop_gen_reg_dst_src2(uint32_t uop_type, ir_data_t *ir, int dest_reg, int src_reg_a, int src_reg_b) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_dst_src2(uint32_t uop_type, ir_data_t* ir, int dest_reg, int src_reg_a, int src_reg_b) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->src_reg_b = codegen_reg_read(src_reg_b);
-        uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->src_reg_b = codegen_reg_read(src_reg_b);
+	uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
 }
 
-static inline void uop_gen_reg_dst_src2_imm(uint32_t uop_type, ir_data_t *ir, int dest_reg, int src_reg_a, int src_reg_b,
-                                            uint32_t imm) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_dst_src2_imm(uint32_t uop_type, ir_data_t* ir, int dest_reg, int src_reg_a, int src_reg_b,
+											uint32_t imm) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->src_reg_b = codegen_reg_read(src_reg_b);
-        uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
-        uop->imm_data = imm;
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->src_reg_b = codegen_reg_read(src_reg_b);
+	uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
+	uop->imm_data = imm;
 }
 
-static inline void uop_gen_reg_dst_src3(uint32_t uop_type, ir_data_t *ir, int dest_reg, int src_reg_a, int src_reg_b,
-                                        int src_reg_c) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_dst_src3(uint32_t uop_type, ir_data_t* ir, int dest_reg, int src_reg_a, int src_reg_b,
+										int src_reg_c) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->src_reg_b = codegen_reg_read(src_reg_b);
-        uop->src_reg_c = codegen_reg_read(src_reg_c);
-        uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->src_reg_b = codegen_reg_read(src_reg_b);
+	uop->src_reg_c = codegen_reg_read(src_reg_c);
+	uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
 }
 
-static inline void uop_gen_reg_dst_src_imm(uint32_t uop_type, ir_data_t *ir, int dest_reg, int src_reg, uint32_t imm) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_dst_src_imm(uint32_t uop_type, ir_data_t* ir, int dest_reg, int src_reg, uint32_t imm) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg);
-        uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
-        uop->imm_data = imm;
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg);
+	uop->dest_reg_a = codegen_reg_write(dest_reg, ir->wr_pos - 1);
+	uop->imm_data = imm;
 }
 
-static inline int uop_gen_reg_src2(uint32_t uop_type, ir_data_t *ir, int src_reg_a, int src_reg_b) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline int uop_gen_reg_src2(uint32_t uop_type, ir_data_t* ir, int src_reg_a, int src_reg_b) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->src_reg_b = codegen_reg_read(src_reg_b);
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->src_reg_b = codegen_reg_read(src_reg_b);
 
-        return ir->wr_pos - 1;
+	return ir->wr_pos - 1;
 }
 
-static inline void uop_gen_reg_src2_imm(uint32_t uop_type, ir_data_t *ir, int src_reg_a, int src_reg_b, uint32_t imm) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_src2_imm(uint32_t uop_type, ir_data_t* ir, int src_reg_a, int src_reg_b, uint32_t imm) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->src_reg_b = codegen_reg_read(src_reg_b);
-        uop->imm_data = imm;
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->src_reg_b = codegen_reg_read(src_reg_b);
+	uop->imm_data = imm;
 }
 
-static inline void uop_gen_reg_src3(uint32_t uop_type, ir_data_t *ir, int src_reg_a, int src_reg_b, int src_reg_c) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_src3(uint32_t uop_type, ir_data_t* ir, int src_reg_a, int src_reg_b, int src_reg_c) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->src_reg_b = codegen_reg_read(src_reg_b);
-        uop->src_reg_c = codegen_reg_read(src_reg_c);
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->src_reg_b = codegen_reg_read(src_reg_b);
+	uop->src_reg_c = codegen_reg_read(src_reg_c);
 }
 
-static inline void uop_gen_reg_src3_imm(uint32_t uop_type, ir_data_t *ir, int src_reg_a, int src_reg_b, int src_reg_c,
-                                        uint32_t imm) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_src3_imm(uint32_t uop_type, ir_data_t* ir, int src_reg_a, int src_reg_b, int src_reg_c,
+										uint32_t imm) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->src_reg_b = codegen_reg_read(src_reg_b);
-        uop->src_reg_c = codegen_reg_read(src_reg_c);
-        uop->imm_data = imm;
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->src_reg_b = codegen_reg_read(src_reg_b);
+	uop->src_reg_c = codegen_reg_read(src_reg_c);
+	uop->imm_data = imm;
 }
 
-static inline void uop_gen_imm(uint32_t uop_type, ir_data_t *ir, uint32_t imm) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_imm(uint32_t uop_type, ir_data_t* ir, uint32_t imm) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->imm_data = imm;
+	uop->type = uop_type;
+	uop->imm_data = imm;
 }
 
-static inline void uop_gen_pointer(uint32_t uop_type, ir_data_t *ir, void *p) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_pointer(uint32_t uop_type, ir_data_t* ir, void* p) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->p = p;
+	uop->type = uop_type;
+	uop->p = p;
 }
 
-static inline void uop_gen_pointer_imm(uint32_t uop_type, ir_data_t *ir, void *p, uint32_t imm) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_pointer_imm(uint32_t uop_type, ir_data_t* ir, void* p, uint32_t imm) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->p = p;
-        uop->imm_data = imm;
+	uop->type = uop_type;
+	uop->p = p;
+	uop->imm_data = imm;
 }
 
-static inline void uop_gen_reg_src_pointer(uint32_t uop_type, ir_data_t *ir, int src_reg_a, void *p) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_src_pointer(uint32_t uop_type, ir_data_t* ir, int src_reg_a, void* p) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->p = p;
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->p = p;
 }
 
-static inline void uop_gen_reg_src_pointer_imm(uint32_t uop_type, ir_data_t *ir, int src_reg_a, void *p, uint32_t imm) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_src_pointer_imm(uint32_t uop_type, ir_data_t* ir, int src_reg_a, void* p, uint32_t imm) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->p = p;
-        uop->imm_data = imm;
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->p = p;
+	uop->imm_data = imm;
 }
 
-static inline void uop_gen_reg_src2_pointer(uint32_t uop_type, ir_data_t *ir, int src_reg_a, int src_reg_b, void *p) {
-        uop_t *uop = uop_alloc(ir, uop_type);
+static inline void uop_gen_reg_src2_pointer(uint32_t uop_type, ir_data_t* ir, int src_reg_a, int src_reg_b, void* p) {
+	uop_t* uop = uop_alloc(ir, uop_type);
 
-        uop->type = uop_type;
-        uop->src_reg_a = codegen_reg_read(src_reg_a);
-        uop->src_reg_b = codegen_reg_read(src_reg_b);
-        uop->p = p;
+	uop->type = uop_type;
+	uop->src_reg_a = codegen_reg_read(src_reg_a);
+	uop->src_reg_b = codegen_reg_read(src_reg_b);
+	uop->p = p;
 }
 
 #define uop_LOAD_FUNC_ARG_REG(ir, arg, reg) uop_gen_reg_src1(UOP_LOAD_FUNC_ARG_0 + arg, ir, reg)
@@ -600,8 +600,8 @@ static inline void uop_gen_reg_src2_pointer(uint32_t uop_type, ir_data_t *ir, in
 
 #define uop_ADD(ir, dst_reg, src_reg_a, src_reg_b) uop_gen_reg_dst_src2(UOP_ADD, ir, dst_reg, src_reg_a, src_reg_b)
 #define uop_ADD_IMM(ir, dst_reg, src_reg, imm) uop_gen_reg_dst_src_imm(UOP_ADD_IMM, ir, dst_reg, src_reg, imm)
-#define uop_ADD_LSHIFT(ir, dst_reg, src_reg_a, src_reg_b, shift)                                                                 \
-        uop_gen_reg_dst_src2_imm(UOP_ADD_LSHIFT, ir, dst_reg, src_reg_a, src_reg_b, shift)
+#define uop_ADD_LSHIFT(ir, dst_reg, src_reg_a, src_reg_b, shift) \
+	uop_gen_reg_dst_src2_imm(UOP_ADD_LSHIFT, ir, dst_reg, src_reg_a, src_reg_b, shift)
 #define uop_AND(ir, dst_reg, src_reg_a, src_reg_b) uop_gen_reg_dst_src2(UOP_AND, ir, dst_reg, src_reg_a, src_reg_b)
 #define uop_AND_IMM(ir, dst_reg, src_reg, imm) uop_gen_reg_dst_src_imm(UOP_AND_IMM, ir, dst_reg, src_reg, imm)
 #define uop_ANDN(ir, dst_reg, src_reg_a, src_reg_b) uop_gen_reg_dst_src2(UOP_ANDN, ir, dst_reg, src_reg_a, src_reg_b)
@@ -659,20 +659,20 @@ static inline void uop_gen_reg_src2_pointer(uint32_t uop_type, ir_data_t *ir, in
 #define uop_FSQRT(ir, dst_reg, src_reg) uop_gen_reg_dst_src1(UOP_FSQRT, ir, dst_reg, src_reg)
 #define uop_FTST(ir, dst_reg, src_reg) uop_gen_reg_dst_src1(UOP_FTST, ir, dst_reg, src_reg)
 
-#define uop_FP_ENTER(ir)                                                                                                         \
-        do {                                                                                                                     \
-                if (!codegen_fpu_entered)                                                                                        \
-                        uop_gen_imm(UOP_FP_ENTER, ir, cpu_state.oldpc);                                                          \
-                codegen_fpu_entered = 1;                                                                                         \
-                codegen_mmx_entered = 0;                                                                                         \
-        } while (0)
-#define uop_MMX_ENTER(ir)                                                                                                        \
-        do {                                                                                                                     \
-                if (!codegen_mmx_entered)                                                                                        \
-                        uop_gen_imm(UOP_MMX_ENTER, ir, cpu_state.oldpc);                                                         \
-                codegen_mmx_entered = 1;                                                                                         \
-                codegen_fpu_entered = 0;                                                                                         \
-        } while (0)
+#define uop_FP_ENTER(ir)                                    \
+	do {                                                    \
+		if(!codegen_fpu_entered)                            \
+			uop_gen_imm(UOP_FP_ENTER, ir, cpu_state.oldpc); \
+		codegen_fpu_entered = 1;                            \
+		codegen_mmx_entered = 0;                            \
+	} while(0)
+#define uop_MMX_ENTER(ir)                                    \
+	do {                                                     \
+		if(!codegen_mmx_entered)                             \
+			uop_gen_imm(UOP_MMX_ENTER, ir, cpu_state.oldpc); \
+		codegen_mmx_entered = 1;                             \
+		codegen_fpu_entered = 0;                             \
+	} while(0)
 
 #define uop_JMP(ir, p) uop_gen_pointer(UOP_JMP, ir, p)
 #define uop_JMP_DEST(ir) uop_gen(UOP_JMP_DEST, ir)
@@ -680,26 +680,26 @@ static inline void uop_gen_reg_src2_pointer(uint32_t uop_type, ir_data_t *ir, in
 #define uop_LOAD_SEG(ir, p, src_reg) uop_gen_reg_src_pointer(UOP_LOAD_SEG, ir, src_reg, p)
 
 #define uop_MEM_LOAD_ABS(ir, dst_reg, seg_reg, imm) uop_gen_reg_dst_src_imm(UOP_MEM_LOAD_ABS, ir, dst_reg, seg_reg, imm)
-#define uop_MEM_LOAD_REG(ir, dst_reg, seg_reg, addr_reg)                                                                         \
-        uop_gen_reg_dst_src2_imm(UOP_MEM_LOAD_REG, ir, dst_reg, seg_reg, addr_reg, 0)
-#define uop_MEM_LOAD_REG_OFFSET(ir, dst_reg, seg_reg, addr_reg, offset)                                                          \
-        uop_gen_reg_dst_src2_imm(UOP_MEM_LOAD_REG, ir, dst_reg, seg_reg, addr_reg, offset)
-#define uop_MEM_LOAD_SINGLE(ir, dst_reg, seg_reg, addr_reg)                                                                      \
-        uop_gen_reg_dst_src2_imm(UOP_MEM_LOAD_SINGLE, ir, dst_reg, seg_reg, addr_reg, 0)
-#define uop_MEM_LOAD_DOUBLE(ir, dst_reg, seg_reg, addr_reg)                                                                      \
-        uop_gen_reg_dst_src2_imm(UOP_MEM_LOAD_DOUBLE, ir, dst_reg, seg_reg, addr_reg, 0)
+#define uop_MEM_LOAD_REG(ir, dst_reg, seg_reg, addr_reg) \
+	uop_gen_reg_dst_src2_imm(UOP_MEM_LOAD_REG, ir, dst_reg, seg_reg, addr_reg, 0)
+#define uop_MEM_LOAD_REG_OFFSET(ir, dst_reg, seg_reg, addr_reg, offset) \
+	uop_gen_reg_dst_src2_imm(UOP_MEM_LOAD_REG, ir, dst_reg, seg_reg, addr_reg, offset)
+#define uop_MEM_LOAD_SINGLE(ir, dst_reg, seg_reg, addr_reg) \
+	uop_gen_reg_dst_src2_imm(UOP_MEM_LOAD_SINGLE, ir, dst_reg, seg_reg, addr_reg, 0)
+#define uop_MEM_LOAD_DOUBLE(ir, dst_reg, seg_reg, addr_reg) \
+	uop_gen_reg_dst_src2_imm(UOP_MEM_LOAD_DOUBLE, ir, dst_reg, seg_reg, addr_reg, 0)
 #define uop_MEM_STORE_ABS(ir, seg_reg, imm, src_reg) uop_gen_reg_src2_imm(UOP_MEM_STORE_ABS, ir, seg_reg, src_reg, imm)
-#define uop_MEM_STORE_REG(ir, seg_reg, addr_reg, src_reg)                                                                        \
-        uop_gen_reg_src3_imm(UOP_MEM_STORE_REG, ir, seg_reg, addr_reg, src_reg, 0)
-#define uop_MEM_STORE_REG_OFFSET(ir, seg_reg, addr_reg, offset, src_reg)                                                         \
-        uop_gen_reg_src3_imm(UOP_MEM_STORE_REG, ir, seg_reg, addr_reg, src_reg, offset)
+#define uop_MEM_STORE_REG(ir, seg_reg, addr_reg, src_reg) \
+	uop_gen_reg_src3_imm(UOP_MEM_STORE_REG, ir, seg_reg, addr_reg, src_reg, 0)
+#define uop_MEM_STORE_REG_OFFSET(ir, seg_reg, addr_reg, offset, src_reg) \
+	uop_gen_reg_src3_imm(UOP_MEM_STORE_REG, ir, seg_reg, addr_reg, src_reg, offset)
 #define uop_MEM_STORE_IMM_8(ir, seg_reg, addr_reg, imm) uop_gen_reg_src2_imm(UOP_MEM_STORE_IMM_8, ir, seg_reg, addr_reg, imm)
 #define uop_MEM_STORE_IMM_16(ir, seg_reg, addr_reg, imm) uop_gen_reg_src2_imm(UOP_MEM_STORE_IMM_16, ir, seg_reg, addr_reg, imm)
 #define uop_MEM_STORE_IMM_32(ir, seg_reg, addr_reg, imm) uop_gen_reg_src2_imm(UOP_MEM_STORE_IMM_32, ir, seg_reg, addr_reg, imm)
-#define uop_MEM_STORE_SINGLE(ir, seg_reg, addr_reg, src_reg)                                                                     \
-        uop_gen_reg_src3_imm(UOP_MEM_STORE_SINGLE, ir, seg_reg, addr_reg, src_reg, 0)
-#define uop_MEM_STORE_DOUBLE(ir, seg_reg, addr_reg, src_reg)                                                                     \
-        uop_gen_reg_src3_imm(UOP_MEM_STORE_DOUBLE, ir, seg_reg, addr_reg, src_reg, 0)
+#define uop_MEM_STORE_SINGLE(ir, seg_reg, addr_reg, src_reg) \
+	uop_gen_reg_src3_imm(UOP_MEM_STORE_SINGLE, ir, seg_reg, addr_reg, src_reg, 0)
+#define uop_MEM_STORE_DOUBLE(ir, seg_reg, addr_reg, src_reg) \
+	uop_gen_reg_src3_imm(UOP_MEM_STORE_DOUBLE, ir, seg_reg, addr_reg, src_reg, 0)
 
 #define uop_MOV(ir, dst_reg, src_reg) uop_gen_reg_dst_src1(UOP_MOV, ir, dst_reg, src_reg)
 #define uop_MOV_IMM(ir, reg, imm) uop_gen_reg_dst_imm(UOP_MOV_IMM, ir, reg, imm)
@@ -710,10 +710,10 @@ static inline void uop_gen_reg_src2_pointer(uint32_t uop_type, ir_data_t *ir, in
 #define uop_MOVSX(ir, dst_reg, src_reg) uop_gen_reg_dst_src1(UOP_MOVSX, ir, dst_reg, src_reg)
 #define uop_MOVZX(ir, dst_reg, src_reg) uop_gen_reg_dst_src1(UOP_MOVZX, ir, dst_reg, src_reg)
 #define uop_MOV_DOUBLE_INT(ir, dst_reg, src_reg) uop_gen_reg_dst_src1(UOP_MOV_DOUBLE_INT, ir, dst_reg, src_reg)
-#define uop_MOV_INT_DOUBLE(ir, dst_reg, src_reg /*, nrc, orc*/)                                                                  \
-        uop_gen_reg_dst_src1(UOP_MOV_INT_DOUBLE, ir, dst_reg, src_reg /*, nrc, orc*/)
-#define uop_MOV_INT_DOUBLE_64(ir, dst_reg, src_reg_d, src_reg_q, tag)                                                            \
-        uop_gen_reg_dst_src3(UOP_MOV_INT_DOUBLE_64, ir, dst_reg, src_reg_d, src_reg_q, tag)
+#define uop_MOV_INT_DOUBLE(ir, dst_reg, src_reg /*, nrc, orc*/) \
+	uop_gen_reg_dst_src1(UOP_MOV_INT_DOUBLE, ir, dst_reg, src_reg /*, nrc, orc*/)
+#define uop_MOV_INT_DOUBLE_64(ir, dst_reg, src_reg_d, src_reg_q, tag) \
+	uop_gen_reg_dst_src3(UOP_MOV_INT_DOUBLE_64, ir, dst_reg, src_reg_d, src_reg_q, tag)
 
 #define uop_NOP_BARRIER(ir) uop_gen(UOP_NOP_BARRIER, ir)
 
@@ -786,46 +786,46 @@ static inline void uop_gen_reg_src2_pointer(uint32_t uop_type, ir_data_t *ir, in
 #define uop_TEST_JS_DEST(ir, src_reg) uop_gen_reg_src1(UOP_TEST_JS_DEST, ir, src_reg)
 
 #ifdef DEBUG_EXTRA
-#define uop_LOG_INSTR(ir, imm) uop_gen_imm(UOP_LOG_INSTR, ir, imm)
+	#define uop_LOG_INSTR(ir, imm) uop_gen_imm(UOP_LOG_INSTR, ir, imm)
 #endif
 
-void codegen_direct_read_8(codeblock_t *block, int host_reg, void *p);
-void codegen_direct_read_16(codeblock_t *block, int host_reg, void *p);
-void codegen_direct_read_32(codeblock_t *block, int host_reg, void *p);
-void codegen_direct_read_64(codeblock_t *block, int host_reg, void *p);
-void codegen_direct_read_pointer(codeblock_t *block, int host_reg, void *p);
-void codegen_direct_read_double(codeblock_t *block, int host_reg, void *p);
-void codegen_direct_read_st_8(codeblock_t *block, int host_reg, void *base, int reg_idx);
-void codegen_direct_read_st_64(codeblock_t *block, int host_reg, void *base, int reg_idx);
-void codegen_direct_read_st_double(codeblock_t *block, int host_reg, void *base, int reg_idx);
+void codegen_direct_read_8(codeblock_t* block, int host_reg, void* p);
+void codegen_direct_read_16(codeblock_t* block, int host_reg, void* p);
+void codegen_direct_read_32(codeblock_t* block, int host_reg, void* p);
+void codegen_direct_read_64(codeblock_t* block, int host_reg, void* p);
+void codegen_direct_read_pointer(codeblock_t* block, int host_reg, void* p);
+void codegen_direct_read_double(codeblock_t* block, int host_reg, void* p);
+void codegen_direct_read_st_8(codeblock_t* block, int host_reg, void* base, int reg_idx);
+void codegen_direct_read_st_64(codeblock_t* block, int host_reg, void* base, int reg_idx);
+void codegen_direct_read_st_double(codeblock_t* block, int host_reg, void* base, int reg_idx);
 
-void codegen_direct_write_8(codeblock_t *block, void *p, int host_reg);
-void codegen_direct_write_16(codeblock_t *block, void *p, int host_reg);
-void codegen_direct_write_32(codeblock_t *block, void *p, int host_reg);
-void codegen_direct_write_64(codeblock_t *block, void *p, int host_reg);
-void codegen_direct_write_pointer(codeblock_t *block, void *p, int host_reg);
-void codegen_direct_write_ptr(codeblock_t *block, void *p, int host_reg);
-void codegen_direct_write_double(codeblock_t *block, void *p, int host_reg);
-void codegen_direct_write_st_8(codeblock_t *block, void *base, int reg_idx, int host_reg);
-void codegen_direct_write_st_64(codeblock_t *block, void *base, int reg_idx, int host_reg);
-void codegen_direct_write_st_double(codeblock_t *block, void *base, int reg_idx, int host_reg);
+void codegen_direct_write_8(codeblock_t* block, void* p, int host_reg);
+void codegen_direct_write_16(codeblock_t* block, void* p, int host_reg);
+void codegen_direct_write_32(codeblock_t* block, void* p, int host_reg);
+void codegen_direct_write_64(codeblock_t* block, void* p, int host_reg);
+void codegen_direct_write_pointer(codeblock_t* block, void* p, int host_reg);
+void codegen_direct_write_ptr(codeblock_t* block, void* p, int host_reg);
+void codegen_direct_write_double(codeblock_t* block, void* p, int host_reg);
+void codegen_direct_write_st_8(codeblock_t* block, void* base, int reg_idx, int host_reg);
+void codegen_direct_write_st_64(codeblock_t* block, void* base, int reg_idx, int host_reg);
+void codegen_direct_write_st_double(codeblock_t* block, void* base, int reg_idx, int host_reg);
 
-void codegen_direct_read_16_stack(codeblock_t *block, int host_reg, int stack_offset);
-void codegen_direct_read_32_stack(codeblock_t *block, int host_reg, int stack_offset);
-void codegen_direct_read_64_stack(codeblock_t *block, int host_reg, int stack_offset);
-void codegen_direct_read_pointer_stack(codeblock_t *block, int host_reg, int stack_offset);
-void codegen_direct_read_double_stack(codeblock_t *block, int host_reg, int stack_offset);
+void codegen_direct_read_16_stack(codeblock_t* block, int host_reg, int stack_offset);
+void codegen_direct_read_32_stack(codeblock_t* block, int host_reg, int stack_offset);
+void codegen_direct_read_64_stack(codeblock_t* block, int host_reg, int stack_offset);
+void codegen_direct_read_pointer_stack(codeblock_t* block, int host_reg, int stack_offset);
+void codegen_direct_read_double_stack(codeblock_t* block, int host_reg, int stack_offset);
 
-void codegen_direct_write_32_stack(codeblock_t *block, int stack_offset, int host_reg);
-void codegen_direct_write_64_stack(codeblock_t *block, int stack_offset, int host_reg);
-void codegen_direct_write_pointer_stack(codeblock_t *block, int stack_offset, int host_reg);
-void codegen_direct_write_double_stack(codeblock_t *block, int stack_offset, int host_reg);
+void codegen_direct_write_32_stack(codeblock_t* block, int stack_offset, int host_reg);
+void codegen_direct_write_64_stack(codeblock_t* block, int stack_offset, int host_reg);
+void codegen_direct_write_pointer_stack(codeblock_t* block, int stack_offset, int host_reg);
+void codegen_direct_write_double_stack(codeblock_t* block, int stack_offset, int host_reg);
 
-void codegen_set_jump_dest(codeblock_t *block, void *p);
+void codegen_set_jump_dest(codeblock_t* block, void* p);
 
-void codegen_direct_write_8_imm(codeblock_t *block, void *p, uint8_t imm_data);
-void codegen_direct_write_16_imm(codeblock_t *block, void *p, uint16_t imm_data);
-void codegen_direct_write_32_imm(codeblock_t *block, void *p, uint32_t imm_data);
-void codegen_direct_write_32_imm_stack(codeblock_t *block, int stack_offset, uint32_t imm_data);
+void codegen_direct_write_8_imm(codeblock_t* block, void* p, uint8_t imm_data);
+void codegen_direct_write_16_imm(codeblock_t* block, void* p, uint16_t imm_data);
+void codegen_direct_write_32_imm(codeblock_t* block, void* p, uint32_t imm_data);
+void codegen_direct_write_32_imm_stack(codeblock_t* block, int stack_offset, uint32_t imm_data);
 
 #endif /* _CODEGEN_IR_DEFS_H_ */

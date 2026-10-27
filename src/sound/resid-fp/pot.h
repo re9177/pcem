@@ -23,8 +23,8 @@
 #include "siddefs-fp.h"
 
 class PotentiometerFP {
-    public:
-        reg8 readPOT();
+   public:
+	reg8 readPOT();
 };
 
 #endif

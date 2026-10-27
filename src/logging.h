@@ -5,11 +5,11 @@
 extern "C" {
 #endif
 
-//#define printf pclog
-extern void pclog(const char *format, ...);
-extern void error(const char *format, ...);
-extern void fatal(const char *format, ...);
-extern void warning(const char *format, ...);
+// #define printf pclog
+extern void pclog(const char* format, ...);
+extern void error(const char* format, ...);
+extern void fatal(const char* format, ...);
+extern void warning(const char* format, ...);
 
 // Used to flush the log contents to disk.
 void pclog_flush();

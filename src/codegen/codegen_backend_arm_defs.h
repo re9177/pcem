@@ -66,29 +66,29 @@
 #define REG_MASK_LR (1 << REG_LR)
 #define REG_MASK_PC (1 << REG_PC)
 
-#define REG_MASK_LOCAL                                                                                                           \
-        (REG_MASK_R4 | REG_MASK_R5 | REG_MASK_R6 | REG_MASK_R7 | REG_MASK_R8 | REG_MASK_R9 | REG_MASK_R10 | REG_MASK_R11)
+#define REG_MASK_LOCAL \
+	(REG_MASK_R4 | REG_MASK_R5 | REG_MASK_R6 | REG_MASK_R7 | REG_MASK_R8 | REG_MASK_R9 | REG_MASK_R10 | REG_MASK_R11)
 
 #define CODEGEN_HOST_REGS 7
 #define CODEGEN_HOST_FP_REGS 8
 
-extern void *codegen_mem_load_byte;
-extern void *codegen_mem_load_word;
-extern void *codegen_mem_load_long;
-extern void *codegen_mem_load_quad;
-extern void *codegen_mem_load_single;
-extern void *codegen_mem_load_double;
+extern void* codegen_mem_load_byte;
+extern void* codegen_mem_load_word;
+extern void* codegen_mem_load_long;
+extern void* codegen_mem_load_quad;
+extern void* codegen_mem_load_single;
+extern void* codegen_mem_load_double;
 
-extern void *codegen_mem_store_byte;
-extern void *codegen_mem_store_word;
-extern void *codegen_mem_store_long;
-extern void *codegen_mem_store_quad;
-extern void *codegen_mem_store_single;
-extern void *codegen_mem_store_double;
+extern void* codegen_mem_store_byte;
+extern void* codegen_mem_store_word;
+extern void* codegen_mem_store_long;
+extern void* codegen_mem_store_quad;
+extern void* codegen_mem_store_single;
+extern void* codegen_mem_store_double;
 
-extern void *codegen_fp_round;
+extern void* codegen_fp_round;
 
-extern void *codegen_gpf_rout;
-extern void *codegen_exit_rout;
+extern void* codegen_gpf_rout;
+extern void* codegen_exit_rout;
 
 #endif /* _CODEGEN_BACKEND_ARM_DEFS_H_ */

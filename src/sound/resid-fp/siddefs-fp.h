@@ -21,17 +21,17 @@
 #define __SIDDEFS_FP_H__
 
 #ifndef M_PI
-#define M_PI 3.14159265358979323846
-#define M_PI_f 3.14159265358979323846f
+	#define M_PI 3.14159265358979323846
+	#define M_PI_f 3.14159265358979323846f
 #else
-#define M_PI_f ((float)M_PI)
+	#define M_PI_f ((float)M_PI)
 #endif
 
 #ifndef M_LN2
-#define M_LN2 0.69314718055994530942
-#define M_LN2_f 0.69314718055994530942f
+	#define M_LN2 0.69314718055994530942
+	#define M_LN2_f 0.69314718055994530942f
 #else
-#define M_LN2_f ((float)M_LN2)
+	#define M_LN2_f ((float)M_LN2)
 #endif
 
 // Define bool, true, and false for C++ compilers that lack these keywords.
@@ -58,15 +58,17 @@ typedef unsigned int reg24;
 
 typedef int cycle_count;
 
-enum chip_model { MOS6581FP = 1, MOS8580FP };
+enum chip_model { MOS6581FP = 1,
+				  MOS8580FP };
 
-enum sampling_method { SAMPLE_INTERPOLATE = 1, SAMPLE_RESAMPLE_INTERPOLATE };
+enum sampling_method { SAMPLE_INTERPOLATE = 1,
+					   SAMPLE_RESAMPLE_INTERPOLATE };
 
 extern "C" {
 #ifndef __VERSION_CC__
-extern const char *resid_version_string;
+extern const char* resid_version_string;
 #else
-const char *resid_version_string = VERSION;
+const char* resid_version_string = VERSION;
 #endif
 }
 
@@ -74,9 +76,9 @@ const char *resid_version_string = VERSION;
 #define RESID_INLINE inline
 
 #if defined(__SSE__) || (defined(_MSC_VER) && (_MSC_VER >= 1300))
-#define RESID_USE_SSE 1
+	#define RESID_USE_SSE 1
 #else
-#define RESID_USE_SSE 0
+	#define RESID_USE_SSE 0
 #endif
 
 #define HAVE_LOGF

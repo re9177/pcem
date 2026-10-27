@@ -29,10 +29,10 @@ typedef unsigned char *queueElementT;
 */
 
 struct queuepacket {
-        int len;
-        unsigned char data[2000];
+	int len;
+	unsigned char data[2000];
 };
-typedef struct queuepacket *queueElementT;
+typedef struct queuepacket* queueElementT;
 
 /*
  * Type: queueADT
@@ -48,7 +48,7 @@ typedef struct queuepacket *queueElementT;
  * of struct.
  */
 
-typedef struct queueCDT *queueADT;
+typedef struct queueCDT* queueADT;
 
 /*
  * Function: QueueCreate

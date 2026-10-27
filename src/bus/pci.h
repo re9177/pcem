@@ -2,10 +2,10 @@
 #define _PCI_H_
 void pci_init(int type);
 void pci_slot(int card);
-void pci_add_specific(int card, uint8_t (*read)(int func, int addr, void *priv),
-                      void (*write)(int func, int addr, uint8_t val, void *priv), void *priv);
-int pci_add(uint8_t (*read)(int func, int addr, void *priv), void (*write)(int func, int addr, uint8_t val, void *priv),
-            void *priv);
+void pci_add_specific(int card, uint8_t (*read)(int func, int addr, void* priv),
+					  void (*write)(int func, int addr, uint8_t val, void* priv), void* priv);
+int pci_add(uint8_t (*read)(int func, int addr, void* priv), void (*write)(int func, int addr, uint8_t val, void* priv),
+			void* priv);
 void pci_set_irq_routing(int card, int irq);
 void pci_set_card_routing(int card, int pci_int);
 void pci_set_card_irq(int card, int irq);

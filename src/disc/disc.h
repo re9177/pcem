@@ -1,22 +1,22 @@
 #ifndef _DISC_H_
 #define _DISC_H_
 typedef struct {
-        void (*seek)(int drive, int track);
-        void (*readsector)(int drive, int sector, int track, int side, int density, int sector_size);
-        void (*writesector)(int drive, int sector, int track, int side, int density, int sector_size);
-        void (*readaddress)(int drive, int track, int side, int density);
-        void (*format)(int drive, int track, int side, int density, uint8_t fill);
-        int (*hole)(int drive);
-        void (*stop)();
-        void (*poll)();
+	void (*seek)(int drive, int track);
+	void (*readsector)(int drive, int sector, int track, int side, int density, int sector_size);
+	void (*writesector)(int drive, int sector, int track, int side, int density, int sector_size);
+	void (*readaddress)(int drive, int track, int side, int density);
+	void (*format)(int drive, int track, int side, int density, uint8_t fill);
+	int (*hole)(int drive);
+	void (*stop)();
+	void (*poll)();
 } DRIVE;
 
 extern DRIVE drives[2];
 
 extern int curdrive;
 
-void disc_load(int drive, char *fn);
-void disc_new(int drive, char *fn);
+void disc_load(int drive, char* fn);
+void disc_new(int drive, char* fn);
 void disc_close(int drive);
 void disc_init();
 void disc_reset();

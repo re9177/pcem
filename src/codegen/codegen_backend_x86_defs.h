@@ -25,22 +25,22 @@
 #define CODEGEN_HOST_REGS 3
 #define CODEGEN_HOST_FP_REGS 6
 
-extern void *codegen_mem_load_byte;
-extern void *codegen_mem_load_word;
-extern void *codegen_mem_load_long;
-extern void *codegen_mem_load_quad;
-extern void *codegen_mem_load_single;
-extern void *codegen_mem_load_double;
+extern void* codegen_mem_load_byte;
+extern void* codegen_mem_load_word;
+extern void* codegen_mem_load_long;
+extern void* codegen_mem_load_quad;
+extern void* codegen_mem_load_single;
+extern void* codegen_mem_load_double;
 
-extern void *codegen_mem_store_byte;
-extern void *codegen_mem_store_word;
-extern void *codegen_mem_store_long;
-extern void *codegen_mem_store_quad;
-extern void *codegen_mem_store_single;
-extern void *codegen_mem_store_double;
+extern void* codegen_mem_store_byte;
+extern void* codegen_mem_store_word;
+extern void* codegen_mem_store_long;
+extern void* codegen_mem_store_quad;
+extern void* codegen_mem_store_single;
+extern void* codegen_mem_store_double;
 
-extern void *codegen_gpf_rout;
-extern void *codegen_exit_rout;
+extern void* codegen_gpf_rout;
+extern void* codegen_exit_rout;
 
 #define STACK_ARG0 (0)
 #define STACK_ARG1 (4)

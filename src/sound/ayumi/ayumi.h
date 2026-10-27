@@ -4,57 +4,57 @@
 #define AYUMI_H
 
 enum {
-  TONE_CHANNELS = 3,
-  DECIMATE_FACTOR = 8,
-  FIR_SIZE = 192,
-  DC_FILTER_SIZE = 1024
+	TONE_CHANNELS = 3,
+	DECIMATE_FACTOR = 8,
+	FIR_SIZE = 192,
+	DC_FILTER_SIZE = 1024
 };
 
 struct tone_channel {
-  int tone_period;
-  int tone_counter;
-  int tone;
-  int t_off;
-  int n_off;
-  int e_on;
-  int volume;
-  double pan_left;
-  double pan_right;
+	int tone_period;
+	int tone_counter;
+	int tone;
+	int t_off;
+	int n_off;
+	int e_on;
+	int volume;
+	double pan_left;
+	double pan_right;
 };
 
 struct interpolator {
-  double c[4];
-  double y[4];
+	double c[4];
+	double y[4];
 };
 
 struct dc_filter {
-  double sum;
-  double delay[DC_FILTER_SIZE];
+	double sum;
+	double delay[DC_FILTER_SIZE];
 };
 
 struct ayumi {
-  struct tone_channel channels[TONE_CHANNELS];
-  int noise_period;
-  int noise_counter;
-  int noise;
-  int envelope_counter;
-  int envelope_period;
-  int envelope_shape;
-  int envelope_segment;
-  int envelope;
-  const double* dac_table;
-  double step;
-  double x;
-  struct interpolator interpolator_left;
-  struct interpolator interpolator_right;
-  double fir_left[FIR_SIZE * 2];
-  double fir_right[FIR_SIZE * 2];
-  int fir_index;
-  struct dc_filter dc_left;
-  struct dc_filter dc_right;
-  int dc_index;
-  double left;
-  double right;
+	struct tone_channel channels[TONE_CHANNELS];
+	int noise_period;
+	int noise_counter;
+	int noise;
+	int envelope_counter;
+	int envelope_period;
+	int envelope_shape;
+	int envelope_segment;
+	int envelope;
+	const double* dac_table;
+	double step;
+	double x;
+	struct interpolator interpolator_left;
+	struct interpolator interpolator_right;
+	double fir_left[FIR_SIZE * 2];
+	double fir_right[FIR_SIZE * 2];
+	int fir_index;
+	struct dc_filter dc_left;
+	struct dc_filter dc_right;
+	int dc_index;
+	double left;
+	double right;
 };
 
 int ayumi_configure(struct ayumi* ay, int is_ym, double clock_rate, int sr);

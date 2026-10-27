@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-void joystickconfig_open(void *hwnd, int joy_nr, int type);
+void joystickconfig_open(void* hwnd, int joy_nr, int type);
 
 #ifdef __cplusplus
 }

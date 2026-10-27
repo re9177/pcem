@@ -119,111 +119,111 @@ extern uint64_t opcode_deps_8x[8];
 extern uint64_t opcode_deps_8x_mod3[8];
 
 static inline uint32_t get_addr_regmask(uint64_t data, uint32_t fetchdat, int op_32) {
-        uint32_t addr_regmask = 0;
+	uint32_t addr_regmask = 0;
 
-        if (data & MODRM) {
-                uint8_t modrm = fetchdat & 0xff;
+	if(data & MODRM) {
+		uint8_t modrm = fetchdat & 0xff;
 
-                if ((modrm & 0xc0) != 0xc0) {
-                        if (op_32 & 0x200) {
-                                if ((modrm & 0x7) == 4) {
-                                        uint8_t sib = (fetchdat >> 8) & 0xff;
+		if((modrm & 0xc0) != 0xc0) {
+			if(op_32 & 0x200) {
+				if((modrm & 0x7) == 4) {
+					uint8_t sib = (fetchdat >> 8) & 0xff;
 
-                                        if ((modrm & 0xc0) != 0xc0 && (sib & 7) != 5) {
-                                                addr_regmask = 1 << (sib & 7);
-                                                if ((sib & 0x38) != 0x20)
-                                                        addr_regmask |= 1 << ((sib >> 3) & 7);
-                                        }
-                                } else if ((modrm & 0xc7) != 5) {
-                                        addr_regmask = 1 << (modrm & 7);
-                                }
-                        } else {
-                                if ((modrm & 0xc7) != 0x06) {
-                                        switch (modrm & 7) {
-                                        case 0:
-                                                addr_regmask = REG_BX | REG_SI;
-                                                break;
-                                        case 1:
-                                                addr_regmask = REG_BX | REG_DI;
-                                                break;
-                                        case 2:
-                                                addr_regmask = REG_BP | REG_SI;
-                                                break;
-                                        case 3:
-                                                addr_regmask = REG_BP | REG_DI;
-                                                break;
-                                        case 4:
-                                                addr_regmask = REG_SI;
-                                                break;
-                                        case 5:
-                                                addr_regmask = REG_DI;
-                                                break;
-                                        case 6:
-                                                addr_regmask = REG_BP;
-                                                break;
-                                        case 7:
-                                                addr_regmask = REG_BX;
-                                                break;
-                                        }
-                                }
-                        }
-                }
-        }
+					if((modrm & 0xc0) != 0xc0 && (sib & 7) != 5) {
+						addr_regmask = 1 << (sib & 7);
+						if((sib & 0x38) != 0x20)
+							addr_regmask |= 1 << ((sib >> 3) & 7);
+					}
+				} else if((modrm & 0xc7) != 5) {
+					addr_regmask = 1 << (modrm & 7);
+				}
+			} else {
+				if((modrm & 0xc7) != 0x06) {
+					switch(modrm & 7) {
+						case 0:
+							addr_regmask = REG_BX | REG_SI;
+							break;
+						case 1:
+							addr_regmask = REG_BX | REG_DI;
+							break;
+						case 2:
+							addr_regmask = REG_BP | REG_SI;
+							break;
+						case 3:
+							addr_regmask = REG_BP | REG_DI;
+							break;
+						case 4:
+							addr_regmask = REG_SI;
+							break;
+						case 5:
+							addr_regmask = REG_DI;
+							break;
+						case 6:
+							addr_regmask = REG_BP;
+							break;
+						case 7:
+							addr_regmask = REG_BX;
+							break;
+					}
+				}
+			}
+		}
+	}
 
-        if (data & IMPL_ESP)
-                addr_regmask |= REGMASK_IMPL_ESP;
+	if(data & IMPL_ESP)
+		addr_regmask |= REGMASK_IMPL_ESP;
 
-        return addr_regmask;
+	return addr_regmask;
 }
 
 static inline uint32_t get_srcdep_mask(uint64_t data, uint32_t fetchdat, int bit8, int op_32) {
-        uint32_t mask = 0;
-        if (data & SRCDEP_REG) {
-                int reg = (fetchdat >> 3) & 7;
-                if (bit8)
-                        reg &= 3;
-                mask |= (1 << reg);
-        }
-        if (data & SRCDEP_RM) {
-                int reg = fetchdat & 7;
-                if (bit8)
-                        reg &= 3;
-                mask |= (1 << reg);
-        }
-        mask |= ((data >> SRCDEP_SHIFT) & 0xff);
-        if (data & MMX_SHIFTPACK)
-                mask |= REGMASK_SHIFTPACK;
-        if (data & MMX_MULTIPLY)
-                mask |= REGMASK_MULTIPLY;
+	uint32_t mask = 0;
+	if(data & SRCDEP_REG) {
+		int reg = (fetchdat >> 3) & 7;
+		if(bit8)
+			reg &= 3;
+		mask |= (1 << reg);
+	}
+	if(data & SRCDEP_RM) {
+		int reg = fetchdat & 7;
+		if(bit8)
+			reg &= 3;
+		mask |= (1 << reg);
+	}
+	mask |= ((data >> SRCDEP_SHIFT) & 0xff);
+	if(data & MMX_SHIFTPACK)
+		mask |= REGMASK_SHIFTPACK;
+	if(data & MMX_MULTIPLY)
+		mask |= REGMASK_MULTIPLY;
 
-        mask |= get_addr_regmask(data, fetchdat, op_32);
+	mask |= get_addr_regmask(data, fetchdat, op_32);
 
-        return mask;
+	return mask;
 }
 
 static inline uint32_t get_dstdep_mask(uint64_t data, uint32_t fetchdat, int bit8) {
-        uint32_t mask = 0;
-        if (data & DSTDEP_REG) {
-                int reg = (fetchdat >> 3) & 7;
-                if (bit8)
-                        reg &= 3;
-                mask |= (1 << reg);
-        }
-        if (data & DSTDEP_RM) {
-                int reg = fetchdat & 7;
-                if (bit8)
-                        reg &= 3;
-                mask |= (1 << reg);
-        }
-        mask |= ((data >> DSTDEP_SHIFT) & 0xff);
-        if (data & MMX_SHIFTPACK)
-                mask |= REGMASK_SHIFTPACK;
-        if (data & MMX_MULTIPLY)
-                mask |= REGMASK_MULTIPLY;
-        if (data & IMPL_ESP)
-                mask |= REGMASK_IMPL_ESP | (1 << REG_ESP);
+	uint32_t mask = 0;
+	if(data & DSTDEP_REG) {
+		int reg = (fetchdat >> 3) & 7;
+		if(bit8)
+			reg &= 3;
+		mask |= (1 << reg);
+	}
+	if(data & DSTDEP_RM) {
+		int reg = fetchdat & 7;
+		if(bit8)
+			reg &= 3;
+		mask |= (1 << reg);
+	}
+	mask |= ((data >> DSTDEP_SHIFT) & 0xff);
+	if(data & MMX_SHIFTPACK)
+		mask |= REGMASK_SHIFTPACK;
+	if(data & MMX_MULTIPLY)
+		mask |= REGMASK_MULTIPLY;
+	if(data & IMPL_ESP)
+		mask |= REGMASK_IMPL_ESP | (1 << REG_ESP);
 
-        return mask;
+	return mask;
 }
 
 #endif /* _CODEGEN_TIMING_COMMON_H_ */

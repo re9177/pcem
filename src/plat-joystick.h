@@ -8,30 +8,30 @@ void joystick_close();
 void joystick_poll();
 
 typedef struct plat_joystick_t {
-        char name[64];
+	char name[64];
 
-        int a[8];
-        int b[32];
-        int p[4];
+	int a[8];
+	int b[32];
+	int p[4];
 
-        struct {
-                char name[32];
-                int id;
-        } axis[8];
+	struct {
+		char name[32];
+		int id;
+	} axis[8];
 
-        struct {
-                char name[32];
-                int id;
-        } button[32];
+	struct {
+		char name[32];
+		int id;
+	} button[32];
 
-        struct {
-                char name[32];
-                int id;
-        } pov[4];
+	struct {
+		char name[32];
+		int id;
+	} pov[4];
 
-        int nr_axes;
-        int nr_buttons;
-        int nr_povs;
+	int nr_axes;
+	int nr_buttons;
+	int nr_povs;
 } plat_joystick_t;
 
 #define MAX_PLAT_JOYSTICKS 8
@@ -43,14 +43,14 @@ extern int joysticks_present;
 #define POV_Y 0x40000000
 
 typedef struct joystick_t {
-        int axis[8];
-        int button[32];
-        int pov[4];
+	int axis[8];
+	int button[32];
+	int pov[4];
 
-        int plat_joystick_nr;
-        int axis_mapping[8];
-        int button_mapping[32];
-        int pov_mapping[4][2];
+	int plat_joystick_nr;
+	int axis_mapping[8];
+	int button_mapping[32];
+	int pov_mapping[4][2];
 } joystick_t;
 
 #define MAX_JOYSTICKS 4

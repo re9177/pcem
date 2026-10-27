@@ -4,7 +4,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-void shaderconfig_open(void *hwnd, struct glslp_t *glsl);
+void shaderconfig_open(void* hwnd, struct glslp_t* glsl);
 #ifdef __cplusplus
 }
 #endif

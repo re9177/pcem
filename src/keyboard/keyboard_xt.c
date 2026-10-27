@@ -23,104 +23,104 @@
 #define STAT_OFULL 0x01
 
 struct {
-        int wantirq;
-        uint8_t key_waiting;
+	int wantirq;
+	uint8_t key_waiting;
 
-        uint8_t pa;
-        uint8_t pb;
+	uint8_t pa;
+	uint8_t pb;
 
-        int shift_full;
+	int shift_full;
 
-        int tandy;
-        int pb2_turbo;
+	int tandy;
+	int pb2_turbo;
 
-        pc_timer_t send_delay_timer;
+	pc_timer_t send_delay_timer;
 } keyboard_xt;
 
 static uint8_t key_queue[16];
 static int key_queue_start = 0, key_queue_end = 0;
 
 void keyboard_xt_poll() {
-        timer_advance_u64(&keyboard_xt.send_delay_timer, (1000 * TIMER_USEC));
-        if (!(keyboard_xt.pb & 0x40))
-                return;
-        if (keyboard_xt.wantirq) {
-                keyboard_xt.wantirq = 0;
-                keyboard_xt.pa = keyboard_xt.key_waiting;
-                keyboard_xt.shift_full = 1;
-                picint(2);
-                pclog("keyboard_xt : take IRQ\n");
-        }
-        if (key_queue_start != key_queue_end && !keyboard_xt.shift_full) {
-                keyboard_xt.key_waiting = key_queue[key_queue_start];
-                pclog("Reading %02X from the key queue at %i\n", keyboard_xt.key_waiting, key_queue_start);
-                key_queue_start = (key_queue_start + 1) & 0xf;
-                keyboard_xt.wantirq = 1;
-        }
+	timer_advance_u64(&keyboard_xt.send_delay_timer, (1000 * TIMER_USEC));
+	if(!(keyboard_xt.pb & 0x40))
+		return;
+	if(keyboard_xt.wantirq) {
+		keyboard_xt.wantirq = 0;
+		keyboard_xt.pa = keyboard_xt.key_waiting;
+		keyboard_xt.shift_full = 1;
+		picint(2);
+		pclog("keyboard_xt : take IRQ\n");
+	}
+	if(key_queue_start != key_queue_end && !keyboard_xt.shift_full) {
+		keyboard_xt.key_waiting = key_queue[key_queue_start];
+		pclog("Reading %02X from the key queue at %i\n", keyboard_xt.key_waiting, key_queue_start);
+		key_queue_start = (key_queue_start + 1) & 0xf;
+		keyboard_xt.wantirq = 1;
+	}
 }
 
 void keyboard_xt_adddata(uint8_t val) {
-        key_queue[key_queue_end] = val;
-        pclog("keyboard_xt : %02X added to key queue at %i\n", val, key_queue_end);
-        key_queue_end = (key_queue_end + 1) & 0xf;
-        return;
+	key_queue[key_queue_end] = val;
+	pclog("keyboard_xt : %02X added to key queue at %i\n", val, key_queue_end);
+	key_queue_end = (key_queue_end + 1) & 0xf;
+	return;
 }
 
-void keyboard_xt_write(uint16_t port, uint8_t val, void *priv) {
-        //        pclog("keyboard_xt : write %04X %02X %02X\n", port, val, keyboard_xt.pb);
-        /*        if (ram[8] == 0xc3)
-                {
-                        output = 3;
-                }*/
-        switch (port) {
-        case 0x61:
-                //                pclog("keyboard_xt : pb write %02X %02X  %i %02X %i\n", val, keyboard_xt.pb, !(keyboard_xt.pb &
-                //                0x40), keyboard_xt.pb & 0x40, (val & 0x40));
-                if (!(keyboard_xt.pb & 0x40) && (val & 0x40)) /*Reset keyboard*/
-                {
-                        pclog("keyboard_xt : reset keyboard\n");
-                        key_queue_start = key_queue_end = 0;
-                        keyboard_xt.wantirq = 0;
-                        keyboard_xt.shift_full = 0;
-                        keyboard_xt_adddata(0xaa);
-                }
-                keyboard_xt.pb = val;
-                ppi.pb = val;
+void keyboard_xt_write(uint16_t port, uint8_t val, void* priv) {
+	//        pclog("keyboard_xt : write %04X %02X %02X\n", port, val, keyboard_xt.pb);
+	/*        if (ram[8] == 0xc3)
+			{
+					output = 3;
+			}*/
+	switch(port) {
+		case 0x61:
+			//                pclog("keyboard_xt : pb write %02X %02X  %i %02X %i\n", val, keyboard_xt.pb, !(keyboard_xt.pb &
+			//                0x40), keyboard_xt.pb & 0x40, (val & 0x40));
+			if(!(keyboard_xt.pb & 0x40) && (val & 0x40)) /*Reset keyboard*/
+			{
+				pclog("keyboard_xt : reset keyboard\n");
+				key_queue_start = key_queue_end = 0;
+				keyboard_xt.wantirq = 0;
+				keyboard_xt.shift_full = 0;
+				keyboard_xt_adddata(0xaa);
+			}
+			keyboard_xt.pb = val;
+			ppi.pb = val;
 
-                timer_process();
+			timer_process();
 
-                if (keyboard_xt.pb2_turbo)
-                        cpu_set_turbo((val & 4) ? 0 : 1);
+			if(keyboard_xt.pb2_turbo)
+				cpu_set_turbo((val & 4) ? 0 : 1);
 
-                speaker_update();
-                speaker_gated = val & 1;
-                speaker_enable = val & 2;
-                if (speaker_enable)
-                        was_speaker_enable = 1;
-                pit_set_gate(&pit, 2, val & 1);
+			speaker_update();
+			speaker_gated = val & 1;
+			speaker_enable = val & 2;
+			if(speaker_enable)
+				was_speaker_enable = 1;
+			pit_set_gate(&pit, 2, val & 1);
 
-                if (val & 0x80) {
-                        keyboard_xt.pa = 0;
-                        keyboard_xt.shift_full = 0;
-                        picintc(2);
-                }
-                break;
-        }
+			if(val & 0x80) {
+				keyboard_xt.pa = 0;
+				keyboard_xt.shift_full = 0;
+				picintc(2);
+			}
+			break;
+	}
 }
 
-uint8_t keyboard_xt_read(uint16_t port, void *priv) {
-        uint8_t temp = 0xff;
-        //        pclog("keyboard_xt : read %04X ", port);
-        switch (port) {
-        case 0x60:
-                temp = keyboard_xt.pa;
-                break;
+uint8_t keyboard_xt_read(uint16_t port, void* priv) {
+	uint8_t temp = 0xff;
+	//        pclog("keyboard_xt : read %04X ", port);
+	switch(port) {
+		case 0x60:
+			temp = keyboard_xt.pa;
+			break;
 
-        case 0x61:
-                temp = keyboard_xt.pb;
-                break;
+		case 0x61:
+			temp = keyboard_xt.pb;
+			break;
 
-        case 0x62:
+		case 0x62:
 #if 0
                 if (romset == ROM_IBMPC) {
                         if (keyboard_xt.pb & 0x04)
@@ -152,64 +152,64 @@ uint8_t keyboard_xt_read(uint16_t port, void *priv) {
                 if (keyboard_xt.tandy)
                         temp |= (tandy_eeprom_read() ? 0x10 : 0);
 #endif
-                if (keyboard_xt.pb & 0x08) {
-                        if (video_is_ega_vga())
-                             temp = 4;
-                        else if (video_is_mda())
-                             temp = 7;
-                        else
-                             temp = 6;
-                } else {
-                        temp = hasfpu ? 0xf : 0xd;
-                }
-                temp |= (ppispeakon ? 0x20 : 0);
-                break;
+			if(keyboard_xt.pb & 0x08) {
+				if(video_is_ega_vga())
+					temp = 4;
+				else if(video_is_mda())
+					temp = 7;
+				else
+					temp = 6;
+			} else {
+				temp = hasfpu ? 0xf : 0xd;
+			}
+			temp |= (ppispeakon ? 0x20 : 0);
+			break;
 
-        default:
-                pclog("\nBad XT keyboard read %04X\n", port);
-                // dumpregs();
-                // exit(-1);
-        }
-        //        pclog("%02X\n", temp);
-        return temp;
+		default:
+			pclog("\nBad XT keyboard read %04X\n", port);
+			// dumpregs();
+			// exit(-1);
+	}
+	//        pclog("%02X\n", temp);
+	return temp;
 }
 
-static uint8_t ledge_modelm_read(uint16_t port, void *p) {
-        uint8_t temp = 0;
+static uint8_t ledge_modelm_read(uint16_t port, void* p) {
+	uint8_t temp = 0;
 
-        if (((mem_size - 64) / 32) >> 4)
-                temp |= 0x40;
+	if(((mem_size - 64) / 32) >> 4)
+		temp |= 0x40;
 
-        return temp;
+	return temp;
 }
 
 void keyboard_xt_reset() {
-        keyboard_xt.wantirq = 0;
+	keyboard_xt.wantirq = 0;
 
-        keyboard_scan = 1;
+	keyboard_scan = 1;
 }
 
 void keyboard_xt_init() {
-        // return;
-        io_sethandler(0x0060, 0x0004, keyboard_xt_read, NULL, NULL, keyboard_xt_write, NULL, NULL, NULL);
-        if (romset == ROM_LEDGE_MODELM)
-                io_sethandler(0x00a0, 0x0001, ledge_modelm_read, NULL, NULL, NULL, NULL, NULL, NULL);
-        keyboard_xt_reset();
-        keyboard_send = keyboard_xt_adddata;
-        keyboard_poll = keyboard_xt_poll;
-        keyboard_xt.tandy = 0;
-        keyboard_xt.pb2_turbo =  0;
+	// return;
+	io_sethandler(0x0060, 0x0004, keyboard_xt_read, NULL, NULL, keyboard_xt_write, NULL, NULL, NULL);
+	if(romset == ROM_LEDGE_MODELM)
+		io_sethandler(0x00a0, 0x0001, ledge_modelm_read, NULL, NULL, NULL, NULL, NULL, NULL);
+	keyboard_xt_reset();
+	keyboard_send = keyboard_xt_adddata;
+	keyboard_poll = keyboard_xt_poll;
+	keyboard_xt.tandy = 0;
+	keyboard_xt.pb2_turbo = 0;
 
-        timer_add(&keyboard_xt.send_delay_timer, (void *)keyboard_xt_poll, NULL, 1);
+	timer_add(&keyboard_xt.send_delay_timer, (void*)keyboard_xt_poll, NULL, 1);
 }
 
 void keyboard_tandy_init() {
-        // return;
-        io_sethandler(0x0060, 0x0004, keyboard_xt_read, NULL, NULL, keyboard_xt_write, NULL, NULL, NULL);
-        keyboard_xt_reset();
-        keyboard_send = keyboard_xt_adddata;
-        keyboard_poll = keyboard_xt_poll;
-        keyboard_xt.tandy =  0;
+	// return;
+	io_sethandler(0x0060, 0x0004, keyboard_xt_read, NULL, NULL, keyboard_xt_write, NULL, NULL, NULL);
+	keyboard_xt_reset();
+	keyboard_send = keyboard_xt_adddata;
+	keyboard_poll = keyboard_xt_poll;
+	keyboard_xt.tandy = 0;
 
-        timer_add(&keyboard_xt.send_delay_timer, (void *)keyboard_xt_poll, NULL, 1);
+	timer_add(&keyboard_xt.send_delay_timer, (void*)keyboard_xt_poll, NULL, 1);
 }

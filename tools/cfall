@@ -1,0 +1,8 @@
+#!/bin/bash
+# Reformat source tree
+
+SOURCE_DIRS=(
+ src/
+)
+
+find ${SOURCE_DIRS[@]} -type f | rg -e "(\.c$|\.cpp$|\.cc$|\.hpp$|\.h$)" | xargs -i -- bash -c "clang-format -i \"{}\" && echo \"{}\""

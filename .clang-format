@@ -1,148 +1,61 @@
----
-Language: Cpp
-# BasedOnStyle:  LLVM
-AccessModifierOffset: -4
-AlignAfterOpenBracket: Align
-AlignConsecutiveMacros: false
-AlignConsecutiveAssignments: false
-AlignConsecutiveBitFields: false
-AlignConsecutiveDeclarations: false
-AlignEscapedNewlines: Right
-AlignOperands: Align
-AlignTrailingComments: true
-AllowAllArgumentsOnNextLine: true
-AllowAllConstructorInitializersOnNextLine: true
+# Clang-Format file
+
+# google style is the closest unfortunately
+BasedOnStyle: Google
+
+# force T* or T&
+# rather than T * or T &
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# I think if these two aren't the same
+# it won't indent with tabs even with UseTab set to Always
+TabWidth: 4
+IndentWidth: 4
+
+UseTab: Always
+
+IndentPPDirectives: BeforeHash
+
 AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortEnumsOnASingleLine: true
-AllowShortBlocksOnASingleLine: Never
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: All
-AllowShortLambdasOnASingleLine: All
+AllowShortBlocksOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
 AllowShortIfStatementsOnASingleLine: Never
-AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: None
-AlwaysBreakAfterReturnType: None
-AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: MultiLine
+
 BinPackArguments: true
 BinPackParameters: true
-BraceWrapping:
-    AfterCaseLabel: false
-    AfterClass: false
-    AfterControlStatement: Never
-    AfterEnum: false
-    AfterFunction: false
-    AfterNamespace: false
-    AfterObjCDeclaration: false
-    AfterStruct: false
-    AfterUnion: false
-    AfterExternBlock: false
-    BeforeCatch: false
-    BeforeElse: false
-    BeforeLambdaBody: false
-    BeforeWhile: false
-    IndentBraces: false
-    SplitEmptyFunction: true
-    SplitEmptyRecord: true
-    SplitEmptyNamespace: true
-BreakBeforeBinaryOperators: None
-BreakBeforeBraces: Attach
-BreakBeforeInheritanceComma: false
-BreakInheritanceList: BeforeColon
-BreakBeforeTernaryOperators: true
-BreakConstructorInitializersBeforeComma: false
 BreakConstructorInitializers: BeforeColon
-BreakAfterJavaFieldAnnotations: false
-BreakStringLiterals: true
-ColumnLimit: 130
-CommentPragmas: '^ IWYU pragma:'
+BreakStringLiterals: false
+
+# 130 columns is good but causes some weird issues I don't quite like
+# especially in some codebases
+#ColumnLimit: 130
+ColumnLimit: 0
 CompactNamespaces: false
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
-ConstructorInitializerIndentWidth: 8
-ContinuationIndentWidth: 8
-Cpp11BracedListStyle: true
-DeriveLineEnding: true
-DerivePointerAlignment: false
-DisableFormat: false
-ExperimentalAutoDetectBinPacking: false
+
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ContinuationIndentWidth: 0
+
+# turning this on causes major issues with initalizer lists,
+# turn it off
+Cpp11BracedListStyle: false
+
+# this is turned on to allow something like:
+#
+#	T MyTValue {
+#		initalizer list...
+#	};
+SpaceBeforeCpp11BracedList: true
+
 FixNamespaceComments: true
-ForEachMacros:
-    - foreach
-    - Q_FOREACH
-    - BOOST_FOREACH
-IncludeBlocks: Preserve
-IncludeCategories:
-    - Regex: '^"(llvm|llvm-c|clang|clang-c)/'
-      Priority: 2
-      SortPriority: 0
-    - Regex: '^(<|"(gtest|gmock|isl|json)/)'
-      Priority: 3
-      SortPriority: 0
-    - Regex: '.*'
-      Priority: 1
-      SortPriority: 0
-IncludeIsMainRegex: '(Test)?$'
-IncludeIsMainSourceRegex: ''
-IndentCaseLabels: false
-IndentCaseBlocks: false
-IndentGotoLabels: true
-IndentPPDirectives: None
-IndentExternBlock: AfterExternBlock
-IndentWidth: 8
-IndentWrappedFunctionNames: false
-InsertTrailingCommas: None
-JavaScriptQuotes: Leave
-JavaScriptWrapImports: true
-KeepEmptyLinesAtTheStartOfBlocks: true
-MacroBlockBegin: ''
-MacroBlockEnd: ''
-MaxEmptyLinesToKeep: 1
-NamespaceIndentation: None
-ObjCBinPackProtocolList: Auto
-ObjCBlockIndentWidth: 8
-ObjCBreakBeforeNestedBlockParam: true
-ObjCSpaceAfterProperty: false
-ObjCSpaceBeforeProtocolList: true
-PenaltyBreakAssignment: 2
-PenaltyBreakBeforeFirstCallParameter: 19
-PenaltyBreakComment: 300
-PenaltyBreakFirstLessLess: 120
-PenaltyBreakString: 1000
-PenaltyBreakTemplateDeclaration: 10
-PenaltyExcessCharacter: 1000000
-PenaltyReturnTypeOnItsOwnLine: 60
-PointerAlignment: Right
+
+NamespaceIndentation: All
 ReflowComments: true
+
 SortIncludes: false
-SortUsingDeclarations: false
-SpaceAfterCStyleCast: false
-SpaceAfterLogicalNot: false
-SpaceAfterTemplateKeyword: true
-SpaceBeforeAssignmentOperators: true
-SpaceBeforeCpp11BracedList: false
-SpaceBeforeCtorInitializerColon: true
-SpaceBeforeInheritanceColon: true
-SpaceBeforeParens: ControlStatements
-SpaceBeforeRangeBasedForLoopColon: true
-SpaceInEmptyBlock: false
-SpaceInEmptyParentheses: false
-SpacesBeforeTrailingComments: 1
-SpacesInAngles: false
-SpacesInConditionalStatement: false
-SpacesInContainerLiterals: true
-SpacesInCStyleCastParentheses: false
-SpacesInParentheses: false
+SortUsingDeclarations: true
+
+
 SpacesInSquareBrackets: false
-SpaceBeforeSquareBrackets: false
-Standard: Latest
-StatementMacros:
-    - Q_UNUSED
-    - QT_REQUIRE_VERSION
-TabWidth: 8
-UseCRLF: false
-UseTab: Never
-WhitespaceSensitiveMacros:
-    - STRINGIZE
-    - PP_STRINGIZE
-    - BOOST_PP_STRINGIZE
----
+SpaceBeforeParens: Never
+SpacesBeforeTrailingComments: 1
