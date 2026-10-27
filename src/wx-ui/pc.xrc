@@ -3994,10 +3994,10 @@
 		</object>
 	</object>
 
-	<object class="wxDialog" name="HostConfig">
+	<object class="wxDialog" name="NetConfig">
 		<style>wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP</style>
 		<size>499,175</size>
-		<title>Host Configuration</title>
+		<title>Network Configuration For Adapter</title>
 		<centered>1</centered>
 		<object class="wxBoxSizer">
 			<orient>wxVERTICAL</orient>

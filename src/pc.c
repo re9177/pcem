@@ -1,3 +1,4 @@
+#include "networking/netbackend.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -372,6 +373,7 @@ void resetpchard() {
         lpt1_device_init();
 
 #ifdef USE_NETWORKING
+        network_backend_init();
         vlan_reset(); // NETWORK
         network_card_init();
 #endif

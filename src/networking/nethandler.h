@@ -20,7 +20,6 @@ void closepcap();
 
 void vlan_reset();
 
-enum { NET_SLIRP = 0, NET_PCAP = 1 };
 
 void network_card_init_builtin();
 

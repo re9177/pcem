@@ -13,7 +13,12 @@ endif()
 set(PCEM_SRC ${PCEM_SRC}
         networking/ne2000.c
         networking/nethandler.c
-        networking/queue.c
+
+        networking/netbackend.c
+        networking/netpacket.cpp
+        networking/netbackend_null.cpp
+        networking/netbackend_tap_linux.cpp
+        #networking/queue.c
         )
 
 if(WIN32)
