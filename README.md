@@ -1,13 +1,22 @@
-# [PCem](https://pcem-emulator.co.uk/)
-![GitHub Actions](https://github.com/sarah-walker-pcem/pcem/actions/workflows/workflow.yml/badge.svg)
-![GitHub Actions](https://github.com/sarah-walker-pcem/pcem/actions/workflows/workflow-qt.yml/badge.svg)
-## Download: [Windows](https://pcem-emulator.co.uk/files/PCemV17Win.zip)/[Linux](https://pcem-emulator.co.uk/files/PCemV17Linux.tar.gz)/[vNext (Wise Global Solutions Mirror)](https://mirror.wiseglobalsolutions.com/pcem/)
+# PCem
+
+This is a hard fork of PCem. The authors feel that:
+- The AI policy was shoe-horned in by the lead maintainer to permit AI generated code in several places where it was forcefully introduced without acknowledgement.
+  - The plugin API, NE2000, and Qt user interface (before its removal) were blatantly vibecoded.
+- PC and AT emulation is better covered by less hacky emulators.
+- The upstream PCem codebase is simply too annoying to work on.
+
+We may follow upstream in some cases, but generally, this fork is intended to evolve seperately. We will not make any major choices to make
+syncing with upstream easier, as that is not the goal of this fork.
+
+We are currently mainly focusing on heavily refactoring things behind the scenes, but we will be working on several new features,
+and new emulated machines.
+
+Pull requests are welcomed. They will be reviewed and accepted if they are deemed valuable. Do note that we **will** refuse any AI generated pull requests.
 
 Latest version: <b>v17</b> [Changelog](CHANGELOG.md)
 
 PCem is licensed under GPL v2.0, see [COPYING](COPYING) for more details.
-
-You can submit patches on our [forum](https://pcem-emulator.co.uk/phpBB3). Before you do, please note the [guidelines](https://pcem-emulator.co.uk/phpBB3/viewtopic.php?f=3&t=5) for submitting patches.
 
 :exclamation: Note: <b>NO COPYRIGHTED ROM FILES ARE INCLUDED NOR WILL THEY BE. PLEASE DO NOT ASK FOR THEM.</b>
 
@@ -103,49 +112,6 @@ Misc | [Cards](#misc-cards)
 <hr>
 
 ## Systems
-
-### 8088 based
-Release | Machine | ROM file needed<br/>(within ./roms/ folder)
-:-: | --- | ---
-1981 | <b>IBM PC</b><br/>8088 at 4.77 MHz<br/>16KB - 640KB RAM (min. 64KB) | ibmpc/pc102782.bin<br/>ibmpc/basicc11.f6<br/>ibmpc/basicc11.f8<br/>ibmpc/basicc11.fa<br/>ibmpc/basicc11.fc
-1983 | <b>Compaq Portable Plus</b><br/>8088 at 4.77 MHz<br/>128KB - 640KB RAM | compaq_pip/Compaq Portable Plus 100666-001 Rev C.bin
-1983 | <b>IBM XT</b><br/>8088 at 4.77 MHz<br/>64KB - 640KB RAM | ibmxt/5000027.u19<br/>ibmxt/1501512.u18
-1983 | <b>Leading Edge Model M</b><br/>8088 at 7.16 MHz<br/>128KB - 704KB RAM | leadingedge_modelm/Leading Edge - Model M - BIOS ROM - Version 4.71.bin
-1984 | <b>IBM PCjr</b> <i>[[5]](#system-note-5)</i><br/>8088 at 4.77 MHz<br/>64KB - 640KB RAM (min. 128KB)<br/>Built-in 16 colour graphics<br/>3 voice sound<br/>Not generally PC compatible. | ibmpcjr/bios.rom
-1984 | <b>Tandy 1000</b> <i>[[5]](#system-note-5)</i><br/>8088 at 4.77 MHz<br/>128KB - 640KB RAM<br/>Built-in 16 colour graphics<br/>3 voice sound | tandy/tandy1t1.020
-1985 | <b>Commodore PC10</b><br/>8088 at 4.77 MHz<br/>640KB RAM CGA/Monochrome | cbm_pc10/cbm-pc10c-bios-v4.41-318085-08.bin
-1985 | <b>NCR PC4i</b><br/>8088 at 4.77 MHz<br/>256KB - 640KB RAM | ncr_pc4i/NCR_PC4i_BIOSROM_1985.BIN
-1986 | <b>DTK Clone XT</b><br/>8088 at 8/10 MHz<br/>64KB - 640KB RAM | dtk/dtk_erso_2.42_2764.bin
-1986 | <b>Phoenix XT clone</b><br/>8088 at 8/10 MHz<br/>64KB - 640KB RAM | pxxt/000p001.bin
-1987 | <b>Hyundai Super 16T</b><br/>8088/8087 at 4.77/8.0 MHz<br/>640KB RAM<br/>EGA 16 colour graphics<br/> | super16t/hyundai-super-16t-system-bios-hea-v1.12ta.bin
-1987 | <b>Tandy 1000HX</b><br/>8088 at 7.16 MHz<br/>256KB - 640KB RAM<br/>Built-in 16 colour graphics<br/>3 voice sound<br/>Has DOS 2.11 in ROM | tandy1000hx/v020000.u12
-1987 | <b>Thomson TO16 PC</b><br/>8088 at 9.54 MHz<br/>512KB - 640KB RAM | to16_pc/TO16_103.bin
-1987 | <b>Toshiba T1000</b> <i>[[1]](#system-note-1)</i> <i>[[5]](#system-note-5)</i><br/>8088 at 4.77 MHz<br/>512KB - 1024KB RAM<br/>CGA on built-in LCD | t1000/t1000.rom<br/>t1000/t1000font.rom
-1987 | <b>VTech Laser Turbo XT</b><br/>8088 at 10 MHz<br/>640KB RAM | ltxt/27c64.bin
-1987 | <b>Zenith Data SupersPort</b><br/>8088 at 8 MHz<br/>128KB - 640KB RAM<br/>Built-in LCD video is not currently emulated | zdsupers/z184m v3.1d.10d
-1988? | <b>&#169;Anonymous Generic Turbo XT BIOS</b><br/>8088 at 8+ MHz<br/>64KB - 640KB RAM | genxt/pcxt.rom
-1988 | <b>Atari PC3</b><br/>8088 at 8 MHz<br/>640KB RAM | ataripc3/AWARD_ATARI_PC_BIOS_3.08.BIN
-1988 | <b>Juko XT clone</b> | jukopc/000o001.bin
-1988 | <b>Schneider Euro PC</b><br/>8088 at 9.54 MHz<br/>512KB - 640KB RAM | europc/50145<br/>europc/50146
-1989 | <b>AMI XT clone</b><br/>8088 at 8+ MHz<br/>64KB - 640KB RAM | amixt/ami_8088_bios_31jan89.bin
-1989 | <b>Hyundai Super 16TE</b><br/>8088/8087 at 10 MHz<br/>640KB RAM<br/>EGA 16 colour graphics<br/> | super16te/hyundai-super-16te-system-bios-v2.00id.bin
-2015 | <b>Xi8088</b><br/>8088 at 4.77-13.33 MHz<br/>640KB RAM | xi8088/bios-xi8088.bin
-
-### 8086 based
-Release | Machine | ROM file needed<br/>(within ./roms/ folder)
-:-: | --- | ---
-1984 | <b>Compaq Deskpro</b><br/>8086 at 8 MHz<br/>128KB - 640KB RAM | deskpro/Compaq - BIOS - Revision J - 106265-002.bin
-1984 | <b>Olivetti M24</b> <i>[[5]](#system-note-5)</i><br/>8086 at 8 MHz<br/>128KB - 640KB RAM<br/>Built-in enhanced CGA (supports 640x400x2) | olivetti_m24/olivetti_m24_version_1.43_low.bin<br/>olivetti_m24/olivetti_m24_version_1.43_high.bin
-1986 | <b>Amstrad PC1512</b> <i>[[5]](#system-note-5)</i><br/>8086 at 8 MHz<br/>512KB - 640KB RAM<br/>Enhanced CGA (supports 640x200x16)<br/>Custom mouse port | pc1512/40043.v1<br/>pc1512/40044.v2<br/>pc1512/40078.ic127
-1987 | <b>Amstrad PC1640</b> <i>[[5]](#system-note-5)</i><br/>8086 at 8 MHz<br/>640KB RAM<br/>Built-in Paradise EGA<br/>Custom mouse port | pc1640/40043.v3<br/>pc1640/40044.v3<br/>pc1640/40100
-1987 | <b>Toshiba T1200</b> <i>[[1]](#system-note-1)</i> <i>[[5]](#system-note-5)</i><br/>8086 at 9.54 MHz<br/>1MB - 2MB RAM<br/>CGA on built-in LCD | t1200/t1200_019e.ic15.bin<br/>t1200/t1000font.rom
-1988 | <b>Amstrad PPC512/640</b> <i>[[5]](#system-note-5)</i><br/>8086 at 8 MHz<br/>512KB - 640KB RAM<br/>Built-in CGA w/ plasma display | ppc512/40107.v2<br/>ppc512/40108.v2<br/>ppc512/40109.bin
-1988 | <b>Sinclair PC200/Amstrad PC20</b> <i>[[5]](#system-note-5)</i><br/>8086 at 8 MHz<br/>512KB - 640KB RAM<br/>Built-in CGA (supports TV-out 50hz PAL) | pc200/pc20v2.0<br/>pc200/pc20v2.1<br/>pc200/40109.bin
-1988 | <b>VTech Laser XT3</b><br/>8086 at 10 MHz<br/>512KB - 1152KB RAM | lxt3/27c64d.bin
-1989 | <b>Amstrad PC2086</b> <i>[[5]](#system-note-5)</i><br/>8086 at 8 MHz<br/>640KB RAM<br/>Built-in VGA | pc2086/40179.ic129<br/>pc2086/40180.ic132<br/>pc2086/40186.ic171
-1989 | <b>Tandy 1000SL/2</b> <i>[[5]](#system-note-5)</i><br/>8086 at 9.54 MHz<br/>512KB - 768KB RAM<br/>Built-in 16 colour graphics<br/>4 voice sound | tandy1000sl2/8079047.hu1<br/>tandy1000sl2/8079048.hu2
-1990 | <b>Amstrad PC3086</b> <i>[[5]](#system-note-5)</i><br/>8086 at 8 MHz<br/>640KB RAM<br/>Built-in VGA | pc3086/fc00.bin<br/>pc3086/c000.bin
-1991 | <b>Amstrad PC5086</b><br/>8086 at 8 MHz<br/>640KB RAM | pc5086/sys_rom.bin
 
 ### 286 based
 Release | Machine | ROM file needed<br/>(within ./roms/ folder)
