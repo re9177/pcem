@@ -20,10 +20,10 @@ extern "C" {
 #include "memory/mem.h"
 #include "thread.h"
 #include "video/video.h"
-#include "video/vid_svga.h"
-#include "video/vid_voodoo_common.h"
-#include "video/vid_voodoo_regs.h"
-#include "video/vid_voodoo_texture.h"
+#include "devices/video/vid_svga.h"
+#include "devices/video/vid_voodoo_common.h"
+#include "devices/video/vid_voodoo_regs.h"
+#include "devices/video/vid_voodoo_texture.h"
 }
 
 static std::mutex voodoo_viewer_refcount_mutex;

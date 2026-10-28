@@ -9,7 +9,7 @@
 #include "devices/ps2_nvr.h"
 #include "flash/rom.h"
 #include "models/serial.h"
-#include "video/vid_vga.h"
+#include "devices/video/vid_vga.h"
 #include "cpu/x86.h"
 
 // static uint8_t ps2_92, ps2_94, ps2_102, ps2_103, ps2_104, ps2_105, ps2_190;

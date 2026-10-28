@@ -8,7 +8,7 @@
 #include "ibm.h"
 #include "devices/device.h"
 #include "memory/mem.h"
-#include "video/vid_cga.h"
+#include "devices/video/vid_cga.h"
 #include "dosbox/vid_cga_comp.h"
 
 int CGA_Composite_Table[1024];

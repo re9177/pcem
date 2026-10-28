@@ -30,4 +30,60 @@ set(PCEM_SRC ${PCEM_SRC}
         devices/sound/sound_ssi2001.c
         devices/sound/sound_wss.c
         devices/sound/sound_ym7128.c
+
+        devices/video/vid_ati18800.c
+        devices/video/vid_ati28800.c
+        devices/video/vid_ati68860_ramdac.c
+        devices/video/vid_ati_eeprom.c
+        devices/video/vid_ati_mach64.c
+        devices/video/vid_cga.c
+        devices/video/vid_cl5429.c
+        devices/video/vid_colorplus.c
+        devices/video/vid_compaq_cga.c
+        devices/video/vid_ddc.c
+        devices/video/vid_ega.c
+        devices/video/vid_et4000.c
+        devices/video/vid_et4000w32.c
+        devices/video/vid_genius.c
+        devices/video/vid_hercules.c
+        devices/video/vid_ht216.c
+        devices/video/vid_icd2061.c
+        devices/video/vid_ics2595.c
+        devices/video/vid_im1024.c
+        devices/video/vid_incolor.c
+        devices/video/vid_mda.c
+        devices/video/vid_mga.c
+        devices/video/vid_oti037.c
+        devices/video/vid_oti067.c
+        devices/video/vid_paradise.c
+        devices/video/vid_pgc.c
+        devices/video/vid_ps1_svga.c
+        devices/video/vid_quadcolor.c
+        devices/video/vid_s3.c
+        devices/video/vid_s3_virge.c
+        devices/video/vid_sdac_ramdac.c
+        devices/video/vid_sigma.c
+        devices/video/vid_stg_ramdac.c
+        devices/video/vid_svga.c
+        devices/video/vid_svga_render.c
+        devices/video/vid_t3100e.c
+        devices/video/vid_tgui9440.c
+        devices/video/vid_tkd8001_ramdac.c
+        devices/video/vid_tvga.c
+        devices/video/vid_tvp3026_ramdac.c
+        devices/video/vid_unk_ramdac.c
+        devices/video/vid_v6355.c
+        devices/video/vid_vga.c
+        devices/video/vid_voodoo.c
+        devices/video/vid_voodoo_banshee.c
+        devices/video/vid_voodoo_banshee_blitter.c
+        devices/video/vid_voodoo_blitter.c
+        devices/video/vid_voodoo_display.c
+        devices/video/vid_voodoo_fb.c
+        devices/video/vid_voodoo_fifo.c
+        devices/video/vid_voodoo_reg.c
+        devices/video/vid_voodoo_render.c
+        devices/video/vid_voodoo_setup.c
+        devices/video/vid_voodoo_texture.c
+        devices/video/vid_wy700.c
         )

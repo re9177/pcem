@@ -55,7 +55,7 @@
 #include "devices/sound/sound_speaker.h"
 #include "devices/sound/sound_ssi2001.h"
 #include "timer.h"
-#include "video/vid_voodoo.h"
+#include "devices/video/vid_voodoo.h"
 #include "video/video.h"
 #include "hdd/hdd.h"
 #include "cpu/x86.h"

@@ -11,7 +11,7 @@ extern "C" {
 #include "ibm.h"
 #include "memory/mem.h"
 #include "video/video.h"
-#include "video/vid_svga.h"
+#include "devices/video/vid_svga.h"
 }
 
 enum ColourDepth {

@@ -7,7 +7,7 @@
 #include "memory/mem.h"
 #include "devices/device.h" // REMOVE
 #include "t3100e.h"
-#include "video/vid_t3100e.h"
+#include "devices/video/vid_t3100e.h"
 
 /* The Toshiba 3100e is a 286-based portable.
  *

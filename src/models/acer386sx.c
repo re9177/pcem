@@ -5,7 +5,7 @@
 #include "lpt/lpt.h"
 #include "memory/mem.h"
 #include "models/serial.h"
-#include "video/vid_oti067.h"
+#include "devices/video/vid_oti067.h"
 
 #include "acer386sx.h"
 

@@ -18,7 +18,7 @@
 #include "scsi/scsi_cd.h"
 #include "sound/sound.h"
 #include "video/video.h"
-#include "video/vid_voodoo.h"
+#include "devices/video/vid_voodoo.h"
 #include "wx-config-eventbinder.h"
 
 #include <minivhd.h>
