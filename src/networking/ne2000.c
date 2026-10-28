@@ -1485,8 +1485,13 @@ void* ne2000_common_init() {
 		pclog("ne2000: Using MAC address from pcem.cfg: %s\n", macstring);
 	}
 
+	// Create network instance. TODO: We need to handle adapter stuff.
 	ne2000->network_backend = network_backend_get(config_get_int(CFG_MACHINE, "network", "type", 0));
-	ne2000->network_instance = network_backend_create_instance(ne2000->network_backend, NULL);
+	if(ne2000->network_backend) {
+		ne2000->network_instance = network_backend_create_instance(ne2000->network_backend, NULL);
+	} else {
+		ne2000->network_instance = NULL;
+	}
 
 	memcpy(ne2000->physaddr, maclocal, 6);
 

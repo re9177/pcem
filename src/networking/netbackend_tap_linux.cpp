@@ -72,12 +72,13 @@ class TunManager {
 			return -1;
 		}
 
-		// Enable non-blocking
+		// Enable non-blocking I/O.
 		fcntl(tunFd, F_SETFL, fcntl(tunFd, F_GETFL, 0) | O_NONBLOCK);
 
 		return tunFd;
 	}
 
+	/// Returns true if the provided interface name is a TAP device.
 	bool isTapDevice(const std::string& tapDeviceName) {
 		auto interfaceRequest = makeInterfaceRequest(tapDeviceName);
 		if(ioctl(tunFd, TUNGETIFF, &interfaceRequest) >= 0) {
@@ -96,7 +97,6 @@ class TunManager {
 // like the queues and cable state into a base class.
 
 class TapNetwork {
-	TunManager tunManager;
 
 	// queue of packets recieved
 	std::queue<NetPacket*> rxQueue;
@@ -106,10 +106,16 @@ class TapNetwork {
 	// Default to cable connected
 	bool cableConnected { true };
 
+	TunManager tunManager;
 	int fd;
 	struct pollfd pollState;
 
 	void queueReadPacket() {
+		// Ignore packets which are
+		if(rxQueue.size() + 1 > MAX_PACKET_QUEUE_LENGTH) {
+			return;
+		}
+
 		auto* packet = net_createPacket(2000);
 		if(!packet) {
 			fatal("net_createPacket failed");
@@ -244,7 +250,7 @@ class TapNetwork {
 
 		auto packet = rxQueue.front();
 
-		// Copy packet to user buffer
+		// Copy packet to user-provided buffer.
 		memcpy(&buffer[0], packet->getData(), packet->getSize());
 
 		// pop it

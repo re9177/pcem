@@ -1649,8 +1649,8 @@ void execx86(int cycs) {
 				cycles -= 4;
 				break;
 			case 0x2D: /*SUB AX,#16*/
-					   //                        printf("INS %i\n",ins);
-					   //                        output=1;
+				//                        printf("INS %i\n",ins);
+				//                        output=1;
 				tempw = getword();
 				setsub16(AX, tempw);
 				AX -= tempw;
@@ -2052,13 +2052,13 @@ void execx86(int cycs) {
 						cycles -= ((cpu_mod == 3) ? 4 : 23);
 						break;
 					case 0x10: /*ADC b,#8*/
-							   //                                temp2+=(flags&C_FLAG);
+						//                                temp2+=(flags&C_FLAG);
 						setadc8(temp, temp2);
 						seteab(temp + temp2 + tempc);
 						cycles -= ((cpu_mod == 3) ? 4 : 23);
 						break;
 					case 0x18: /*SBB b,#8*/
-							   //                                temp2+=(flags&C_FLAG);
+						//                                temp2+=(flags&C_FLAG);
 						setsbc8(temp, temp2);
 						seteab(temp - (temp2 + tempc));
 						cycles -= ((cpu_mod == 3) ? 4 : 23);
@@ -2113,7 +2113,7 @@ void execx86(int cycs) {
 						cycles -= ((cpu_mod == 3) ? 4 : 23);
 						break;
 					case 0x10: /*ADC w,#16*/
-							   //                                tempw2+=(flags&C_FLAG);
+						//                                tempw2+=(flags&C_FLAG);
 						setadc16(tempw, tempw2);
 						tempw += tempw2 + tempc;
 						seteaw(tempw);
@@ -2127,7 +2127,7 @@ void execx86(int cycs) {
 						cycles -= ((cpu_mod == 3) ? 4 : 23);
 						break;
 					case 0x18: /*SBB w,#16*/
-							   //                                tempw2+=(flags&C_FLAG);
+						//                                tempw2+=(flags&C_FLAG);
 						setsbc16(tempw, tempw2);
 						seteaw(tempw - (tempw2 + tempc));
 						cycles -= ((cpu_mod == 3) ? 4 : 23);
@@ -2146,7 +2146,7 @@ void execx86(int cycs) {
 						cycles -= ((cpu_mod == 3) ? 4 : 23);
 						break;
 					case 0x38: /*CMP w,#16*/
-							   //                                printf("CMP %04X %04X\n",tempw,tempw2);
+						//                                printf("CMP %04X %04X\n",tempw,tempw2);
 						setsub16(tempw, tempw2);
 						cycles -= ((cpu_mod == 3) ? 4 : 14);
 						break;
@@ -2179,14 +2179,14 @@ void execx86(int cycs) {
 						cycles -= ((cpu_mod == 3) ? 4 : 23);
 						break;
 					case 0x10: /*ADC w,#8*/
-							   //                                tempw2+=(flags&C_FLAG);
+						//                                tempw2+=(flags&C_FLAG);
 						setadc16(tempw, tempw2);
 						tempw += tempw2 + tempc;
 						seteaw(tempw);
 						cycles -= ((cpu_mod == 3) ? 4 : 23);
 						break;
 					case 0x18: /*SBB w,#8*/
-							   //                                tempw2+=(flags&C_FLAG);
+						//                                tempw2+=(flags&C_FLAG);
 						setsbc16(tempw, tempw2);
 						tempw -= (tempw2 + tempc);
 						seteaw(tempw);
@@ -2308,7 +2308,7 @@ void execx86(int cycs) {
 				break;
 
 			case 0x8E: /*MOV sreg,w*/
-					   //                        if (output) printf("MOV %04X  ",pc);
+				//                        if (output) printf("MOV %04X  ",pc);
 				fetchea();
 				//                        if (output) printf("%04X %02X\n",pc,rmdat);
 				switch(rmdat & 0x38) {
@@ -2530,7 +2530,7 @@ void execx86(int cycs) {
 				cycles -= 16;
 				break;
 			case 0xAD: /*LODSW*/
-					   //                        if (times) printf("LODSW %04X:%04X\n",cs>>4,pc);
+				//                        if (times) printf("LODSW %04X:%04X\n",cs>>4,pc);
 				AX = readmemw(ds, SI);
 				if(cpu_state.flags & D_FLAG)
 					SI -= 2;
@@ -3021,7 +3021,7 @@ void execx86(int cycs) {
 						cycles -= ((cpu_mod == 3) ? 8 : 28);
 						break;
 					case 0x10: /*RCL b,CL*/
-							   //                                printf("RCL %i %02X %02X\n",c,CL,temp);
+						//                                printf("RCL %i %02X %02X\n",c,CL,temp);
 						while(c > 0) {
 							templ = cpu_state.flags & C_FLAG;
 							temp2 = temp & 0x80;
@@ -3388,7 +3388,7 @@ void execx86(int cycs) {
 				cycles -= 6;
 				break;
 			case 0xE2: /*LOOP*/
-					   //                        printf("LOOP start\n");
+				//                        printf("LOOP start\n");
 				offset = (int8_t)FETCH();
 				CX--;
 				if(CX) {
@@ -3444,7 +3444,7 @@ void execx86(int cycs) {
 				FETCHCLEAR();
 				break;
 			case 0xE9: /*JMP rel 16*/
-					   //                        pclog("PC was %04X\n",cpu_state.pc);
+				//                        pclog("PC was %04X\n",cpu_state.pc);
 				tempw = getword();
 				cpu_state.pc += tempw;
 				//                        pclog("PC now %04X\n",cpu_state.pc);
@@ -3500,13 +3500,13 @@ void execx86(int cycs) {
 				break;
 
 			case 0xF4: /*HLT*/
-					   //                        printf("IN HLT!!!! %04X %08X %08X %08X\n",oldpc,old8,old82,old83);
-					   /*                        if (!(flags & I_FLAG))
-											   {
-													   pclog("HLT\n");
-													   dumpregs();
-													   exit(-1);
-											   }*/
+				//                        printf("IN HLT!!!! %04X %08X %08X %08X\n",oldpc,old8,old82,old83);
+				/*                        if (!(flags & I_FLAG))
+										{
+												pclog("HLT\n");
+												dumpregs();
+												exit(-1);
+										}*/
 				inhlt = 1;
 				cpu_state.pc--;
 				FETCHCLEAR();
@@ -3778,7 +3778,7 @@ void execx86(int cycs) {
 				cycles -= 2;
 				break;
 			case 0xF9: /*STC*/
-					   //                        printf("STC %04X\n",pc);
+				//                        printf("STC %04X\n",pc);
 				cpu_state.flags |= C_FLAG;
 				cycles -= 2;
 				break;

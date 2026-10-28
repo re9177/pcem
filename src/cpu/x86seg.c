@@ -373,7 +373,7 @@ int loadseg(uint16_t seg, x86seg* s) {
 				case 0x17:
 				case 0x1A:
 				case 0x1B: /*Readable non-conforming code*/
-						   //                                pclog("Load seg %04X %i %i %04X:%08X\n",seg,dpl,CS&3,CS,pc);
+					//                                pclog("Load seg %04X %i %i %04X:%08X\n",seg,dpl,CS&3,CS,pc);
 					if((seg & 3) > dpl || (CPL) > dpl) {
 						pclog("Data seg fail - %04X:%08X %04X %i %04X\n", CS, cpu_state.pc, seg, dpl, segdat[2]);
 						x86gpf(NULL, seg & ~3);

@@ -397,7 +397,7 @@ void fdc_write(uint16_t addr, uint8_t val, void* priv) {
 					case 0x45:
 					case 0x85:
 					case 0xc5: /*Write data*/
-							   //                                printf("Write data!\n");
+						//                                printf("Write data!\n");
 						fdc.pnum = 0;
 						fdc.ptot = 8;
 						fdc.stat = 0x90;
@@ -928,7 +928,7 @@ void fdc_callback() {
 			return;
 
 		case 0x0d: /*Format track*/
-				   //                rpclog("Format\n");
+			//                rpclog("Format\n");
 			if(fdc.format_state == 1) {
 				//                        ioc_fiq(IOC_FIQ_DISC_DATA);
 				fdc.format_state = 2;

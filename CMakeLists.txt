@@ -5,7 +5,11 @@ project(PCem)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/cmake/modules)
 
+# this will be going away. There will only be a Qt user interface
 set(PCEM_DISPLAY_ENGINE "wxWidgets" CACHE STRING "PCem Display Engine")
+
+# a bit TODO
+set(PCEM_PLATFORM "sdl2")
 
 include(${CMAKE_SOURCE_DIR}/cmake/arch-detect.cmake)
 

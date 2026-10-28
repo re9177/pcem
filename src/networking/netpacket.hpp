@@ -4,13 +4,11 @@
 
 /// A network packet.
 class NetPacket {
-	size_t allocatedSize;
-
-   public:
-	// NOTE: This member is only public for introspection.
-	// The implementation uses this. Use the methods in NetPacket
-	// to interact with the class.
+	std::uint8_t buffer[2000];
 	size_t packetSize;
+   public:
+
+	NetPacket() = default;
 
 	size_t getSize() const {
 		return packetSize;
@@ -18,18 +16,18 @@ class NetPacket {
 
 	// Resizes a packet to a smaller length.
 	void resizeTo(size_t newSize) {
-		if(newSize > allocatedSize)
+		if(newSize > sizeof(buffer))
 			return;
 		// Resize.
 		packetSize = newSize;
 	}
 
 	uint8_t* getData() {
-		return reinterpret_cast<uint8_t*>(this + 1);
+		return reinterpret_cast<uint8_t*>(&buffer[0]);
 	}
 
 	const uint8_t* getData() const {
-		return reinterpret_cast<const uint8_t*>(this + 1);
+		return reinterpret_cast<const uint8_t*>(&buffer[0]);
 	}
 };
 

@@ -273,7 +273,7 @@ void writegus(uint16_t addr, uint8_t val, void* p) {
 					gus->addr = (gus->addr & 0xFFF00) | val;
 					break;
 				case 0x45: /*Timer control*/
-						   //                        printf("Timer control %02X\n",val);
+					//                        printf("Timer control %02X\n",val);
 					gus->tctrl = val;
 					gus_update_int_status(gus);
 					break;
@@ -701,8 +701,8 @@ uint8_t readgus(uint16_t addr, void* p) {
 			//                %02X\n",gus->global,gus->voice);
 			switch(gus->global) {
 				case 0x80: /*Voice control*/
-						   //                        pclog("Read voice control %02i %02X\n", gus->voice,
-						   //                        gus->ctrl[gus->voice]|(gus->waveirqs[gus->voice]?0x80:0));
+					//                        pclog("Read voice control %02i %02X\n", gus->voice,
+					//                        gus->ctrl[gus->voice]|(gus->waveirqs[gus->voice]?0x80:0));
 					return gus->ctrl[gus->voice] | (gus->waveirqs[gus->voice] ? 0x80 : 0);
 
 				case 0x82: /*Start addr high*/
@@ -711,7 +711,7 @@ uint8_t readgus(uint16_t addr, void* p) {
 					return gus->start[gus->voice] >> 8;
 
 				case 0x89: /*Current volume*/
-						   //                        pclog("Read current volume %i\n", gus->rcur[gus->voice] >> 14);
+					//                        pclog("Read current volume %i\n", gus->rcur[gus->voice] >> 14);
 					return gus->rcur[gus->voice] >> 14;
 
 				case 0x8A: /*Current addr high*/
@@ -729,7 +729,7 @@ uint8_t readgus(uint16_t addr, void* p) {
 					return gus->rctrl[gus->voice] | (gus->rampirqs[gus->voice] ? 0x80 : 0);
 
 				case 0x8F: /*IRQ status*/
-						   //                        pclog("Read IRQ 1\n");
+					//                        pclog("Read IRQ 1\n");
 					val = gus->irqstatus2;
 					gus->rampirqs[gus->irqstatus2 & 0x1F] = 0;
 					gus->waveirqs[gus->irqstatus2 & 0x1F] = 0;

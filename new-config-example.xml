@@ -1,0 +1,32 @@
+<!-- This is an example of what the new configuration code might write out -->
+<machine board="shuttle">
+    <!-- baseboard config -->
+    <config>
+        <memory-size>64M</memory-size>
+    </config>
+    <!-- device tree -->
+    <devices>
+        <bus bus="ide">
+            <device kind="hdd" addr="0.0">
+                <drive kind="file">
+                    <path>/home/lily/bla.vhd</path>
+                </drive>
+            </device>
+
+            <device kind="cdrom-atapi" addr="1.0">
+                <type>dvdrom</type>
+            </device>
+        </bus>
+
+        <!-- no ISA devices besides the machine's -->
+        <bus bus="isa"/>
+
+        <bus bus="pci">
+            <device kind="rtl8139" addr="1">
+                <network type="slirp">
+                    <baseip>10.69.0.0</baseip>
+                </network>
+            </device>
+        </bus>
+    </devices>
+</machine>

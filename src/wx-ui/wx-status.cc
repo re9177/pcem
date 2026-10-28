@@ -55,7 +55,8 @@ BEGIN_EVENT_TABLE(StatusPane, wxPanel)
 EVT_PAINT(StatusPane::PaintEvent)
 END_EVENT_TABLE()
 
-BEGIN_EVENT_TABLE(StatusFrame, wxFrame) END_EVENT_TABLE()
+BEGIN_EVENT_TABLE(StatusFrame, wxFrame)
+END_EVENT_TABLE()
 
 StatusPane::StatusPane(wxFrame* parent)
 	: wxPanel(parent) {

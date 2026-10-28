@@ -617,11 +617,11 @@ void sb_exec_command(sb_dsp_t* dsp) {
 			sb_add_data(dsp, dsp->sb_test);
 			break;
 		case 0xF2: /*Trigger 8-bit IRQ*/
-				   //                pclog("Trigger IRQ\n");
+			//                pclog("Trigger IRQ\n");
 			sb_irq(dsp, 1);
 			break;
 		case 0xF3: /*Trigger 16-bit IRQ*/
-				   //                pclog("Trigger IRQ\n");
+			//                pclog("Trigger IRQ\n");
 			sb_irq(dsp, 0);
 			break;
 		case 0xE7: /*???*/

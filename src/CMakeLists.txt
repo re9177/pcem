@@ -27,12 +27,15 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/scsi/scsi.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/sound/sound.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/video/video.cmake)
 
+# TODO
 if(${PCEM_DISPLAY_ENGINE} STREQUAL "wxWidgets")
         include(${CMAKE_CURRENT_SOURCE_DIR}/wx-ui/wx-ui.cmake)
         include(${CMAKE_CURRENT_SOURCE_DIR}/wx-ui/viewers/viewers.cmake)
 endif()
 
-set(PCEM_SRC ${PCEM_SRC}
+add_subdirectory(platform)
+
+add_executable(pcem
         config.c
         logging.c
         paths.c
@@ -44,10 +47,8 @@ set(PCEM_SRC ${PCEM_SRC}
         rtc.c
         rtc_tc8521.c
         timer.c
-        )
-
-
-add_executable(pcem ${PCEM_SRC})
+        ${PCEM_SRC}
+)
 
 
 # Pull in private includes
@@ -69,6 +70,8 @@ target_link_libraries(pcem PRIVATE
         ${SDL2_LIBRARIES}
         ${OPENAL_LIBRARY}
         ${OPENGL_LIBRARIES}
+        # subdirectory targets
+        pcem-platform
         # Third party code
         3rdparty-minivhd
         3rdparty-dosbox
