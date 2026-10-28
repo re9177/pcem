@@ -9,18 +9,15 @@
 
 #include "filters.h"
 
-#include "sound_opl.h"
-
 #include "sound.h"
-#include "sound_adlib.h"
-#include "sound_adlibgold.h"
-#include "sound_audiopci.h"
-#include "sound_azt2316a.h"
-#include "sound_pas16.h"
-#include "sound_sb.h"
-#include "sound_sb_dsp.h"
-#include "sound_wss.h"
-#include "sound_mmb.h"
+#include "devices/sound/sound_adlib.h"
+#include "devices/sound/sound_adlibgold.h"
+#include "devices/sound/sound_audiopci.h"
+#include "devices/sound/sound_azt2316a.h"
+#include "devices/sound/sound_pas16.h"
+#include "devices/sound/sound_sb.h"
+#include "devices/sound/sound_wss.h"
+#include "devices/sound/sound_mmb.h"
 
 #include "timer.h"
 #include "thread.h"

@@ -64,7 +64,7 @@
 #include "w83877tf.h"
 #include "w83977tf.h"
 #include "wd76c10.h"
-#include "sound/sound_ps1.h"
+#include "devices/sound/sound_ps1.h"
 
 #include "devices/device.h"
 

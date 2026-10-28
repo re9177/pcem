@@ -6,7 +6,7 @@
 #include "models/pic.h"
 #include "models/pit.h"
 #include "sound/sound.h"
-#include "sound/sound_speaker.h"
+#include "devices/sound/sound_speaker.h"
 #include "timer.h"
 #include "video/video.h"
 

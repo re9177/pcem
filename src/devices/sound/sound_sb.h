@@ -1,6 +1,7 @@
 #ifndef SOUND_SB_H
 #define SOUND_SB_H
 
+#include "sound_opl.h"
 #include "sound_emu8k.h"
 #include "sound_mpu401_uart.h"
 #include "sound_sb_dsp.h"
