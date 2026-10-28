@@ -86,4 +86,6 @@ set(PCEM_SRC ${PCEM_SRC}
         devices/video/vid_voodoo_setup.c
         devices/video/vid_voodoo_texture.c
         devices/video/vid_wy700.c
+
+        devices/network/ne2000.c
         )

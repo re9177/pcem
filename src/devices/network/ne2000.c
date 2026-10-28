@@ -44,7 +44,8 @@
 #include "ibm.h"
 #include "devices/device.h" // REMOVE
 
-#include "nethandler.h"
+#include "networking/nethandler.h"
+#include "networking/netbackend.h"
 
 #include "config.h" // REMOVE
 #include "io.h"
@@ -53,7 +54,6 @@
 #include "bus/pci.h"
 #include "timer.h"
 
-#include "netbackend.h"
 
 /*MAC address*/
 uint8_t maclocal[6];
@@ -232,7 +232,7 @@ typedef struct ne2000_t {
 
 	/* network state */
 	network_backend_t* network_backend;
-	void* network_instance
+	void* network_instance;
 } ne2000_t;
 
 static void ne2000_tx_event(int val, void* p);

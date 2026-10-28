@@ -12,7 +12,6 @@ if(USE_PCAP_NETWORKING)
 endif()
 
 set(PCEM_SRC ${PCEM_SRC}
-        networking/ne2000.c
         networking/nethandler.c
 
         networking/netbackend.c

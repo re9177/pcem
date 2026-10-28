@@ -11,7 +11,7 @@
 #include "ibm.h"
 #include "devices/device.h" // REMOVE
 
-#include "ne2000.h"
+#include "devices/network/ne2000.h"
 #include "timer.h"
 
 #include "devices/device.h"
