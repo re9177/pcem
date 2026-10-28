@@ -119,47 +119,7 @@ void pollmouse() {
 	//        if (mousecapture) position_mouse(64,64);
 }
 
-/*PC1512 languages -
-  7=English
-  6=German
-  5=French
-  4=Spanish
-  3=Danish
-  2=Swedish
-  1=Italian
-		3,2,1 all cause the self test to fail for some reason
-  */
-
 int cpuspeed2;
-
-int clocks[3][12][4] = { {
-						 { 4772728, 13920, 59660, 5965 }, /*4.77MHz*/
-						 { 8000000, 23333, 110000, 0 },	  /*8MHz*/
-						 { 10000000, 29166, 137500, 0 },  /*10MHz*/
-						 { 12000000, 35000, 165000, 0 },  /*12MHz*/
-						 { 16000000, 46666, 220000, 0 },  /*16MHz*/
-						 },
-						 {
-						 { 8000000, 23333, 110000, 0 },	 /*8MHz*/
-						 { 12000000, 35000, 165000, 0 }, /*12MHz*/
-						 { 16000000, 46666, 220000, 0 }, /*16MHz*/
-						 { 20000000, 58333, 275000, 0 }, /*20MHz*/
-						 { 25000000, 72916, 343751, 0 }, /*25MHz*/
-						 },
-						 {
-						 { 16000000, 46666, 220000, 0 },			 /*16MHz*/
-						 { 20000000, 58333, 275000, 0 },			 /*20MHz*/
-						 { 25000000, 72916, 343751, 0 },			 /*25MHz*/
-						 { 33000000, 96000, 454000, 0 },			 /*33MHz*/
-						 { 40000000, 116666, 550000, 0 },			 /*40MHz*/
-						 { 50000000, 72916 * 2, 343751 * 2, 0 },	 /*50MHz*/
-						 { 33000000 * 2, 96000 * 2, 454000 * 2, 0 }, /*66MHz*/
-						 { 75000000, 72916 * 3, 343751 * 3, 0 },	 /*75MHz*/
-						 { 80000000, 116666 * 2, 550000 * 2, 0 },	 /*80MHz*/
-						 { 100000000, 72916 * 4, 343751 * 4, 0 },	 /*100MHz*/
-						 { 120000000, 116666 * 3, 550000 * 3, 0 },	 /*120MHz*/
-						 { 133000000, 96000 * 4, 454000 * 4, 0 },	 /*133MHz*/
-						 } };
 
 int updatestatus = 0;
 int win_title_update = 0;
@@ -439,15 +399,6 @@ void resetpchard() {
 	cycles = cycles_main = 0;
 }
 
-char romsets[17][40] = { "IBM PC", "IBM XT", "Generic Turbo XT", "Euro PC", "Tandy 1000",
-						 "Amstrad PC1512", "Sinclair PC200", "Amstrad PC1640", "IBM AT", "AMI 286 clone",
-						 "Dell System 200", "Misc 286", "IBM AT 386", "Misc 386", "386 clone",
-						 "486 clone", "486 clone 2" };
-char clockspeeds[3][12][16] = {
-	{ "4.77MHz", "8MHz", "10MHz", "12MHz", "16MHz" },
-	{ "8MHz", "12MHz", "16MHz", "20MHz", "25MHz" },
-	{ "16MHz", "20MHz", "25MHz", "33MHz", "40MHz", "50MHz", "66MHz", "75MHz", "80MHz", "100MHz", "120MHz", "133MHz" },
-};
 int framecountx = 0;
 int sndcount = 0;
 int oldat70hz;
@@ -558,8 +509,6 @@ void fullspeed() {
 			setpitclock(models[model]->cpu[cpu_manufacturer].cpus[cpu].rspeed);
 		else
 			setpitclock(14318184.0);
-		//                if (is386) setpitclock(clocks[2][cpuspeed2][0]);
-		//                else       setpitclock(clocks[AT?1:0][cpuspeed2][0]);
 	}
 	atfullspeed = 1;
 }
@@ -576,9 +525,6 @@ void closepc() {
 	atapi->exit();
 	//        ioctl_close();
 	dumppic();
-	//        output=7;
-	//        setpitclock(clocks[0][0][0]);
-	//        while (1) runpc();
 	disc_close(0);
 	disc_close(1);
 	dumpregs();
