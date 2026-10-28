@@ -10,6 +10,7 @@
 #include <sys/file.h>
 #include <sys/ioctl.h>
 #include <net/if.h>
+#include <ifaddrs.h>
 
 #include <linux/if.h>
 #include <linux/if_tun.h>
@@ -77,10 +78,22 @@ class TunManager {
 		return tunFd;
 	}
 
+	bool isTapDevice(const std::string& tapDeviceName) {
+		auto interfaceRequest = makeInterfaceRequest(tapDeviceName);
+		if(ioctl(tunFd, TUNGETIFF, &interfaceRequest) >= 0) {
+			return (interfaceRequest.ifr_flags & IFF_TAP) == IFF_TAP;
+		}
+
+		return false;
+	}
+
 	void closeTap() {
 		closeTun();
 	}
 };
+
+// TODO: It might be wise to pull out some of this base code
+// like the queues and cable state into a base class.
 
 class TapNetwork {
 	TunManager tunManager;
@@ -127,6 +140,15 @@ class TapNetwork {
 	}
 
 	void dropQueues() {
+		while(!rxQueue.empty()) {
+			net_returnPacket(rxQueue.front());
+			rxQueue.pop();
+		}
+
+		while(!txQueue.empty()) {
+			net_returnPacket(txQueue.front());
+			txQueue.pop();
+		}
 	}
 
    public:
@@ -149,7 +171,8 @@ class TapNetwork {
 		if(fd != -1) {
 			tunManager.closeTap();
 		}
-		return;
+		// Drop all packets
+		dropQueues();
 	}
 
 	void setCableConnectState(int connected) {
@@ -157,8 +180,8 @@ class TapNetwork {
 			cableConnected = true;
 		else {
 			cableConnected = false;
-			// TODO: Drop all packets in rx and tx queues?
-			// We need to call net_returnPacket on them all
+			// Drop all in-flight packets
+			dropQueues();
 		}
 	}
 
@@ -231,13 +254,72 @@ class TapNetwork {
 	}
 };
 
+const network_adapter_t* getTapAdapters(size_t* pCount) {
+	static std::vector<network_adapter_t> adapterList{};
+
+	// simple static string pool for interface names.
+	// kinda garbage but well hey so is most of the pcem code :)
+	static struct NamePool {
+		char pool[2048];
+		char* pCurrent;
+
+		NamePool() {
+			pCurrent = &pool[0];
+		}
+
+		char* dup(const char* psz) {
+			char* writeTo = pCurrent;
+			auto count = strlen(psz);
+			memcpy(pCurrent, psz, count);
+			writeTo[count] = '\0';
+			pCurrent += count+1;
+
+			return writeTo;
+		}
+	} namePool{};
+
+
+	pclog("TAP getTapAdapters\n");
+
+	if(adapterList.empty()) {
+		// Generate the adapter list.
+		pclog("TAP Generating adapter list\n");
+		struct ifaddrs* list;
+		if(getifaddrs(&list) == -1) {
+			if(pCount)
+				*pCount = 0;
+			return nullptr;
+		}
+
+		for(auto interface = list; interface != nullptr; interface = interface->ifa_next) {
+			if(interface->ifa_addr)
+				continue;
+			TunManager tun;
+			if(tun.isTapDevice(interface->ifa_name)) {
+				// Add it to the list.
+				network_adapter_t tempAdapter = {
+					.name = namePool.dup(interface->ifa_name),
+					.flags = 0
+				};
+				adapterList.push_back(tempAdapter);
+			}
+		}
+
+		freeifaddrs(list);
+	}
+
+	if(pCount)
+		*pCount = adapterList.size();
+	return adapterList.data();
+}
+
 static network_backend_t net_tap = {
 	.name = "Linux TAP",
 	.id = "tap",
 	.implsize = sizeof(TapNetwork),
 	.requiresAdapterBinding = 1,
 	.getAdapterList = [](size_t* pcount) -> const network_adapter_t* {
-		return nullptr;
+		return getTapAdapters(pcount);
 	},
 
 	.initialize = [](void* pimpl, const network_adapter_t* adapter) -> int {
