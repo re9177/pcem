@@ -17,6 +17,7 @@ set(PCEM_SRC ${PCEM_SRC}
         # new backend layer
         networking/netbackend.c
         networking/netpacket.cpp
+        networking/backends/instancebase.cpp
         networking/backends/null.cpp
         # todo conditional compile
         networking/backends/tap_linux.cpp

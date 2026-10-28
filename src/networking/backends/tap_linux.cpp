@@ -1,5 +1,6 @@
 #include "networking/netbackend.h"
 #include "networking/netpacket.hpp"
+#include "instancebase.hpp"
 #include <cstdint>
 #include <cstring>
 #include <new>
@@ -20,8 +21,6 @@
 extern "C" {
 #include "logging.h"
 }
-
-constexpr static auto MAX_PACKET_QUEUE_LENGTH = 64;
 
 // This class hides away most of the management of the tun device
 class TunManager {
@@ -96,70 +95,10 @@ class TunManager {
 	}
 };
 
-// TODO: It might be wise to pull out some of this base code
-// like the queues and cable state into a base class.
-
-class TapNetwork {
-
-	// queue of packets recieved
-	std::queue<NetPacket*> rxQueue;
-
-	std::queue<NetPacket*> txQueue;
-
-	// Default to cable connected
-	bool cableConnected { true };
-
+class TapNetworkInstance final : public NetworkInstance {
 	TunManager tunManager;
 	int fd;
 	struct pollfd pollState;
-
-	void queueReadPacket() {
-		// Ignore packets which are
-		if(rxQueue.size() + 1 > MAX_PACKET_QUEUE_LENGTH) {
-			return;
-		}
-
-		auto* packet = net_createPacket(2000);
-		if(!packet) {
-			fatal("net_createPacket failed");
-		}
-
-		int nRead = read(fd, packet->getData(), packet->getSize());
-		// Ignore invalid reads.
-		if(nRead < 0 || nRead == 0) {
-			net_returnPacket(packet);
-			return;
-		}
-
-		// Packet recieved, add it to queue
-		packet->resizeTo(nRead);
-		rxQueue.push(packet);
-	}
-
-	void writeQueuedPacket() {
-		// Don't bother
-		if(txQueue.empty())
-			return;
-
-		auto packet = txQueue.front();
-
-		// pop packet
-		net_returnPacket(packet);
-		txQueue.pop();
-	}
-
-	void dropQueues() {
-		while(!rxQueue.empty()) {
-			net_returnPacket(rxQueue.front());
-			rxQueue.pop();
-		}
-
-		while(!txQueue.empty()) {
-			net_returnPacket(txQueue.front());
-			txQueue.pop();
-		}
-	}
-
    public:
 	int init(const network_adapter_t* adapter) {
 		if(!adapter)
@@ -184,22 +123,6 @@ class TapNetwork {
 		dropQueues();
 	}
 
-	void setCableConnectState(int connected) {
-		if(connected)
-			cableConnected = true;
-		else {
-			cableConnected = false;
-			// Drop all in-flight packets
-			dropQueues();
-		}
-	}
-
-	int getCableConnectState() {
-		if(cableConnected)
-			return 1;
-		return 0;
-	}
-
 	void pollEvents() {
 		int pollStatus = poll(&pollState, 1, 100);
 		if(pollStatus == 0)
@@ -210,56 +133,40 @@ class TapNetwork {
 			// we can now react to them and do things.
 
 			if(pollState.revents & POLLIN) {
-				queueReadPacket();
+				// the TAP is readable, so try and recieve a packet from it.
+				auto* packet = net_createPacket(2000);
+				if(!packet) {
+					fatal("net_createPacket failed");
+				}
+
+				int nRead = read(fd, packet->getData(), packet->getSize());
+				// Ignore invalid reads.
+				if(nRead < 0 || nRead == 0) {
+					net_returnPacket(packet);
+					return;
+				}
+
+				// Packet recieved, add it to queue
+				packet->resizeTo(nRead);
+				pushRxQueue(packet);
 			}
 
 			if(pollState.revents & POLLOUT) {
-				writeQueuedPacket();
+				// The TAP is writable, so let's write a packet which was previously queued.
+				auto packet = peekTxQueue();
+				if(packet == nullptr)
+					return;
+
+				int nWritten = write(fd, packet->getData(), packet->getSize());
+				if(nWritten < 0 || nWritten == 0) {
+					pclog("error writing tap %d\n", errno);
+				}
+
+				popTxQueue();
 			}
 		} else {
 			pclog("Error polling for events.");
 		}
-	}
-
-	int sendPacket(const uint8_t* buffer, size_t size) {
-		// Don't bother
-		if(!cableConnected)
-			return -1;
-
-		auto* packet = net_createPacket(size);
-		if(!packet) {
-			fatal("Network backend out of packets??");
-		}
-
-		// If we go above the packet queue length we are probably
-		// somehow stalled, so dropping the packet seems like the best option.
-		if(txQueue.size() + 1 > MAX_PACKET_QUEUE_LENGTH)
-			return -1;
-
-		// Clone packet and push it. pollEvents() will write it.
-		memcpy(packet->getData(), buffer, size);
-		txQueue.push(packet);
-		return 0;
-	}
-
-	int recievePacket(uint8_t* buffer, size_t size) {
-		// No packets are available to read.
-		if(rxQueue.empty()) {
-			return -1;
-		}
-
-		if(!cableConnected)
-			return -1;
-
-		auto packet = rxQueue.front();
-
-		// Copy packet to user-provided buffer.
-		memcpy(&buffer[0], packet->getData(), packet->getSize());
-
-		// pop it
-		net_returnPacket(packet);
-		rxQueue.pop();
-		return packet->getSize(); // packet read.
 	}
 };
 
@@ -325,39 +232,39 @@ const network_adapter_t* getTapAdapters(size_t* pCount) {
 static network_backend_t net_tap = {
 	.name = "Linux TAP",
 	.id = "tap",
-	.implsize = sizeof(TapNetwork),
+	.implsize = sizeof(TapNetworkInstance),
 	.requiresAdapterBinding = 1,
 	.getAdapterList = [](size_t* pcount) -> const network_adapter_t* {
 		return getTapAdapters(pcount);
 	},
 
 	.initialize = [](void* pimpl, const network_adapter_t* adapter) -> int {
-		auto* p = new(pimpl) TapNetwork;
+		auto* p = new(pimpl) TapNetworkInstance;
 		return p->init(adapter);
 	},
 
 	.shutdown = [](void* pimpl) -> void {
-		auto* p = reinterpret_cast<TapNetwork*>(pimpl);
+		auto* p = reinterpret_cast<TapNetworkInstance*>(pimpl);
 		p->shutdown();
-		p->~TapNetwork();
+		p->~TapNetworkInstance();
 	},
 
 	.setCableConnectState = [](void* pimpl, int connected) -> void {
-		return reinterpret_cast<TapNetwork*>(pimpl)->setCableConnectState(connected);
+		return reinterpret_cast<TapNetworkInstance*>(pimpl)->setCableConnectState(connected);
 	},
 
 	.getCableConnectState = [](void* pimpl) -> int {
-		return reinterpret_cast<TapNetwork*>(pimpl)->getCableConnectState();
+		return reinterpret_cast<TapNetworkInstance*>(pimpl)->getCableConnectState();
 	},
 
-	.doPoll = [](void* pimpl) { return reinterpret_cast<TapNetwork*>(pimpl)->pollEvents(); },
+	.doPoll = [](void* pimpl) { return reinterpret_cast<TapNetworkInstance*>(pimpl)->pollEvents(); },
 
 	.sendPacket = [](void* pimpl, const uint8_t* buffer, size_t size) -> int {
-		return reinterpret_cast<TapNetwork*>(pimpl)->sendPacket(buffer, size);
+		return reinterpret_cast<TapNetworkInstance*>(pimpl)->sendPacket(buffer, size);
 	},
 
 	.recievePacket = [](void* pimpl, uint8_t* buffer, size_t size) -> int {
-		return reinterpret_cast<TapNetwork*>(pimpl)->recievePacket(buffer, size);
+		return reinterpret_cast<TapNetworkInstance*>(pimpl)->recievePacket(buffer, size);
 	},
 };
 
