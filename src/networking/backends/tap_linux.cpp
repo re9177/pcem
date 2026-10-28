@@ -80,6 +80,9 @@ class TunManager {
 
 	/// Returns true if the provided interface name is a TAP device.
 	bool isTapDevice(const std::string& tapDeviceName) {
+		if(openTun(); tunFd == -1)
+			return false;
+
 		auto interfaceRequest = makeInterfaceRequest(tapDeviceName);
 		if(ioctl(tunFd, TUNGETIFF, &interfaceRequest) >= 0) {
 			return (interfaceRequest.ifr_flags & IFF_TAP) == IFF_TAP;
