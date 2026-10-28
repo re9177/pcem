@@ -1,5 +1,5 @@
-#include "netbackend.h"
-#include "netpacket.hpp"
+#include "networking/netbackend.h"
+#include "networking/netpacket.hpp"
 #include <cstdint>
 #include <cstring>
 #include <new>

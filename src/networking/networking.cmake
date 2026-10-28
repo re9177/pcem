@@ -14,11 +14,12 @@ endif()
 set(PCEM_SRC ${PCEM_SRC}
         networking/nethandler.c
 
+        # new backend layer
         networking/netbackend.c
         networking/netpacket.cpp
-        networking/netbackend_null.cpp
-        networking/netbackend_tap_linux.cpp
-        #networking/queue.c
+        networking/backends/null.cpp
+        # todo conditional compile
+        networking/backends/tap_linux.cpp
         )
 
 if(WIN32)
