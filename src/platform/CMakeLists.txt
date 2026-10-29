@@ -13,6 +13,22 @@ else()
 message(FATAL_ERROR "Unknown platform ${PCEM_PLATFORM}")
 endif()
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+	target_sources(pcem-platform PRIVATE
+		midi_alsa.c
+	)
+	target_link_libraries(pcem-platform INTERFACE
+		${ALSA_LIBRARIES}
+	)
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+	target_sources(pcem-platform PRIVATE
+		midi_win.c
+	)
+	target_link_libraries(pcem-platform INTERFACE
+		${ALSA_LIBRARIES}
+	)
+endif()
+
 target_include_directories(pcem-platform PRIVATE
         ${PROJECT_SOURCE_DIR}/src
 )

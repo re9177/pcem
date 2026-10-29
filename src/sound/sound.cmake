@@ -29,15 +29,3 @@ set(PCEM_SRC ${PCEM_SRC}
         sound/resid-fp/wave8580__ST.cc
         sound/resid-fp/wave.cc
         )
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-        set(PCEM_SRC ${PCEM_SRC}
-                sound/midi_alsa.c
-                )
-        set(PCEM_ADDITIONAL_LIBS ${PCEM_ADDITIONAL_LIBS} ${ALSA_LIBRARIES})
-elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
-    set(PCEM_SRC ${PCEM_SRC}
-                sound/win-midi.c
-                )
-                set(PCEM_ADDITIONAL_LIBS ${PCEM_ADDITIONAL_LIBS} winmm)
-endif()

@@ -2,7 +2,7 @@
 #include <mmsystem.h>
 #include "ibm.h"
 #include "config.h" // REMOVE
-#include "plat-midi.h"
+#include "platform/midi.h"
 
 static int midi_id;
 static HMIDIOUT midi_out_device = NULL;
