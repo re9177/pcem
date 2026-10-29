@@ -1,3 +1,4 @@
+#include "logging.h"
 #ifdef _WIN32
 	#define BITMAP WINDOWS_BITMAP
 	#include <windows.h>
@@ -57,7 +58,7 @@ int hostconfig_dialog_proc(void* hdlg, int message, INT_PARAM wParam, LONG_PARAM
 				config_set_int(CFG_MACHINE, "network", "type", type);
 
 				// Save bound adapter
-				if(backend->requiresAdapterBinding) {
+				if(backend->requiresBinding) {
 					char name[64];
 					sprintf(&name[0], "%s_bindadapter", backend->id);
 				}
@@ -75,13 +76,25 @@ int hostconfig_dialog_proc(void* hdlg, int message, INT_PARAM wParam, LONG_PARAM
 
 				h = wx_getdlgitem(hdlg, WX_ID("IDC_COMBO_NETWORK_TYPE"));
 				type = wx_sendmessage(h, WX_CB_GETCURSEL, 0, 0);
-				h = wx_getdlgitem(hdlg, WX_ID("IDC_COMBO_NETWORK_DEVICE"));
-
 				network_backend_t* backend = network_backend_get(type);
-				if(backend->requiresAdapterBinding) {
+				pclog("Switched to backend %s\n", backend->name);
+				if(backend->requiresBinding == 1) {
 					// Clear the list of adapters selected
+					h = wx_getdlgitem(hdlg, WX_ID("IDC_COMBO_NETWORK_DEVICE"));
+					wx_sendmessage(h, WX_CB_RESETCONTENT, 0, 0);
+
+					size_t listCount = 0;
+					const network_binding_t* networkList = backend->getBindingList(&listCount);
+					pclog("%d adapters\n");
+					for(size_t i = 0; i < listCount; ++i) {
+						pclog("adapter %s\n", networkList[i].name);
+						wx_sendmessage(h, WX_CB_ADDSTRING, 0, (LONG_PARAM)networkList[i].name);
+					}
+
+					h = wx_getdlgitem(hdlg, WX_ID("IDC_COMBO_NETWORK_DEVICE"));
 					wx_enablewindow(h, TRUE);
 				} else {
+					h = wx_getdlgitem(hdlg, WX_ID("IDC_COMBO_NETWORK_DEVICE"));
 					wx_enablewindow(h, FALSE);
 				}
 

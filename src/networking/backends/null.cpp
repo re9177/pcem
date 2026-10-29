@@ -3,15 +3,15 @@
 static network_backend_t net_null = {
 	.name = "None",
 	.id = "null",
-	.implsize = sizeof(int),
-	.requiresAdapterBinding = 0,
-	.getAdapterList = [](size_t* pcount) -> const network_adapter_t* {
+	.instanceSize = sizeof(int),
+	.requiresBinding = 0,
+	.getBindingList = [](size_t* pcount) -> const network_binding_t* {
 		if(pcount)
 			*pcount = 0;
 		return nullptr;
 	},
 
-	.initialize = [](void* pimpl, const network_adapter_t* adapter) -> int {
+	.initialize = [](void* pimpl, const network_binding_t* adapter) -> int {
 		return 0; // success
 	},
 

@@ -27,13 +27,14 @@ network_backend_t* network_backend_get(int index) {
 }
 
 // Creates an instance of a network backend.
-void* network_backend_create_instance(network_backend_t* backend, const network_adapter_t* adapter) {
-	void* instance = malloc(backend->implsize);
+void* network_backend_create_instance(network_backend_t* backend, const network_binding_t* adapter) {
+	void* instance = malloc(backend->instanceSize);
 	if(instance == NULL)
 		return NULL;
 
 	if(!backend->initialize(instance, adapter)) {
 		backend->shutdown(instance);
+		free(instance);
 		return NULL;
 	}
 

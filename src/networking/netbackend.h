@@ -14,27 +14,27 @@ extern "C" {
 typedef struct {
 	const char* name;
 	int flags; // No flags are defined yet
-} network_adapter_t;
+} network_binding_t;
 
 typedef struct {
 	const char* name;
 	const char* id;
 
-	// size of the implementation to allocate.
-	size_t implsize;
+	// size of an instance
+	size_t instanceSize;
 
-	// set to 1 (todo bool true) if this backend requires binding to a specific adapter to function.
+	// set to 1 (todo bool true) if this backend requires a binding to function.
 	// set to 0 otherwise in the case that it does not.
-	int requiresAdapterBinding;
+	int requiresBinding;
 
 	// obtains a list of all viable adapters (optionally placing count in [*count]). if [requiresAdapterBinding] is false,
 	// this function is permitted to return a null pointer since there is no adapter binding required, and thus
 	// no need to actually populate a list of adapters.
-	const network_adapter_t* (*getAdapterList)(size_t* count);
+	const network_binding_t* (*getBindingList)(size_t* count);
 
 	// initalize the backend with the selected adapter. [adapter] is permitted to be a null pointer
 	// when [requiresAdapterBinding] is false.
-	int (*initialize)(void* pimpl, const network_adapter_t* adapter);
+	int (*initialize)(void* pimpl, const network_binding_t* adapter);
 
 	// shuts down the backend.
 	void (*shutdown)(void* pimpl);
@@ -64,9 +64,10 @@ int network_backend_get_count();
 
 network_backend_t* network_backend_get(int index);
 
-// Creates an instance of a network backend.
-void* network_backend_create_instance(network_backend_t* backend, const network_adapter_t* adapter);
+/// Creates an instance of a network backend.
+void* network_backend_create_instance(network_backend_t* backend, const network_binding_t* adapter);
 
+/// Destroy an instance of a network backend.
 void network_backend_destroy_instance(void* instance);
 
 #ifdef __cplusplus

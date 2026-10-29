@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <cstring>
 #include <new>
-#include <queue>
 #include <string>
 
 #include <unistd.h>
@@ -34,7 +33,7 @@ class TunManager {
 
 		tunFd = ::open("/dev/net/tun", O_RDWR | O_CLOEXEC);
 		if(tunFd < 0) {
-			pclog("DEV9: Failed to open /dev/net/tun. TAP networking will not function.");
+			pclog("TAP: Failed to open /dev/net/tun. TAP networking will not function.");
 			tunFd = -1;
 			return;
 		}
@@ -55,6 +54,10 @@ class TunManager {
 	}
 
    public:
+	~TunManager() {
+		closeTun();
+	}
+
 	int openTap(const std::string& tapDeviceName) {
 		// Try and open the TUN device. If that fails, give up.
 		if(openTun(); tunFd == -1)
@@ -67,7 +70,7 @@ class TunManager {
 		// Request the TAP device from the TUN.
 		int result = ioctl(tunFd, TUNSETIFF, &interfaceRequest);
 		if(result == -1) {
-			pclog("Could not request TAP %s from /dev/net/tun. TAP networking will not function.", tapDeviceName.c_str());
+			pclog("TAP: Could not request TAP interface %s from the kernel TUN interface. TAP networking will not function.", tapDeviceName.c_str());
 			return -1;
 		}
 
@@ -100,7 +103,7 @@ class TapNetworkInstance final : public NetworkInstance {
 	int fd;
 	struct pollfd pollState;
    public:
-	int init(const network_adapter_t* adapter) {
+	int init(const network_binding_t* adapter) {
 		if(!adapter)
 			return 1;
 
@@ -110,6 +113,7 @@ class TapNetworkInstance final : public NetworkInstance {
 			return 1;
 		}
 
+		// set up the poll struct.
 		pollState.fd = fd;
 		pollState.events = POLLIN | POLLOUT;
 		return 0;
@@ -124,7 +128,7 @@ class TapNetworkInstance final : public NetworkInstance {
 	}
 
 	void pollEvents() {
-		int pollStatus = poll(&pollState, 1, 100);
+		int pollStatus = poll(&pollState, 1, 1);
 		if(pollStatus == 0)
 			return;
 
@@ -170,8 +174,8 @@ class TapNetworkInstance final : public NetworkInstance {
 	}
 };
 
-const network_adapter_t* getTapAdapters(size_t* pCount) {
-	static std::vector<network_adapter_t> adapterList{};
+const network_binding_t* getTapBindings(size_t* pCount) {
+	static std::vector<network_binding_t> bindingList{};
 
 	// simple static string pool for interface names.
 	// kinda garbage but well hey so is most of the pcem code :)
@@ -195,11 +199,11 @@ const network_adapter_t* getTapAdapters(size_t* pCount) {
 	} namePool{};
 
 
-	pclog("TAP getTapAdapters\n");
+	pclog("TAP getBindingList\n");
 
-	if(adapterList.empty()) {
-		// Generate the adapter list.
-		pclog("TAP Generating adapter list\n");
+	if(bindingList.empty()) {
+		// Generate the binding list.
+		pclog("TAP Generating binding list\n");
 		struct ifaddrs* list;
 		if(getifaddrs(&list) == -1) {
 			if(pCount)
@@ -207,17 +211,17 @@ const network_adapter_t* getTapAdapters(size_t* pCount) {
 			return nullptr;
 		}
 
+		TunManager tun;
+
 		for(auto interface = list; interface != nullptr; interface = interface->ifa_next) {
 			if(interface->ifa_addr)
 				continue;
-			TunManager tun;
+
 			if(tun.isTapDevice(interface->ifa_name)) {
-				// Add it to the list.
-				network_adapter_t tempAdapter = {
+				bindingList.push_back({
 					.name = namePool.dup(interface->ifa_name),
 					.flags = 0
-				};
-				adapterList.push_back(tempAdapter);
+				});
 			}
 		}
 
@@ -225,20 +229,20 @@ const network_adapter_t* getTapAdapters(size_t* pCount) {
 	}
 
 	if(pCount)
-		*pCount = adapterList.size();
-	return adapterList.data();
+		*pCount = bindingList.size();
+	return bindingList.data();
 }
 
 static network_backend_t net_tap = {
 	.name = "Linux TAP",
 	.id = "tap",
-	.implsize = sizeof(TapNetworkInstance),
-	.requiresAdapterBinding = 1,
-	.getAdapterList = [](size_t* pcount) -> const network_adapter_t* {
-		return getTapAdapters(pcount);
+	.instanceSize = sizeof(TapNetworkInstance),
+	.requiresBinding = 1,
+	.getBindingList = [](size_t* pcount) -> const network_binding_t* {
+		return getTapBindings(pcount);
 	},
 
-	.initialize = [](void* pimpl, const network_adapter_t* adapter) -> int {
+	.initialize = [](void* pimpl, const network_binding_t* adapter) -> int {
 		auto* p = new(pimpl) TapNetworkInstance;
 		return p->init(adapter);
 	},
