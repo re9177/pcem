@@ -1,5 +1,6 @@
 #ifndef _SOUND_AD1848_H_
 #define _SOUND_AD1848_H_
+#include "platform/sound.h"
 #include "timer.h"
 
 #define AD1848_TYPE_DEFAULT 0
@@ -27,7 +28,7 @@ typedef struct ad1848_t {
 	pc_timer_t timer;
 	uint64_t timer_latch;
 
-	int16_t buffer[MAXSOUNDBUFLEN * 2];
+	int16_t buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2];
 	int pos;
 
 	int type;

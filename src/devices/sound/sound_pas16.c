@@ -132,7 +132,7 @@ typedef struct pas16_t {
 	opl_t opl;
 	sb_dsp_t dsp;
 
-	int16_t pcm_buffer[2][MAXSOUNDBUFLEN];
+	int16_t pcm_buffer[2][PLATFORM_MAX_SOUND_BUFFER_LENGTH];
 
 	int pos;
 } pas16_t;

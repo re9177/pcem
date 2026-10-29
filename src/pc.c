@@ -43,6 +43,7 @@
 #include "platform/joystick.h"
 #include "platform/keyboard.h"
 #include "platform/midi.h"
+#include "platform/sound.h"
 #include "platform/mouse.h"
 #include "scsi/scsi_cd.h"
 #include "scsi/scsi_zip.h"
@@ -577,7 +578,7 @@ void loadconfig(char* fn) {
 	window_remember = config_get_int(CFG_GLOBAL, NULL, "window_remember", 0);
 
 	sound_buf_len = config_get_int(CFG_GLOBAL, NULL, "sound_buf_len", 200);
-	sound_gain = config_get_int(CFG_GLOBAL, NULL, "sound_gain", 0);
+	sound_driver_set_gain(config_get_int(CFG_GLOBAL, NULL, "sound_gain", 0));
 
 	GAMEBLASTER = config_get_int(CFG_MACHINE, NULL, "gameblaster", 0);
 	GUS = config_get_int(CFG_MACHINE, NULL, "gus", 0);
@@ -806,7 +807,7 @@ void saveconfig(char* fn) {
 	config_set_int(CFG_GLOBAL, NULL, "window_remember", window_remember);
 
 	config_set_int(CFG_GLOBAL, NULL, "sound_buf_len", sound_buf_len);
-	config_set_int(CFG_GLOBAL, NULL, "sound_gain", sound_gain);
+	config_set_int(CFG_GLOBAL, NULL, "sound_gain", sound_driver_get_gain());
 
 	config_set_int(CFG_MACHINE, NULL, "gameblaster", GAMEBLASTER);
 	config_set_int(CFG_MACHINE, NULL, "gus", GUS);

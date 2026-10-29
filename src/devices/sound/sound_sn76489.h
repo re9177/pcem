@@ -1,6 +1,7 @@
 #ifndef _SOUND_SN76489_H_
 #define _SOUND_SN76489_H_
 #include "sound.h"
+#include "platform/sound.h"
 
 enum { SN76496,
 	   NCR8496,
@@ -23,7 +24,7 @@ typedef struct sn76489_t {
 	int type;
 	int extra_divide;
 
-	int16_t buffer[MAXSOUNDBUFLEN];
+	int16_t buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH];
 	int pos;
 
 	double psgconst;

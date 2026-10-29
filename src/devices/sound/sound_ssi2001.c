@@ -3,13 +3,14 @@
 #include "devices/device.h" // REMOVE
 #include "io.h"
 #include "sound.h"
+#include "platform/sound.h"
 
 #include "sound_resid.h"
 #include "sound_ssi2001.h"
 
 typedef struct ssi2001_t {
 	void* psid;
-	int16_t buffer[MAXSOUNDBUFLEN * 2];
+	int16_t buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2];
 	int pos;
 } ssi2001_t;
 

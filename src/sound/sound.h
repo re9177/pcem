@@ -25,18 +25,9 @@ void sound_init();
 void sound_init_builtin();
 void sound_reset();
 
-void initalmain(int argc, char* argv[]);
-void inital();
-
-void givealbuffer(int32_t* buf);
-void givealbuffer_cd(int16_t* buf);
+void sound_shutdown();
 
 extern int sound_buf_len;
 void sound_update_buf_length();
-
-extern int sound_gain;
-
-extern int sound_buf_len_al;
-#define MAXSOUNDBUFLEN (48000 / 10)
 
 #endif /* _SOUND_H_ */

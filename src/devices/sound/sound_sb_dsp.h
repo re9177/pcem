@@ -1,6 +1,10 @@
 #ifndef _SOUND_SB_DSP_H_
 #define _SOUND_SB_DSP_H_
 
+#include <stdint.h>
+#include "timer.h"
+#include "platform/sound.h"
+
 /*Sound Blaster Clones, for quirks*/
 #define SB_SUBTYPE_DEFAULT 0			 /*Handle as a Creative card*/
 #define SB_SUBTYPE_CLONE_AZT2316A_0X11 1 /*Aztech Sound Galaxy Pro 16 AB, DSP 3.1 - SBPRO2 clone*/
@@ -79,7 +83,7 @@ typedef struct sb_dsp_t {
 	int record_pos_read;
 	int record_pos_write;
 	int16_t record_buffer[0xFFFF];
-	int16_t buffer[MAXSOUNDBUFLEN * 2];
+	int16_t buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2];
 	int pos;
 
 	uint8_t azt_eeprom[AZTECH_EEPROM_SIZE]; // the eeprom in the Aztech cards is attached to the DSP

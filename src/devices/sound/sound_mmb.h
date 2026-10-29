@@ -1,6 +1,7 @@
 #ifndef _SOUND_MMB_H_
 #define _SOUND_MMB_H_
 #include "sound.h"
+#include "platform/sound.h"
 #include "ayumi/ayumi.h"
 
 extern device_t mmb_device;
@@ -15,7 +16,7 @@ typedef struct mmb_t {
 	ay_3_891x_t first;
 	ay_3_891x_t second;
 
-	int16_t buffer[MAXSOUNDBUFLEN * 2];
+	int16_t buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2];
 	int pos;
 } mmb_t;
 

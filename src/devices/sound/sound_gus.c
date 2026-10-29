@@ -8,6 +8,7 @@
 #include "io.h"
 #include "models/pic.h"
 #include "sound.h"
+#include "platform/sound.h"
 #include "sound_gus.h"
 #include "timer.h"
 
@@ -38,7 +39,7 @@ typedef struct gus_t {
 
 	int32_t out_l, out_r;
 
-	int16_t buffer[2][MAXSOUNDBUFLEN];
+	int16_t buffer[2][PLATFORM_MAX_SOUND_BUFFER_LENGTH];
 	int pos;
 
 	pc_timer_t samp_timer;

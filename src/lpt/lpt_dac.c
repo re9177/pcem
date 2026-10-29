@@ -4,6 +4,7 @@
 #include "lpt/lpt.h"
 #include "lpt_dac.h"
 #include "sound/sound.h"
+#include "platform/sound.h"
 
 typedef struct lpt_dac_t {
 	uint8_t dac_val_l, dac_val_r;
@@ -11,7 +12,7 @@ typedef struct lpt_dac_t {
 	int is_stereo;
 	int channel;
 
-	int16_t buffer[2][MAXSOUNDBUFLEN];
+	int16_t buffer[2][PLATFORM_MAX_SOUND_BUFFER_LENGTH];
 	int pos;
 } lpt_dac_t;
 

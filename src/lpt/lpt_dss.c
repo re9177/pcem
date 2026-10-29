@@ -4,6 +4,7 @@
 #include "lpt/lpt.h"
 #include "lpt_dac.h"
 #include "sound/sound.h"
+#include "platform/sound.h"
 
 typedef struct dss_t {
 	uint8_t fifo[16];
@@ -13,7 +14,7 @@ typedef struct dss_t {
 
 	pc_timer_t timer;
 
-	int16_t buffer[MAXSOUNDBUFLEN];
+	int16_t buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH];
 	int pos;
 } dss_t;
 

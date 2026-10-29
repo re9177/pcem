@@ -19,6 +19,7 @@
 #include "devices/sound/sound_wss.h"
 #include "devices/sound/sound_mmb.h"
 
+#include "platform/sound.h"
 #include "timer.h"
 #include "thread.h"
 
@@ -115,20 +116,16 @@ int sound_pos_global = 0;
 int soundon = 1;
 
 static int16_t cd_buffer[CD_BUFLEN * 2];
-static thread_t* sound_cd_thread_h;
-static event_t* sound_cd_event;
-static unsigned int cd_vol_l, cd_vol_r;
+//static thread_t* sound_cd_thread_h;
+//static event_t* sound_cd_event;
+static uint32_t cd_vol_l, cd_vol_r;
 
 int sound_buf_len = 48000 / 10;
-int sound_gain = 0;
+
+static int32_t* outbuffer;
 
 void sound_update_buf_length() {
-	int new_buf_len = (48000 / (1000 / sound_buf_len)) / 4;
-
-	if(new_buf_len > MAXSOUNDBUFLEN)
-		new_buf_len = MAXSOUNDBUFLEN;
-
-	sound_buf_len_al = new_buf_len;
+	sound_driver_set_buffer_length((48000 / (1000 / sound_buf_len)) / sizeof(int));
 }
 
 void sound_set_cd_volume(unsigned int vol_l, unsigned int vol_r) {
@@ -136,12 +133,44 @@ void sound_set_cd_volume(unsigned int vol_l, unsigned int vol_r) {
 	cd_vol_r = vol_r;
 }
 
-static void sound_cd_thread(void* param) {
-	while(1) {
-		int c;
+void sound_init() {
+	// Initialize sound driver.
+	sound_driver_init();
 
-		thread_wait_event(sound_cd_event, -1);
-		thread_reset_event(sound_cd_event);
+	outbuffer = malloc(PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2 * sizeof(int32_t));
+}
+
+void sound_shutdown() {
+	// Shut down the driver first, as it may still be holding on to
+	// our output buffer.
+	sound_driver_shutdown();
+
+	sound_handlers_num = 0;
+	ioctl_audio_stop();
+	image_audio_stop();
+
+	free(outbuffer);
+}
+
+void sound_add_handler(void (*get_buffer)(int32_t* buffer, int len, void* p), void* p) {
+	sound_handlers[sound_handlers_num].get_buffer = get_buffer;
+	sound_handlers[sound_handlers_num].priv = p;
+	sound_handlers_num++;
+}
+
+static int cd_pos = 0;
+void sound_poll(void* priv) {
+	timer_advance_u64(&sound_poll_timer, sound_poll_latch);
+
+	cd_pos++;
+	if(cd_pos == (PLATFORM_CD_BUFFER_LENGTH * PLATFORM_FREQ) / PLATFORM_CD_FREQ) {
+		cd_pos = 0;
+
+		// NOTE(lily): Just going to put this here.
+		// I don't think it needs to be running on a different thread,
+		// and if it does run better on a thread,
+		// perhaps audio mixing as a whole would be better running on another thread.
+
 		memset(cd_buffer, 0, CD_BUFLEN * 2 * 2);
 		ioctl_audio_callback(cd_buffer, CD_BUFLEN * 2);
 		image_audio_callback(cd_buffer, CD_BUFLEN * 2);
@@ -153,7 +182,7 @@ static void sound_cd_thread(void* param) {
 			channel_select[0] = atapi_get_cd_channel(0);
 			channel_select[1] = atapi_get_cd_channel(1);
 
-			for(c = 0; c < CD_BUFLEN * 2; c += 2) {
+			for(int c = 0; c < CD_BUFLEN * 2; c += 2) {
 				int32_t cd_buffer_temp[2] = { 0, 0 };
 
 				/*First, adjust input from drive according to ATAPI volume.*/
@@ -187,64 +216,20 @@ static void sound_cd_thread(void* param) {
 				cd_buffer[c + 1] = cd_buffer_temp[1];
 			}
 
-			givealbuffer_cd(cd_buffer);
+			sound_driver_write_cd(cd_buffer);
 		}
-	}
-}
-
-static int32_t* outbuffer;
-
-void sound_init() {
-	initalmain(0, NULL);
-	inital();
-
-	outbuffer = malloc(MAXSOUNDBUFLEN * 2 * sizeof(int32_t));
-
-	sound_cd_event = thread_create_event();
-	sound_cd_thread_h = thread_create(sound_cd_thread, NULL);
-}
-
-void sound_add_handler(void (*get_buffer)(int32_t* buffer, int len, void* p), void* p) {
-	sound_handlers[sound_handlers_num].get_buffer = get_buffer;
-	sound_handlers[sound_handlers_num].priv = p;
-	sound_handlers_num++;
-}
-
-static int cd_pos = 0;
-void sound_poll(void* priv) {
-	timer_advance_u64(&sound_poll_timer, sound_poll_latch);
-
-	cd_pos++;
-	if(cd_pos == (CD_BUFLEN * 48000) / CD_FREQ) {
-		cd_pos = 0;
-		thread_set_event(sound_cd_event);
 	}
 
 	sound_pos_global++;
-	if(sound_pos_global == sound_buf_len_al) {
-		int c;
-		/*                int16_t buf16[sound_buf_len_al * 2 ];*/
+	const int buffer_length = sound_driver_get_buffer_length();
+	if(sound_pos_global == buffer_length) {
+		memset(outbuffer, 0, buffer_length * 2 * sizeof(int32_t));
 
-		memset(outbuffer, 0, sound_buf_len_al * 2 * sizeof(int32_t));
-
-		for(c = 0; c < sound_handlers_num; c++)
-			sound_handlers[c].get_buffer(outbuffer, sound_buf_len_al, sound_handlers[c].priv);
-
-		/*                for (c=0;c<sound_buf_len_al*2;c++)
-						{
-								if (outbuffer[c] < -32768)
-										buf16[c] = -32768;
-								else if (outbuffer[c] > 32767)
-										buf16[c] = 32767;
-								else
-										buf16[c] = outbuffer[c];
-						}
-
-				if (!soundf) soundf=fopen("sound.pcm","wb");
-				fwrite(buf16,(sound_buf_len_al)*2*2,1,soundf);*/
+		for(int c = 0; c < sound_handlers_num; c++)
+			sound_handlers[c].get_buffer(outbuffer, buffer_length, sound_handlers[c].priv);
 
 		if(soundon)
-			givealbuffer(outbuffer);
+			sound_driver_write(outbuffer);
 
 		sound_pos_global = 0;
 		sound_update_buf_length();
@@ -252,7 +237,7 @@ void sound_poll(void* priv) {
 }
 
 void sound_speed_changed() {
-	sound_poll_latch = (uint64_t)((double)TIMER_USEC * (1000000.0 / 48000.0));
+	sound_poll_latch = (uint64_t)((double)TIMER_USEC * (1000000.0 / (double)(PLATFORM_FREQ)));
 }
 
 void sound_reset() {

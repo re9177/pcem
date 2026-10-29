@@ -5,6 +5,7 @@
 #include "devices/device.h" // REMOVE
 #include "io.h"
 #include "sound.h"
+#include "platform/sound.h"
 #include "sound_cms.h"
 
 #define MASTER_CLOCK 7159090
@@ -24,7 +25,7 @@ typedef struct cms_t {
 
 	uint8_t latched_data;
 
-	int16_t buffer[MAXSOUNDBUFLEN * 2];
+	int16_t buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2];
 
 	int pos;
 } cms_t;

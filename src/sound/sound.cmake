@@ -1,6 +1,5 @@
 set(PCEM_SRC ${PCEM_SRC}
         sound/sound.c
-        sound/soundopenal.c
         )
 
 # TODO submodule in //3rdparty

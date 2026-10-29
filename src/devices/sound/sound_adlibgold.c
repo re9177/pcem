@@ -4,6 +4,7 @@
 #include "ibm.h"
 #include "devices/device.h" // REMOVE
 
+#include "platform/sound.h"
 #include "sound_opl.h"
 #include "sound_ym7128.h"
 #include "models/dma.h"
@@ -55,8 +56,8 @@ typedef struct adgold_t {
 	int vol_l, vol_r;
 	int treble, bass;
 
-	int16_t opl_buffer[MAXSOUNDBUFLEN * 2];
-	int16_t mma_buffer[2][MAXSOUNDBUFLEN];
+	int16_t opl_buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2];
+	int16_t mma_buffer[2][PLATFORM_MAX_SOUND_BUFFER_LENGTH];
 
 	int pos;
 
@@ -629,10 +630,10 @@ void adgold_timer_poll(void* p) {
 
 static void adgold_get_buffer(int32_t* buffer, int len, void* p) {
 	adgold_t* adgold = (adgold_t*)p;
-	int16_t adgold_buffer[MAXSOUNDBUFLEN * 2];
+	int16_t adgold_buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2];
 	int c;
 
-	assert(len <= MAXSOUNDBUFLEN);
+	assert(len <= PLATFORM_MAX_SOUND_BUFFER_LENGTH);
 
 	opl3_update2(&adgold->opl);
 	adgold_update(adgold);

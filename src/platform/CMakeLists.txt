@@ -1,4 +1,6 @@
 add_library(pcem-platform
+	# OpenAL sound driver. TODO
+	sound_openal.c
 )
 
 if(PCEM_PLATFORM STREQUAL "sdl2")

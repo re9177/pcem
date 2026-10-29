@@ -31,6 +31,7 @@
 #include "lpt/lpt.h"
 #include "platform/joystick.h"
 #include "platform/midi.h"
+#include "platform/sound.h"
 #include "scsi/scsi_zip.h"
 #include "sound.h"
 #include "thread.h"
@@ -403,7 +404,7 @@ int wx_setupmenu(void* data) {
 	sprintf(menuitem, "IDM_SND_BUF[%d]", (int)(log(sound_buf_len / MIN_SND_BUF) / log(2)));
 	wx_checkmenuitem(menu, WX_ID(menuitem), WX_MB_CHECKED);
 
-	sprintf(menuitem, "IDM_SND_GAIN[%d]", (int)(sound_gain / 2));
+	sprintf(menuitem, "IDM_SND_GAIN[%d]", (int)(sound_driver_get_gain() / 2));
 	wx_checkmenuitem(menu, WX_ID(menuitem), WX_MB_CHECKED);
 
 	sprintf(menuitem, "IDM_VID_SCALE_MODE[%d]", video_scale_mode);
@@ -653,6 +654,8 @@ int stop_emulation() {
 
 	device_close_all();
 	midi_close();
+
+	sound_shutdown();
 
 	pclog("Emulation stopped.\n");
 
@@ -928,7 +931,7 @@ int wx_handle_command(void* hwnd, int wParam, int checked) {
 		wx_checkmenuitem(menu, wParam, WX_MB_CHECKED);
 		saveconfig(NULL);
 	} else if(ID_RANGE("IDM_SND_GAIN[start]", "IDM_SND_GAIN[end]")) {
-		sound_gain = 2 * (wParam - wx_xrcid("IDM_SND_GAIN[start]"));
+		sound_driver_set_gain(2 * (wParam - wx_xrcid("IDM_SND_GAIN[start]")));
 		wx_checkmenuitem(menu, wParam, WX_MB_CHECKED);
 		saveconfig(NULL);
 	} else if(ID_IS("IDM_CDROM_EMPTY")) {

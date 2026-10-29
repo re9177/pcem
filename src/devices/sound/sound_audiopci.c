@@ -7,6 +7,7 @@
 #include "memory/mem.h"
 #include "bus/pci.h"
 #include "sound.h"
+#include "platform/sound.h"
 
 #define N 16
 
@@ -72,7 +73,7 @@ typedef struct es1371_t {
 	int card;
 
 	int pos;
-	int16_t buffer[MAXSOUNDBUFLEN * 2];
+	int16_t buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2];
 } es1371_t;
 
 #define LEGACY_SB_ADDR (1 << 29)

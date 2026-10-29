@@ -1,5 +1,6 @@
 #include "ibm.h"
 #include "sound.h"
+#include "platform/sound.h"
 #include "sound_speaker.h"
 
 int gated, speakval, speakon;
@@ -7,7 +8,7 @@ int ppispeakon;
 
 int speaker_mute = 0;
 
-static int16_t speaker_buffer[MAXSOUNDBUFLEN];
+static int16_t speaker_buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH];
 
 static int speaker_pos = 0;
 

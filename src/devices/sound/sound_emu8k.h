@@ -1,6 +1,8 @@
 #ifndef _SOUND_EMU8K_H_
 #define _SOUND_EMU8K_H_
 
+#include "platform/sound.h"
+
 /* All these defines are in samples, not in bytes. */
 #define EMU8K_MEM_ADDRESS_MASK 0xFFFFFF
 #define EMU8K_RAM_MEM_START 0x200000
@@ -366,12 +368,12 @@ typedef struct emu8k_t {
 	int16_t out_l, out_r;
 
 	emu8k_chorus_eng_t chorus_engine;
-	int32_t chorus_in_buffer[MAXSOUNDBUFLEN];
+	int32_t chorus_in_buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH];
 	emu8k_reverb_eng_t reverb_engine;
-	int32_t reverb_in_buffer[MAXSOUNDBUFLEN];
+	int32_t reverb_in_buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH];
 
 	int pos;
-	int32_t buffer[MAXSOUNDBUFLEN * 2];
+	int32_t buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2];
 } emu8k_t;
 
 void emu8k_init(emu8k_t* emu8k, uint16_t emu_addr, int onboard_ram);

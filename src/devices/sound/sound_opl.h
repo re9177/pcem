@@ -1,6 +1,7 @@
 #ifndef _SOUND_OPL_H_
 #define _SOUND_OPL_H_
-#include "sound.h"
+#include "timer.h"
+#include "platform/sound.h"
 
 typedef struct opl_t {
 	int chip_nr[2];
@@ -9,7 +10,7 @@ typedef struct opl_t {
 
 	int16_t filtbuf[2];
 
-	int16_t buffer[MAXSOUNDBUFLEN * 2];
+	int16_t buffer[PLATFORM_MAX_SOUND_BUFFER_LENGTH * 2];
 	int pos;
 } opl_t;
 
