@@ -4,7 +4,7 @@
 #include "timer.h"
 #include "gameport.h"
 #include "joystick_standard.h"
-#include "plat-joystick.h"
+#include "platform/joystick.h"
 
 static void* ch_flightstick_pro_init() {
 	return NULL;

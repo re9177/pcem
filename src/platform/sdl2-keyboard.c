@@ -1,4 +1,4 @@
-#include "plat-keyboard.h"
+#include "keyboard.h"
 #include <string.h>
 
 uint8_t pcem_key[272];

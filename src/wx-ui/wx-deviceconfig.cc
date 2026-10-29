@@ -13,7 +13,7 @@
 
 extern "C" {
 #include "config.h" // REMOVE
-#include "plat-midi.h"
+#include "platform/midi.h"
 void saveconfig(char*);
 void resetpchard();
 int deviceconfig_dlgproc(void* hdlg, int message, INT_PARAM wParam, LONG_PARAM lParam);

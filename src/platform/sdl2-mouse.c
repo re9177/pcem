@@ -1,6 +1,6 @@
 #include <SDL2/SDL.h>
 #include <string.h>
-#include "plat-mouse.h"
+#include "mouse.h"
 
 int mouse_buttons;
 static int mouse_x = 0, mouse_y = 0, mouse_z = 0;

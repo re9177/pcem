@@ -2,7 +2,7 @@
 #include "ibm.h"
 #include "devices/device.h" // REMOVE
 #include "io.h"
-#include "plat-joystick.h"
+#include "platform/joystick.h"
 #include "timer.h"
 #include "cpu/x86.h"
 

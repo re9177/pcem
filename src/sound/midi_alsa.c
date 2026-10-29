@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "ibm.h"
 #include "config.h" // REMOVE
-#include "plat-midi.h"
+#include "platform/midi.h"
 
 #define MAX_MIDI_DEVICES 128
 #define MAX_RAWMIDI_SUBDEVICES 32

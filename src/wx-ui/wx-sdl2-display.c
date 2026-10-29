@@ -4,7 +4,7 @@
 #include "wx-utils.h"
 #include "ibm.h"
 #include "wx-display.h"
-#include "plat-keyboard.h"
+#include "platform/keyboard.h"
 
 #ifdef __WINDOWS__
 	#define BITMAP WINDOWS_BITMAP

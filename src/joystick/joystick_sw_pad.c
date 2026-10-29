@@ -26,7 +26,7 @@
 #include "timer.h"
 #include "gameport.h"
 #include "joystick_sw_pad.h"
-#include "plat-joystick.h"
+#include "platform/joystick.h"
 
 typedef struct {
 	pc_timer_t poll_timer;

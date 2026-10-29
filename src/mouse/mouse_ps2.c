@@ -3,7 +3,7 @@
 #include "keyboard/keyboard_at.h"
 #include "mouse/mouse.h"
 #include "mouse_ps2.h"
-#include "plat-mouse.h"
+#include "platform/mouse.h"
 #include "cpu/x86.h"
 #include "devices/f82c710_upc.h"
 

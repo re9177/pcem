@@ -8,8 +8,8 @@
 #include "ibm.h"
 #include "models/pit.h"
 
-#include "plat-keyboard.h"
-#include "plat-mouse.h"
+#include "platform/keyboard.h"
+#include "platform/mouse.h"
 
 PPI ppi;
 

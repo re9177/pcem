@@ -4,7 +4,7 @@
 #include "ibm.h"
 #include "devices/device.h"
 #include "joystick/gameport.h"
-#include "plat-joystick.h"
+#include "joystick.h"
 
 int joysticks_present;
 joystick_t joystick_state[MAX_JOYSTICKS];

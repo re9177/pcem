@@ -16,7 +16,7 @@ void pclog(const char* format, ...);
 #include "config.h"			// REMOVE
 #include "devices/device.h" // REMOVE
 #include "joystick/gameport.h"
-#include "plat-joystick.h"
+#include "platform/joystick.h"
 }
 
 #define IDC_CONFIG_BASE 1000

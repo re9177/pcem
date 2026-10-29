@@ -1,7 +1,7 @@
 #include "ibm.h"
 #include "io.h"
 #include "models/pic.h"
-#include "plat-midi.h"
+#include "platform/midi.h"
 #include "sound_mpu401_uart.h"
 
 enum { STATUS_OUTPUT_NOT_READY = 0x40,

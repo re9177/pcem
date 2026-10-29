@@ -3,7 +3,6 @@ extern "C" {
 	#include "logging.h"
 }
 
-/// Drops all packets, hopefully freeing the memory.
 void NetworkInstance::dropQueues() {
 	while(!rxQueue.empty()) {
 		net_returnPacket(rxQueue.front());
