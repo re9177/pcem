@@ -21,7 +21,6 @@
 
 #include "platform/sound.h"
 #include "timer.h"
-#include "thread.h"
 
 #include "devices/device.h"
 
@@ -115,9 +114,7 @@ int sound_pos_global = 0;
 
 int soundon = 1;
 
-static int16_t cd_buffer[CD_BUFLEN * 2];
-//static thread_t* sound_cd_thread_h;
-//static event_t* sound_cd_event;
+static int16_t cd_buffer[PLATFORM_CD_BUFFER_LENGTH * 2];
 static uint32_t cd_vol_l, cd_vol_r;
 
 int sound_buf_len = 48000 / 10;
@@ -171,9 +168,9 @@ void sound_poll(void* priv) {
 		// and if it does run better on a thread,
 		// perhaps audio mixing as a whole would be better running on another thread.
 
-		memset(cd_buffer, 0, CD_BUFLEN * 2 * 2);
-		ioctl_audio_callback(cd_buffer, CD_BUFLEN * 2);
-		image_audio_callback(cd_buffer, CD_BUFLEN * 2);
+		memset(cd_buffer, 0, PLATFORM_CD_BUFFER_LENGTH * 2 * 2);
+		ioctl_audio_callback(cd_buffer, PLATFORM_CD_BUFFER_LENGTH * 2);
+		image_audio_callback(cd_buffer, PLATFORM_CD_BUFFER_LENGTH * 2);
 		if(soundon) {
 			int32_t atapi_vol_l = atapi_get_cd_volume(0);
 			int32_t atapi_vol_r = atapi_get_cd_volume(1);
@@ -182,7 +179,7 @@ void sound_poll(void* priv) {
 			channel_select[0] = atapi_get_cd_channel(0);
 			channel_select[1] = atapi_get_cd_channel(1);
 
-			for(int c = 0; c < CD_BUFLEN * 2; c += 2) {
+			for(int c = 0; c < PLATFORM_CD_BUFFER_LENGTH * 2; c += 2) {
 				int32_t cd_buffer_temp[2] = { 0, 0 };
 
 				/*First, adjust input from drive according to ATAPI volume.*/

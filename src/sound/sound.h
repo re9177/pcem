@@ -15,9 +15,6 @@ int sound_card_get_from_internal_name(char* s);
 void sound_card_init();
 void sound_set_cd_volume(unsigned int vol_l, unsigned int vol_r);
 
-#define CD_FREQ 44100
-#define CD_BUFLEN (CD_FREQ / 10)
-
 extern int sound_pos_global;
 void sound_speed_changed();
 
