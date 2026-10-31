@@ -176,8 +176,4 @@ add_subdirectory(3rdparty)
 
 add_subdirectory(src)
 
-if(USE_EXPERIMENTAL)
-        add_subdirectory(experimental)
-endif()
-
 include(${CMAKE_SOURCE_DIR}/cmake/install.cmake)
