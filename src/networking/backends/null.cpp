@@ -24,7 +24,8 @@ static network_backend_t net_null = {
 	},
 
 	.getCableConnectState = [](void* pimpl) -> int {
-		// Cable is always connected?
+		// With the null backend cable cannot be disconnected.
+		// (would it be worth allowing the cable to be disconnected?)
 		return 1;
 	},
 
@@ -37,7 +38,8 @@ static network_backend_t net_null = {
 	},
 
 	.recievePacket = [](void* pimpl, uint8_t* buffer, size_t size) -> int {
-		return 0;
+		// no packets recieved
+		return -1;
 	},
 };
 

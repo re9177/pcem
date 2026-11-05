@@ -128,7 +128,7 @@ class TapNetworkInstance final : public NetworkInstance {
 	}
 
 	void pollEvents() {
-		int pollStatus = poll(&pollState, 1, 1);
+		int pollStatus = poll(&pollState, 1, 0);
 		if(pollStatus == 0)
 			return;
 

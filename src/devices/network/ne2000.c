@@ -792,8 +792,7 @@ void ne2000_write(uint16_t address, uint8_t value, void* p) {
 			// Send the packet to the system driver
 
 			if(ne2000->network_instance) {
-				ne2000->network_backend->sendPacket(ne2000->network_instance, &ne2000->mem[ne2000->tx_page_start * 256 - BX_NE2K_MEMSTART],
-													ne2000->tx_bytes);
+				ne2000->network_backend->sendPacket(ne2000->network_instance, &ne2000->mem[ne2000->tx_page_start * 256 - BX_NE2K_MEMSTART], ne2000->tx_bytes);
 			}
 
 			ne2000_tx_event(value, ne2000);

@@ -1,18 +1,23 @@
 # PCem
 
-This is a hard fork of PCem. The authors feel that:
+## **This is a hard fork of PCem**. 
+
+The authors feel that:
 - The AI policy was shoe-horned in by the lead maintainer to permit AI generated code in several places where it was forcefully introduced without acknowledgement.
   - The plugin API, NE2000, and Qt user interface (before its removal) were blatantly vibecoded.
-- PC and AT emulation is better covered by less hacky emulators.
+- PC and AT emulation is better covered by less hacky emulators, like [MartyPC, which is also nearly entirely cycle and bus timing accurate.](https://github.com/dbalsom/martypc)).
+    - Also, many machines which are removed either never worked or had several things broken about them.
 - The upstream PCem codebase is simply too annoying to work on.
 
-We may follow upstream in some cases, but generally, this fork is intended to evolve seperately. We will not make any major choices to make
+We may follow upstream in some cases, but generally, this fork is intended to evolve on its own. We will not make any major decisions to make
 syncing with upstream easier, as that is not the goal of this fork.
 
 We are currently mainly focusing on heavily refactoring things behind the scenes, but we will be working on several new features,
 and new emulated machines.
 
 Pull requests are welcomed. They will be reviewed and accepted if they are deemed valuable. Do note that we **will** refuse any AI generated pull requests.
+
+If you feel objection with our goals, you are welcome to voice that. However, being hostile behind a forum doesn't really do you any favors. Toxicity goes both ways; being overly toxic about our decision to evolve seperately simply makes the reasoning for doing so more tangible.
 
 Latest version: <b>v17</b> [Changelog](CHANGELOG.md)
 

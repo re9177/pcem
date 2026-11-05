@@ -16,6 +16,8 @@ typedef struct {
 	int flags; // No flags are defined yet
 } network_binding_t;
 
+// TODO: superset of config for UI options. Backends will have the config node
+
 typedef struct {
 	const char* name;
 	const char* id;
@@ -27,9 +29,9 @@ typedef struct {
 	// set to 0 otherwise in the case that it does not.
 	int requiresBinding;
 
-	// obtains a list of all viable adapters (optionally placing count in [*count]). if [requiresAdapterBinding] is false,
+	// obtains a list of all viable bindings (optionally placing count in [*count]). if [requiresAdapterBinding] is false,
 	// this function is permitted to return a null pointer since there is no adapter binding required, and thus
-	// no need to actually populate a list of adapters.
+	// no need to actually populate a list of bindings.
 	const network_binding_t* (*getBindingList)(size_t* count);
 
 	// initalize the backend with the selected adapter. [adapter] is permitted to be a null pointer

@@ -11,7 +11,7 @@ namespace util {
 		/// Default free list configuration
 		class DefaultFreeListPoolConfig {
 			/// The max amount of items before the pool is garbage collected.
-			constexpr static std::size_t MaxItemsInPool = 32;
+			constexpr static std::size_t MaxItemsInPool = 512;
 		};
 
 		/// A free list and memory pool.

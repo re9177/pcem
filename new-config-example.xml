@@ -1,45 +1,12 @@
-<!-- This is an example of what the new configuration code might write out -->
-<machine board="shuttle">
-	<!-- baseboard config -->
-	<config>
-		<memory-size>64M</memory-size>
-	</config>
-	<!-- device tree -->
-	<devices>
-		<bus kind="ide">
-			<device kind="hdd" addr="0.0">
-				<drive kind="file">
-					<path>/home/lily/bla.vhd</path>
-				</drive>
-			</device>
-
-			<device kind="cdrom-atapi" addr="1.0">
-				<type>dvdrom</type>
-			</device>
-		</bus>
-
-		<!-- no ISA devices besides the machine's -->
-		<bus kind="isa"/>
-
-		<bus kind="pci">
-			<device kind="rtl8139" addr="1">
-				<network kind="slirp">
-					<baseip>10.69.0.0</baseip>
-				</network>
-			</device>
-		</bus>
-	</devices>
-</machine>
-
-
 <!-- Another example, this time showing SCSI assignments -->
-<machine board="shuttle">
+<Aeiou86Machine motherboard="spamielchipset2026-with100morecopperwires">
 	<!-- baseboard config -->
-	<config>
-		<memory-size>64M</memory-size>
-	</config>
-	<!-- device tree -->
-	<devices>
+	<processor kind="pentium-mmx">
+		<frequencyMhz>166</frequencyMhz>
+	</processor>
+	<memorySizeMB>64</memorySizeMB>
+	<deviceTree>
+		<!--- IDE disk devices -->
 		<bus kind="ide">
 			<device kind="hdd" addr="0.0">
 				<drive kind="file">
@@ -49,31 +16,65 @@
 
 			<device kind="cdrom-atapi" addr="1.0">
 				<type>dvdrom</type>
-			</device>
-		</bus>
-
-		<bus kind="scsi">
-			<!-- using a partial ctds format (c,t,d) for addressing,
-				so controllers can co-exist). A cleaner way of doing this
-				might be to put the <bus> in each controller instance, allowing
-				ommision of (c, t), and only specifying (d), which is the LUN, i think? -->
-			<device kind="hdd" addr="0.0.0">
-				<drive kind="file">
-				<path>/home/lily/bla.vhd</path>
-				</drive>
 			</device>
 		</bus>
 
 		<bus kind="pci">
 			<device kind="rtl8139" id="rtl8139.1" addr="1.0">
+				<mac>b7:ab:7a:b7:ab</mac>
 				<network kind="slirp">
 					<baseip>10.69.0.0</baseip>
 				</network>
 			</device>
 
 			<device kind="aha1541" id="scsi" addr="1.1">
+				<!-- generic scsi controller options -->
 				<!-- aha1541 specific options -->
+				<bootrom>c000</bootrom>
+
+				<!-- Devices attached to this controller -->
+				<bus kind="scsi">
+					<!-- addr is (t, d). -->
+					<device kind="hdd" addr="1.0">
+						<drive kind="file">
+							<path>/home/lily/scsi0.vhd</path>
+						</drive>
+					</device>
+					<!-- a single target can have multiple members
+						and is automatically terminated -->
+					<device kind="hdd" addr="1.1">
+						<drive kind="file">
+							<path>/home/lily/scsi0.vhd</path>
+						</drive>
+					</device>
+				</bus>
 			</device>
 		</bus>
-	</devices>
-</machine>
+	</deviceTree>
+</Aeiou86Machine>
+
+<!-- aeiou86 global config -->
+<Aeiou86Config configversion="1">
+	<sound>
+		<backend>pipewire</backend>
+	</sound>
+	<paths>
+		<roms>/bla/roms</roms>
+		<nvram-base>/bla/nvram-base</nvram-base>
+		<machines>/bla/machines</machines>
+		<logs>/bla/logs</logs>
+		<!-- screenshots go in $machine/screenshots -->
+	</paths>
+	<UserInterface>
+		<rememberWindowPosition>false</rememberWindowPosition>
+		<!-- <windowPosition> shows up here, with x/y/width/height members -->
+	</UserInterface>
+</Aeiou86Config>
+
+<!-- machines.xml, alongside pcem.xml -->
+<machines>
+	<!-- xml_filename is relative to globalconfig/paths/machines, unless the path is explicit -->
+	<machine name="My Machine" xml_path="mymachine/mymachine.xml"/>
+	<!-- like this path: -->
+	<machine name="External machine" xml_path="/mnt/test/external_machine.xml"/>
+</machines>
