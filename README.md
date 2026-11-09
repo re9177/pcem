@@ -97,7 +97,7 @@ On Linux, if you want to use PCap Networking, run `setcap cap_net_raw,cap_net_ad
 
 Hardware | Links
 --- | ---
-Systems | [8088](#8088-based)<br/>[8086](#8086-based)<br/>[286](#286-based)<br/>[386](#386-based)<br/>[486](#486-based)<br/>[Pentium](#pentium-based)<br/>[Super Socket 7](#super-socket-7-based)
+Systems | [286](#286-based)<br/>[386](#386-based)<br/>[486](#486-based)<br/>[Pentium](#pentium-based)<br/>[Super Socket 7](#super-socket-7-based)
 Graphics | [Basic](#basic-cards)<br/>[Unaccelerated (S)VGA cards](#unaccelerated-svga-cards)<br/>[2D accelerated SVGA cards](#2d-accelerated-svga-cards)<br/>[3D accelerated SVGA cards](#3d-accelerated-svga-cards)<br/>[3D only cards](#3d-only-cards)
 Sound | [Cards](#sound-cards)
 HDD Controller | [Cards](#hdd-controller-cards)
