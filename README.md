@@ -103,15 +103,4 @@ Sound | [Cards](#sound-cards)
 HDD Controller | [Cards](#hdd-controller-cards)
 Misc | [Cards](#misc-cards)
 
-### [Software Tested](TESTED.md) (list)
-- [DOS](TESTED.md#dos)<br/>
-- [Windows](TESTED.md#windows)<br/>
-- [Windows NT](TESTED.md#windows-nt)<br/>
-- [OS/2](TESTED.md#os2)<br/>
-- [Linux](TESTED.md#linux)<br/>
-- [Applications](TESTED.md#applications)<br/>
-- [Games](TESTED.md#games)<br/>
-- [Demos](TESTED.md#demos)<br/>
-- [Emulators](TESTED.md#emulators)<br/>
-
 <hr>
