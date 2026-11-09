@@ -32,16 +32,6 @@ set(archdetect_c_code "
     #error cmake_ARCH i386
 #elif defined(__x86_64) || defined(__x86_64__) || defined(__amd64) || defined(_M_X64)
     #error cmake_ARCH x86_64
-#elif defined(__ia64) || defined(__ia64__) || defined(_M_IA64)
-    #error cmake_ARCH ia64
-#elif defined(__ppc__) || defined(__ppc) || defined(__powerpc__) \\
-      || defined(_ARCH_COM) || defined(_ARCH_PWR) || defined(_ARCH_PPC)  \\
-      || defined(_M_MPPC) || defined(_M_PPC)
-    #if defined(__ppc64__) || defined(__powerpc64__) || defined(__64BIT__)
-        #error cmake_ARCH ppc64
-    #else
-        #error cmake_ARCH ppc
-    #endif
 #elif defined(__aarch64__) || defined(_M_ARM64)
     #error cmake_ARCH arm64
 #endif
@@ -52,14 +42,10 @@ set(archdetect_c_code "
 function(target_architecture output_var)
     if(APPLE AND CMAKE_OSX_ARCHITECTURES)
         foreach(osx_arch ${CMAKE_OSX_ARCHITECTURES})
-            if("${osx_arch}" STREQUAL "ppc" AND ppc_support)
-                set(osx_arch_ppc TRUE)
-            elseif("${osx_arch}" STREQUAL "i386")
+            if("${osx_arch}" STREQUAL "i386")
                 set(osx_arch_i386 TRUE)
             elseif("${osx_arch}" STREQUAL "x86_64")
                 set(osx_arch_x86_64 TRUE)
-            elseif("${osx_arch}" STREQUAL "ppc64" AND ppc_support)
-                set(osx_arch_ppc64 TRUE)
             elseif("${osx_arch}" STREQUAL "arm64")
                 set(osx_arch_arm64 TRUE)
             else()
@@ -67,20 +53,12 @@ function(target_architecture output_var)
             endif()
         endforeach()
 
-        if(osx_arch_ppc)
-            list(APPEND ARCH ppc)
-        endif()
-
         if(osx_arch_i386)
             list(APPEND ARCH i386)
         endif()
 
         if(osx_arch_x86_64)
             list(APPEND ARCH x86_64)
-        endif()
-
-        if(osx_arch_ppc64)
-            list(APPEND ARCH ppc64)
         endif()
 
         if(osx_arch_arm64)
