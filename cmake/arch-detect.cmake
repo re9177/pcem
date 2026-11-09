@@ -1,36 +1,5 @@
 set(archdetect_c_code "
-#if defined(__arm__) || defined(__TARGET_ARCH_ARM)
-    #if defined(__ARM_ARCH_8__) \\
-        || defined(__ARM_ARCH_8A__) \\
-        || (defined(__ARM_ARCH) && __ARM_ARCH >= 8) \\
-        || (defined(__TARGET_ARCH_ARM) && __TARGET_ARCH_ARM-0 >= 8)
-        #error cmake_ARCH armv8
-    #elif defined(__ARM_ARCH_7__) \\
-        || defined(__ARM_ARCH_7A__) \\
-        || defined(__ARM_ARCH_7R__) \\
-        || defined(__ARM_ARCH_7M__) \\
-        || (defined(__ARM_ARCH) && __ARM_ARCH >= 7) \\
-        || (defined(__TARGET_ARCH_ARM) && __TARGET_ARCH_ARM-0 >= 7)
-        #error cmake_ARCH armv7
-    #elif defined(__ARM_ARCH_6__) \\
-        || defined(__ARM_ARCH_6J__) \\
-        || defined(__ARM_ARCH_6T2__) \\
-        || defined(__ARM_ARCH_6Z__) \\
-        || defined(__ARM_ARCH_6K__) \\
-        || defined(__ARM_ARCH_6ZK__) \\
-        || defined(__ARM_ARCH_6M__) \\
-        || (defined(__ARM_ARCH) && __ARM_ARCH >= 6) \\
-        || (defined(__TARGET_ARCH_ARM) && __TARGET_ARCH_ARM-0 >= 6)
-        #error cmake_ARCH armv6
-    #elif defined(__ARM_ARCH_5TEJ__) \\
-        || (defined(__TARGET_ARCH_ARM) && __TARGET_ARCH_ARM-0 >= 5)
-        #error cmake_ARCH armv5
-    #else
-        #error cmake_ARCH arm
-    #endif
-#elif defined(__i386) || defined(__i386__) || defined(_M_IX86)
-    #error cmake_ARCH i386
-#elif defined(__x86_64) || defined(__x86_64__) || defined(__amd64) || defined(_M_X64)
+#if defined(__x86_64) || defined(__x86_64__) || defined(__amd64) || defined(_M_X64)
     #error cmake_ARCH x86_64
 #elif defined(__aarch64__) || defined(_M_ARM64)
     #error cmake_ARCH arm64
@@ -42,9 +11,7 @@ set(archdetect_c_code "
 function(target_architecture output_var)
     if(APPLE AND CMAKE_OSX_ARCHITECTURES)
         foreach(osx_arch ${CMAKE_OSX_ARCHITECTURES})
-            if("${osx_arch}" STREQUAL "i386")
-                set(osx_arch_i386 TRUE)
-            elseif("${osx_arch}" STREQUAL "x86_64")
+            if("${osx_arch}" STREQUAL "x86_64")
                 set(osx_arch_x86_64 TRUE)
             elseif("${osx_arch}" STREQUAL "arm64")
                 set(osx_arch_arm64 TRUE)
@@ -52,10 +19,6 @@ function(target_architecture output_var)
                 message(FATAL_ERROR "Invalid OS X arch name: ${osx_arch}")
             endif()
         endforeach()
-
-        if(osx_arch_i386)
-            list(APPEND ARCH i386)
-        endif()
 
         if(osx_arch_x86_64)
             list(APPEND ARCH x86_64)

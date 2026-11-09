@@ -4,21 +4,12 @@ set(PCEM_PRIVATE_API ${PCEM_PRIVATE_API}
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_arm64_defs.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_arm64.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_arm64_ops.h
-        ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_arm_defs.h
-        ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_arm.h
-        ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_arm_ops.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86-64_defs.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86-64.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86-64_ops.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86-64_ops_helpers.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86-64_ops_sse.h
-        ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86_defs.h
-        ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86.h
-        ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86_ops_fpu.h
-        ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86_ops.h
-        ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86_ops_helpers.h
-        ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_backend_x86_ops_sse.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_ir_defs.h
         ${CMAKE_SOURCE_DIR}/includes/private/codegen/codegen_ir.h
@@ -96,27 +87,11 @@ if(${PCEM_CPU_TYPE} STREQUAL "x86_64")
                 )
 endif()
 
-if(${PCEM_CPU_TYPE} STREQUAL "i386")
-        set(PCEM_SRC ${PCEM_SRC}
-                codegen/x86/codegen_backend_x86.c
-                codegen/x86/codegen_backend_x86_ops.c
-                codegen/x86/codegen_backend_x86_ops_fpu.c
-                codegen/x86/codegen_backend_x86_ops_sse.c
-                codegen/x86/codegen_backend_x86_uops.c
-                )
-endif()
-
 if(${PCEM_CPU_TYPE} STREQUAL "arm64")
         set(PCEM_SRC ${PCEM_SRC}
                 codegen/arm64/codegen_backend_arm64.c
                 codegen/arm64/codegen_backend_arm64_imm.c
                 codegen/arm64/codegen_backend_arm64_ops.c
                 codegen/arm64/codegen_backend_arm64_uops.c
-                )
-elseif(${PCEM_CPU_TYPE} MATCHES "armv.*")
-        set(PCEM_SRC ${PCEM_SRC}
-                codegen/arm32/codegen_backend_arm.c
-                codegen/arm32/codegen_backend_arm_ops.c
-                codegen/arm32/codegen_backend_arm_uops.c
                 )
 endif()
