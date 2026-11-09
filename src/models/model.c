@@ -56,7 +56,6 @@
 #include "models/serial.h"
 #include "sio.h"
 #include "devices/sis496.h"
-#include "sl82c460.h"
 #include "flash/sst39sf010.h"
 #include "um8669f.h"
 #include "vl82c480.h"
@@ -104,7 +103,6 @@ void xt_laserxt_init();
 void at_t3100e_init();
 void xt_t1000_init();
 void xt_t1200_init();
-void at_sl82c460_init();
 void at_zappa_init();
 void at_pb410a_init();
 void at_pb520r_init();
@@ -370,11 +368,6 @@ void at_sis496_init() {
 	pci_slot(0xd);
 	pci_slot(0xf);
 	device_add(&sis496_device);
-}
-
-void at_sl82c460_init() {
-	at_init();
-	sl82c460_init();
 }
 
 void at_batman_init() {
@@ -998,16 +991,6 @@ MODEL m_sis496 = { "[486] Award SiS 496/497",
 				   1,
 				   at_sis496_init,
 				   NULL };
-MODEL m_elx_pc425x = { "[486] Elonex PC-425X",
-					   ROM_ELX_PC425X,
-					   "elx_pc425x",
-					   { { "Intel", cpus_i486 }, { "AMD", cpus_Am486 }, { "Cyrix", cpus_Cx486 } },
-					   MODEL_GFX_FIXED | MODEL_AT | MODEL_HAS_IDE,
-					   1,
-					   256,
-					   1,
-					   at_sl82c460_init,
-					   NULL };
 MODEL m_ibmps1_2133 = { "[486] IBM PS/1 Model 2133 (EMEA 451)",
 						ROM_IBMPS1_2133_451,
 						"ibmps1_2133",
@@ -1234,7 +1217,6 @@ void model_init_builtin() {
 	pcem_add_model(&m_ami486);
 	pcem_add_model(&m_win486);
 	pcem_add_model(&m_sis496);
-	pcem_add_model(&m_elx_pc425x);
 	pcem_add_model(&m_ibmps1_2133);
 	pcem_add_model(&m_ibmps2_m70_type4);
 	pcem_add_model(&m_pb410a);

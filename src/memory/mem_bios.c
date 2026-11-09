@@ -684,23 +684,6 @@ int loadbios() {
 			biosmask = 0x7fff;
 			return 1;
 
-		case ROM_ELX_PC425X:
-			/*PC-425X uses a single ROM chip containing both main and video BIOSes.
-			  First 32kb is video BIOS, next 32kb is blank, last 64kb is main BIOS.
-			  Alternatively, seperate BIOS + video BIOS dumps are supported.*/
-			f = romfopen("elx_pc425x/elx_pc425x.bin", "rb");
-			if(!f) {
-				if(!rom_present("elx_pc425x/elx_pc425x_vbios.bin"))
-					break;
-				f = romfopen("elx_pc425x/elx_pc425x_bios.bin", "rb");
-				if(!f)
-					break;
-			} else
-				fseek(f, 0x10000, SEEK_SET);
-			romfread(rom, 65536, 1, f);
-			fclose(f);
-			return 1;
-
 		case ROM_PB570:
 			if(!rom_present("pb570/gd5430.bin"))
 				break;

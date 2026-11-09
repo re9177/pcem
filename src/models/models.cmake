@@ -38,7 +38,6 @@ set(PCEM_SRC ${PCEM_SRC}
         models/scat.c
         models/serial.c
         models/sio.c
-        models/sl82c460.c
         models/t3100e.c
         models/um8669f.c
         models/um8881f.c

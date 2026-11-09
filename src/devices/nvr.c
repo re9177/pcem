@@ -408,10 +408,6 @@ void loadnvr() {
 		case ROM_T3100E:
 			f = nvrfopen("t3100e.nvr", "rb");
 			break;
-		case ROM_ELX_PC425X:
-			f = nvrfopen("elx_pc425.nvr", "rb");
-			nvrmask = 127;
-			break;
 		case ROM_PB570:
 			f = nvrfopen("pb570.nvr", "rb");
 			nvrmask = 127;
@@ -638,9 +634,6 @@ void savenvr() {
 			break;
 		case ROM_T3100E:
 			f = nvrfopen("t3100e.nvr", "wb");
-			break;
-		case ROM_ELX_PC425X:
-			f = nvrfopen("elx_pc425.nvr", "wb");
 			break;
 		case ROM_PB570:
 			f = nvrfopen("pb570.nvr", "wb");

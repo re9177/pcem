@@ -245,9 +245,6 @@ device_t* video_card_getdevice(int card, int romset) {
 		case ROM_T3100E:
 			return &t3100e_device;
 
-		case ROM_ELX_PC425X:
-			return &tgui9400cxi_elx_device;
-
 		case ROM_PB410A:
 			return &ht216_32_pb410a_device;
 
@@ -351,7 +348,6 @@ int video_is_mda() {
 		case ROM_IBMPS1_2133_451:
 		case ROM_T3100E:
 		case ROM_AMA932J:
-		case ROM_ELX_PC425X:
 		case ROM_PB410A:
 		case ROM_PB570:
 		case ROM_PB520R:
@@ -378,7 +374,6 @@ int video_is_cga() {
 		case ROM_IBMPS1_2121:
 		case ROM_IBMPS1_2133_451:
 		case ROM_AMA932J:
-		case ROM_ELX_PC425X:
 		case ROM_PB410A:
 		case ROM_PB570:
 		case ROM_PB520R:
@@ -401,7 +396,6 @@ int video_is_ega_vga() {
 		case ROM_IBMPS2_M80:
 		case ROM_IBMPS1_2121:
 		case ROM_IBMPS1_2133_451:
-		case ROM_ELX_PC425X:
 		case ROM_PB410A:
 		case ROM_PB570:
 		case ROM_PB520R:
@@ -520,10 +514,6 @@ void video_updatetiming() {
 
 			case ROM_T3100E:
 				timing = &timing_t3100e;
-				break;
-
-			case ROM_ELX_PC425X:
-				timing = &timing_pc425x;
 				break;
 
 			case ROM_PB410A:
@@ -652,10 +642,6 @@ void video_init() {
 
 		case ROM_T3100E:
 			device_add(&t3100e_device);
-			return;
-
-		case ROM_ELX_PC425X:
-			device_add(&tgui9400cxi_elx_device);
 			return;
 
 		case ROM_PB410A:

@@ -52,7 +52,6 @@ Release | Machine<br/>(+ addl. hardware) | CPU(s) Supported | ROM file needed<br
 :-: | --- | --- | ---
 1990 | <b>IBM PS/2 Model 70 (type 4)</b> <i>[[3]](#system-note-3)</i><br/>2MB - 16MB RAM<br/>Built-in VGA<br/>MCA bus | <b>486DX</b> at 25 MHz | ibmps2_m70_type3/70-a_even.bin<br/>ibmps2_m70_type3/70-a_odd.bin
 1993 | <b>AMI 486 clone</b><br/>1MB - 32MB RAM | <b>486</b> at 16-66 MHz | ami486/ami486.bin
-1993 | <b>Elonex PC-425X</b> <i>[[5]](#system-note-5)</i><br/>1MB - 256MB RAM<br/>Built-in Trident TGUI9440CXi | <b>486SX</b> at 25 MHz | elx_pc425x/elx_pc425x.bin<br/>&nbsp;&nbsp;&nbsp;<i>or</i><br/>elx_pc425x/elx_pc425x_bios.bin<br/>elx_pc425x/elx_pc425x_vbios.bin
 1993 | <b>IBM PS/1 Model 2133 (EMEA 451)</b><br/>2MB - 64MB RAM<br/>Built-in Cirrus Logic GD5426 | <b>486SX</b> at 25 MHz | ibmps1_2133/PS1_2133_52G2974_ROM.bin
 1993 | <b>Packard Bell PB410A</b> <i>[[5]](#system-note-5)</i><br/>1MB - 64MB RAM<br/>Built-in HT-216 video | <b>486</b> at 25-120 MHz<br/><b>Am5x86</b> at 133-160 MHz<br/><b>Cx5x86</b> at 100-133 MHz<br/><b>Pentium Overdrive</b> at 63-83 MHz | pb410a/PB410A.080337.4ABF.U25.bin
 1994 | <b>AMI WinBIOS 486 clone</b><br/>1MB - 32MB RAM | <b>486</b> at 16-66 MHz | win486/ali1429g.amw
