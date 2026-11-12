@@ -5,7 +5,7 @@
 The authors feel that:
 - The AI policy was shoe-horned in by the lead maintainer to permit AI generated code in several places where it was forcefully introduced without acknowledgement.
   - The plugin API, NE2000, and Qt user interface (before its removal) were blatantly vibecoded.
-- PC and AT emulation is better covered by less hacky emulators, like [MartyPC, which is also nearly entirely cycle and bus timing accurate.](https://github.com/dbalsom/martypc)).
+- PC and AT emulation is better covered by less hacky emulators, like [MartyPC, which is also nearly entirely cycle and bus timing accurate.](https://github.com/dbalsom/martypc)
     - Also, many machines which are removed either never worked or had several things broken about them.
 - The upstream PCem codebase is simply too annoying to work on.
 
@@ -33,7 +33,7 @@ You will need the following libraries and buildtools (and their dependencies):
 - OpenAL
 - CMake
 - Ninja (Recommended, but you can use a Makefile generator if you prefer)
-- CLang Toolchain
+- GCC (Clang is quite problematic so it's not recommended to use it for the time being)
 
 Open a terminal window, navigate to the PCem directory, then enter:
 ### Linux/BSD
