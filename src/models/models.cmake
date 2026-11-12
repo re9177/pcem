@@ -28,8 +28,8 @@ set(PCEM_SRC ${PCEM_SRC}
         models/pc87306.c
         models/pc87307.c
         models/pic.c
-        models/piix.c
-        models/piix_pm.c
+        models/piix3.c
+        models/piix4.c
         models/pit.c
         models/ps1.c
         models/ps2.c

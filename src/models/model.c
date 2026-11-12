@@ -46,7 +46,8 @@
 #include "pc87307.h"
 #include "bus/pci.h"
 #include "models/pic.h"
-#include "piix.h"
+#include "piix3.h"
+#include "piix4.h"
 #include "models/pit.h"
 #include "ps1.h"
 #include "ps2.h"
@@ -441,7 +442,7 @@ void at_p55va_init() {
 	pci_slot(0x0A);
 	pci_slot(0x0B);
 	i430vx_init();
-	piix_init(7, 0x08, 0x09, 0x0A, 0x0B, i430vx_reset);
+	piix3_init(7, 0x08, 0x09, 0x0A, 0x0B, i430vx_reset);
 	fdc37c932fr_init();
 	device_add(&intel_flash_bxt_device);
 }
@@ -454,7 +455,7 @@ void at_p55tvp4_init() {
 	pci_slot(0x0A);
 	pci_slot(0x09);
 	i430vx_init();
-	piix_init(7, 0x0C, 0x0B, 0x0A, 0x09, i430vx_reset);
+	piix3_init(7, 0x0C, 0x0B, 0x0A, 0x09, i430vx_reset);
 	w83877f_init(0x3f0, 0x87);
 	device_add(&intel_flash_bxt_device);
 }
@@ -467,7 +468,7 @@ void at_i430vx_init() {
 	pci_slot(0x13);
 	pci_slot(0x14);
 	i430vx_init();
-	piix_init(7, 18, 17, 20, 19, i430vx_reset);
+	piix3_init(7, 18, 17, 20, 19, i430vx_reset);
 	um8669f_init();
 	device_add(&intel_flash_bxt_device);
 }
@@ -480,7 +481,7 @@ void at_p55t2p4_init() {
 	pci_slot(0x0A);
 	pci_slot(0x09);
 	i430hx_init();
-	piix_init(7, 0x0C, 0x0B, 0x0A, 0x09, i430hx_reset);
+	piix3_init(7, 0x0C, 0x0B, 0x0A, 0x09, i430hx_reset);
 	w83877f_init(0x3f0, 0x87);
 	device_add(&intel_flash_bxt_device);
 }
@@ -507,7 +508,6 @@ void at_vs440fx_init() {
 	i440fx_init();
 	piix_init(7, 0xb, 0xf, 0x11, 0x13, i440fx_reset);
 	pc87307_init(0x2e);
-	//        i440fx_init();
 	device_add(&intel_flash_28fb200bxt_device);
 }
 
